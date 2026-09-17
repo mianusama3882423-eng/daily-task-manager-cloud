@@ -1,1697 +1,564 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0,
-      maximum-scale=1.0, user-scalable=no">
-
-<meta name="theme-color" content="#2563eb">
-
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Daily Tasks">
-
-<link rel="manifest" href="manifest.json">
-
-<title>Daily Task Manager</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Daily Task Manager Cloud</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
 <style>
-
-/* =========================================================
-   GLOBAL
-========================================================= */
-
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
-
-html{
-  scroll-behavior:smooth;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
-  font-family:
-    Inter,
-    Arial,
-    Helvetica,
-    sans-serif;
-  background:#f1f5f9;
-  color:#0f172a;
+  font-family:Arial,sans-serif;
+  background:#f3f6fb;
+  color:#172033
 }
 
-button,
-input{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-button:active{
-  transform:scale(.97);
-}
-
-.hidden{
-  display:none!important;
-}
-
-
-/* =========================================================
-   LOGIN PAGE
-========================================================= */
-
-#loginPage{
-  min-height:100vh;
-
-  display:flex;
-  justify-content:center;
-  align-items:center;
-
-  padding:20px;
-
-  background:
-    radial-gradient(
-      circle at top left,
-      #bfdbfe 0,
-      transparent 35%
-    ),
-    linear-gradient(
-      135deg,
-      #dbeafe,
-      #eff6ff,
-      #f8fafc
-    );
-}
-
-.loginBox{
-  width:100%;
-  max-width:430px;
-
-  background:rgba(255,255,255,.96);
-
-  padding:32px 24px;
-
-  border-radius:26px;
-
-  box-shadow:
-    0 25px 70px rgba(15,23,42,.16);
-
-  border:1px solid rgba(255,255,255,.8);
-
-  animation:loginAppear .45s ease;
-}
-
-@keyframes loginAppear{
-
-  from{
-    opacity:0;
-    transform:translateY(20px) scale(.97);
-  }
-
-  to{
-    opacity:1;
-    transform:translateY(0) scale(1);
-  }
-
-}
-
-.logo{
-  width:74px;
-  height:74px;
-
-  margin:auto;
-
-  border-radius:22px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  background:
-    linear-gradient(
-      135deg,
-      #2563eb,
-      #1d4ed8
-    );
-
+header{
+  background:#155eef;
   color:white;
-
-  font-size:36px;
-  font-weight:bold;
-
-  box-shadow:
-    0 12px 25px rgba(37,99,235,.28);
-}
-
-.loginBox h1{
-  text-align:center;
-
-  margin:18px 0 6px;
-
-  font-size:26px;
-}
-
-.loginBox p{
-  text-align:center;
-
-  color:#64748b;
-
-  margin:0 0 26px;
-
-  line-height:1.5;
-}
-
-.field{
-  margin-bottom:16px;
-}
-
-.field label{
-  display:block;
-
-  margin-bottom:7px;
-
-  font-weight:700;
-
-  font-size:14px;
-}
-
-.field input{
-  width:100%;
-
-  padding:14px;
-
-  border:
-    1px solid #cbd5e1;
-
-  border-radius:13px;
-
-  outline:none;
-
-  background:#f8fafc;
-
-  transition:.2s;
-}
-
-.field input:focus{
-  border-color:#2563eb;
-
-  background:white;
-
-  box-shadow:
-    0 0 0 3px rgba(37,99,235,.10);
-}
-
-.primaryBtn,
-.secondaryBtn{
-  transition:.2s;
-}
-
-.primaryBtn{
-  width:100%;
-
-  border:0;
-
-  padding:14px;
-
-  border-radius:13px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #2563eb,
-      #1d4ed8
-    );
-
-  color:white;
-
-  font-weight:bold;
-
-  margin-top:4px;
-
-  box-shadow:
-    0 8px 18px rgba(37,99,235,.20);
-}
-
-.primaryBtn:hover{
-  filter:brightness(1.05);
-}
-
-.secondaryBtn{
-  width:100%;
-
-  border:
-    1px solid #cbd5e1;
-
-  padding:13px;
-
-  border-radius:13px;
-
-  background:white;
-
-  color:#0f172a;
-
-  font-weight:bold;
-
-  margin-top:10px;
-}
-
-.secondaryBtn:hover{
-  background:#f8fafc;
-}
-
-.statusBox{
-  margin-top:16px;
-
-  padding:12px 14px;
-
-  border-radius:12px;
-
-  font-size:13px;
-
-  line-height:1.5;
-
-  display:none;
-}
-
-
-/* =========================================================
-   APP
-========================================================= */
-
-#app{
-  min-height:100vh;
-}
-
-
-/* =========================================================
-   TOP BAR
-========================================================= */
-
-.topbar{
+  padding:16px;
   position:sticky;
-
   top:0;
-
-  z-index:20;
-
-  background:
-    rgba(255,255,255,.94);
-
-  backdrop-filter:blur(12px);
-
-  border-bottom:
-    1px solid #e2e8f0;
-
-  padding:11px 15px;
+  z-index:5
 }
 
-.topbarInner{
-  max-width:1100px;
-
+.wrap{
+  max-width:1150px;
   margin:auto;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  gap:10px;
+  padding:16px
 }
 
 .brand{
-  display:flex;
-
-  align-items:center;
-
-  gap:10px;
+  font-size:22px;
+  font-weight:800
 }
 
-.brandIcon{
-  width:42px;
-  height:42px;
-
-  border-radius:13px;
-
-  display:flex;
-
-  align-items:center;
-  justify-content:center;
-
-  background:
-    linear-gradient(
-      135deg,
-      #2563eb,
-      #1d4ed8
-    );
-
-  color:white;
-
-  font-weight:bold;
-
-  box-shadow:
-    0 6px 14px rgba(37,99,235,.20);
+.muted{
+  color:#687386
 }
 
-.brandText strong{
-  display:block;
-
-  font-size:15px;
-}
-
-.brandText small{
-  color:#64748b;
-
-  font-size:11px;
-}
-
-.userArea{
-  display:flex;
-
-  align-items:center;
-
-  gap:8px;
-}
-
-.onlineDot{
-  width:9px;
-  height:9px;
-
-  border-radius:50%;
-
-  background:#22c55e;
-
-  box-shadow:
-    0 0 0 4px rgba(34,197,94,.12);
-}
-
-.onlineDot.offline{
-  background:#ef4444;
-
-  box-shadow:
-    0 0 0 4px rgba(239,68,68,.12);
-}
-
-.logoutBtn{
-  border:0;
-
-  background:#fee2e2;
-
-  color:#b91c1c;
-
-  padding:9px 12px;
-
-  border-radius:10px;
-
-  font-weight:bold;
-}
-
-
-/* =========================================================
-   MAIN
-========================================================= */
-
-.container{
-  max-width:1100px;
-
-  margin:auto;
-
-  padding:18px 15px 40px;
-}
-
-
-/* =========================================================
-   STATS
-========================================================= */
-
-.stats{
-  display:grid;
-
-  grid-template-columns:
-    repeat(4,1fr);
-
-  gap:12px;
-
-  margin-bottom:18px;
-}
-
-.stat{
+.card{
   background:white;
-
-  border-radius:17px;
-
-  padding:17px;
-
-  box-shadow:
-    0 5px 18px rgba(15,23,42,.05);
-
-  border:
-    1px solid #f1f5f9;
+  border-radius:16px;
+  padding:18px;
+  margin:12px 0;
+  box-shadow:0 4px 18px #0000000d
 }
 
-.stat small{
-  color:#64748b;
-
-  font-size:12px;
-}
-
-.stat strong{
-  display:block;
-
-  font-size:28px;
-
-  margin-top:5px;
-}
-
-
-/* =========================================================
-   ADD TASK
-========================================================= */
-
-.addBox{
-  background:white;
-
-  padding:15px;
-
-  border-radius:19px;
-
-  margin-bottom:18px;
-
-  box-shadow:
-    0 5px 18px rgba(15,23,42,.05);
-}
-
-.addRow{
-  display:flex;
-
-  gap:10px;
-}
-
-.addRow input{
-  flex:1;
-
-  min-width:0;
-
-  padding:14px;
-
-  border:
-    1px solid #cbd5e1;
-
-  border-radius:12px;
-
-  outline:none;
-}
-
-.addRow input:focus{
-  border-color:#2563eb;
-
-  box-shadow:
-    0 0 0 3px rgba(37,99,235,.08);
-}
-
-.addRow button{
-  border:0;
-
-  padding:0 20px;
-
-  border-radius:12px;
-
-  background:#2563eb;
-
-  color:white;
-
-  font-weight:bold;
-}
-
-
-/* =========================================================
-   FILTERS
-========================================================= */
-
-.controls{
-  background:white;
-
-  border-radius:19px;
-
-  padding:12px;
-
-  margin-bottom:18px;
-
-  box-shadow:
-    0 5px 18px rgba(15,23,42,.05);
-}
-
-.search{
+input,
+textarea,
+select,
+button{
   width:100%;
-
   padding:12px;
-
-  border:
-    1px solid #cbd5e1;
-
-  border-radius:11px;
-
-  margin-bottom:10px;
-
-  outline:none;
-}
-
-.search:focus{
-  border-color:#2563eb;
-}
-
-.tabs{
-  display:flex;
-
-  gap:7px;
-
-  overflow-x:auto;
-
-  scrollbar-width:none;
-}
-
-.tabs::-webkit-scrollbar{
-  display:none;
-}
-
-.tab{
-  border:0;
-
-  padding:10px 15px;
-
+  border:1px solid #d6dce8;
   border-radius:10px;
-
-  background:#f1f5f9;
-
-  white-space:nowrap;
-
-  font-weight:bold;
-
-  transition:.2s;
+  font-size:15px;
+  margin-top:7px
 }
 
-.tab.active{
-  background:#2563eb;
+textarea{
+  min-height:110px;
+  resize:vertical
+}
 
+button{
+  background:#155eef;
   color:white;
-
-  box-shadow:
-    0 5px 12px rgba(37,99,235,.18);
+  border:0;
+  font-weight:700;
+  cursor:pointer
 }
 
+button.secondary{
+  background:#eaf0ff;
+  color:#155eef
+}
 
-/* =========================================================
-   TASK
-========================================================= */
+button.danger{
+  background:#d92d20
+}
 
-.taskList{
+button.gray{
+  background:#667085
+}
+
+button.success{
+  background:#067647
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:12px
+}
+
+.hidden{
+  display:none!important
+}
+
+.login-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:15px;
+  margin-top:25px
+}
+
+.login-card h2{
+  margin-top:8px
+}
+
+.role{
+  font-size:12px;
+  background:#eef4ff;
+  color:#155eef;
+  padding:5px 8px;
+  border-radius:20px;
+  display:inline-block
+}
+
+nav{
   display:flex;
+  gap:8px;
+  overflow:auto;
+  padding:10px 0
+}
 
-  flex-direction:column;
-
-  gap:12px;
+nav button{
+  min-width:max-content;
+  width:auto;
+  padding:9px 14px
 }
 
 .task{
-  background:white;
-
-  border-radius:18px;
-
-  padding:16px;
-
-  box-shadow:
-    0 5px 18px rgba(15,23,42,.05);
-
-  border:
-    1px solid #f1f5f9;
-
-  animation:taskAppear .25s ease;
+  border:1px solid #e0e5ed;
+  border-radius:14px;
+  padding:14px;
+  margin:10px 0
 }
 
-@keyframes taskAppear{
-
-  from{
-    opacity:0;
-    transform:translateY(8px);
-  }
-
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-
+.status{
+  font-size:12px;
+  font-weight:700;
+  padding:5px 8px;
+  border-radius:20px;
+  background:#eef2f6;
+  display:inline-block
 }
 
-.taskTop{
+.status.assigned{
+  background:#fff4d6
+}
+
+.status.accepted{
+  background:#e7f6ec
+}
+
+.status.in_progress{
+  background:#e7efff
+}
+
+.status.completed{
+  background:#e8f7f0
+}
+
+.row{
   display:flex;
+  gap:8px;
+  flex-wrap:wrap
+}
 
+.row>*{
+  flex:1;
+  min-width:130px
+}
+
+.small{
+  font-size:13px
+}
+
+.topline{
+  display:flex;
   justify-content:space-between;
-
   gap:10px;
+  align-items:center;
+  flex-wrap:wrap
 }
 
-.taskName{
-  font-weight:bold;
-
-  font-size:17px;
-
-  word-break:break-word;
-
-  line-height:1.4;
+table{
+  width:100%;
+  border-collapse:collapse
 }
 
-.badge{
-  padding:5px 9px;
-
-  border-radius:999px;
-
-  font-size:11px;
-
-  font-weight:bold;
-
-  white-space:nowrap;
-
-  height:max-content;
+td,th{
+  padding:9px;
+  border-bottom:1px solid #edf0f5;
+  text-align:left;
+  font-size:13px
 }
 
-.badge.pending{
-  background:#fef3c7;
-
-  color:#92400e;
+.table-wrap{
+  overflow-x:auto
 }
 
-.badge.running{
-  background:#dcfce7;
-
-  color:#166534;
+.stat{
+  text-align:center
 }
 
-.badge.stopped{
-  background:#fee2e2;
-
-  color:#991b1b;
+.stat h2{
+  margin:8px 0;
+  font-size:30px
 }
 
-.badge.completed{
-  background:#dbeafe;
-
-  color:#1d4ed8;
-}
-
-.taskInfo{
-  margin-top:10px;
-
-  color:#64748b;
-
-  font-size:13px;
-
-  line-height:1.7;
-}
-
-.timer{
-  font-size:24px;
-
-  font-weight:bold;
-
-  margin:10px 0;
-
-  color:#2563eb;
-
-  font-variant-numeric:
-    tabular-nums;
-}
-
-.taskButtons{
-  display:flex;
-
-  flex-wrap:wrap;
-
-  gap:7px;
-
-  margin-top:12px;
-}
-
-.taskButtons button{
-  border:0;
-
-  padding:9px 12px;
-
-  border-radius:9px;
-
-  font-size:13px;
-
-  font-weight:bold;
-}
-
-.start{
-  background:#dcfce7;
-
-  color:#166534;
-}
-
-.stop{
-  background:#fee2e2;
-
-  color:#991b1b;
-}
-
-.resume{
-  background:#dbeafe;
-
-  color:#1d4ed8;
-}
-
-.complete{
-  background:#2563eb;
-
+#toast{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#172033;
   color:white;
+  padding:12px 18px;
+  border-radius:12px;
+  display:none;
+  z-index:20;
+  max-width:90%
 }
-
-.edit{
-  background:#fef3c7;
-
-  color:#92400e;
-}
-
-.delete{
-  background:#f1f5f9;
-
-  color:#475569;
-}
-
-
-/* =========================================================
-   EMPTY
-========================================================= */
-
-.empty{
-  text-align:center;
-
-  padding:50px 20px;
-
-  color:#64748b;
-
-  background:white;
-
-  border-radius:18px;
-}
-
-.empty h3{
-  color:#0f172a;
-
-  margin-bottom:6px;
-}
-
-
-/* =========================================================
-   MODAL
-========================================================= */
 
 .modal{
   position:fixed;
-
   inset:0;
-
-  background:
-    rgba(15,23,42,.58);
-
+  background:#0008;
   display:flex;
-
   align-items:center;
-
   justify-content:center;
-
-  padding:20px;
-
-  z-index:100;
-
-  backdrop-filter:blur(4px);
+  padding:15px;
+  z-index:50
 }
 
-.modalBox{
-  width:100%;
-
-  max-width:420px;
-
+.modal-box{
   background:white;
-
-  border-radius:21px;
-
-  padding:20px;
-
-  box-shadow:
-    0 25px 70px rgba(0,0,0,.20);
-
-  animation:modalAppear .25s ease;
-}
-
-@keyframes modalAppear{
-
-  from{
-    opacity:0;
-    transform:scale(.94);
-  }
-
-  to{
-    opacity:1;
-    transform:scale(1);
-  }
-
-}
-
-.modalBox h3{
-  margin-top:0;
-}
-
-.modalBox input{
   width:100%;
-
-  padding:13px;
-
-  border:
-    1px solid #cbd5e1;
-
-  border-radius:10px;
-
-  margin:10px 0;
-
-  outline:none;
+  max-width:520px;
+  max-height:90vh;
+  overflow:auto;
+  border-radius:18px;
+  padding:20px
 }
 
-.modalBox input:focus{
-  border-color:#2563eb;
+.empty{
+  text-align:center;
+  padding:30px;
+  color:#667085
 }
-
-.modalBtns{
-  display:flex;
-
-  gap:8px;
-}
-
-.modalBtns button{
-  flex:1;
-
-  border:0;
-
-  padding:12px;
-
-  border-radius:10px;
-
-  font-weight:bold;
-}
-
-.save{
-  background:#2563eb;
-
-  color:white;
-}
-
-.cancel{
-  background:#e2e8f0;
-}
-
-
-/* =========================================================
-   PROFESSIONAL TOAST NOTIFICATIONS
-========================================================= */
-
-#toastContainer{
-  position:fixed;
-
-  top:18px;
-
-  right:18px;
-
-  z-index:9999;
-
-  width:min(
-    380px,
-    calc(100vw - 30px)
-  );
-
-  display:flex;
-
-  flex-direction:column;
-
-  gap:10px;
-
-  pointer-events:none;
-}
-
-.toast{
-  position:relative;
-
-  display:flex;
-
-  align-items:flex-start;
-
-  gap:12px;
-
-  width:100%;
-
-  padding:
-    14px
-    42px
-    14px
-    14px;
-
-  background:#ffffff;
-
-  border-radius:16px;
-
-  box-shadow:
-    0 15px 40px rgba(15,23,42,.17),
-    0 4px 12px rgba(15,23,42,.08);
-
-  border:1px solid #e2e8f0;
-
-  overflow:hidden;
-
-  animation:
-    toastIn .35s ease forwards;
-
-  pointer-events:auto;
-}
-
-.toast.hide{
-  animation:
-    toastOut .3s ease forwards;
-}
-
-.toastIcon{
-  width:38px;
-
-  height:38px;
-
-  min-width:38px;
-
-  border-radius:12px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  font-size:19px;
-
-  font-weight:bold;
-}
-
-.toastContent{
-  flex:1;
-
-  min-width:0;
-}
-
-.toastTitle{
-  font-size:14px;
-
-  font-weight:700;
-
-  color:#0f172a;
-
-  margin-bottom:3px;
-}
-
-.toastMessage{
-  font-size:12.5px;
-
-  line-height:1.45;
-
-  color:#64748b;
-
-  word-break:break-word;
-}
-
-.toastClose{
-  position:absolute;
-
-  top:8px;
-
-  right:8px;
-
-  width:28px;
-
-  height:28px;
-
-  border:0;
-
-  border-radius:8px;
-
-  background:transparent;
-
-  color:#94a3b8;
-
-  font-size:18px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-}
-
-.toastClose:hover{
-  background:#f1f5f9;
-
-  color:#475569;
-}
-
-.toastProgress{
-  position:absolute;
-
-  left:0;
-
-  bottom:0;
-
-  height:3px;
-
-  width:100%;
-
-  transform-origin:left;
-
-  animation:
-    toastProgress 2.8s linear forwards;
-}
-
-
-/* SUCCESS */
-
-.toast.success{
-  border-left:
-    4px solid #22c55e;
-}
-
-.toast.success .toastIcon{
-  background:#dcfce7;
-
-  color:#16a34a;
-}
-
-.toast.success .toastProgress{
-  background:#22c55e;
-}
-
-
-/* ERROR */
-
-.toast.error{
-  border-left:
-    4px solid #ef4444;
-}
-
-.toast.error .toastIcon{
-  background:#fee2e2;
-
-  color:#dc2626;
-}
-
-.toast.error .toastProgress{
-  background:#ef4444;
-}
-
-
-/* INFO */
-
-.toast.info{
-  border-left:
-    4px solid #2563eb;
-}
-
-.toast.info .toastIcon{
-  background:#dbeafe;
-
-  color:#2563eb;
-}
-
-.toast.info .toastProgress{
-  background:#2563eb;
-}
-
-
-/* WARNING */
-
-.toast.warning{
-  border-left:
-    4px solid #f59e0b;
-}
-
-.toast.warning .toastIcon{
-  background:#fef3c7;
-
-  color:#d97706;
-}
-
-.toast.warning .toastProgress{
-  background:#f59e0b;
-}
-
-
-/* OFFLINE */
-
-.toast.offline{
-  border-left:
-    4px solid #64748b;
-}
-
-.toast.offline .toastIcon{
-  background:#f1f5f9;
-
-  color:#475569;
-}
-
-.toast.offline .toastProgress{
-  background:#64748b;
-}
-
-
-@keyframes toastIn{
-
-  from{
-    opacity:0;
-
-    transform:
-      translateX(120px)
-      scale(.95);
-  }
-
-  to{
-    opacity:1;
-
-    transform:
-      translateX(0)
-      scale(1);
-  }
-
-}
-
-@keyframes toastOut{
-
-  from{
-    opacity:1;
-
-    transform:
-      translateX(0)
-      scale(1);
-  }
-
-  to{
-    opacity:0;
-
-    transform:
-      translateX(120px)
-      scale(.95);
-  }
-
-}
-
-@keyframes toastProgress{
-
-  from{
-    transform:scaleX(1);
-  }
-
-  to{
-    transform:scaleX(0);
-  }
-
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media(max-width:700px){
-
-  .stats{
-    grid-template-columns:
-      repeat(2,1fr);
-  }
-
-  .addRow{
-    flex-direction:column;
-  }
-
-  .addRow button{
-    padding:13px;
-  }
-
-  .brandText small{
-    display:none;
-  }
-
-  .userArea span{
-    display:none;
-  }
-
-  .container{
-    padding:
-      14px
-      10px
-      30px;
-  }
-
-}
-
-@media(max-width:600px){
-
-  #toastContainer{
-    top:12px;
-
-    left:12px;
-
-    right:12px;
-
-    width:auto;
-  }
-
-  .toast{
-    border-radius:14px;
-
-    padding:
-      13px
-      40px
-      13px
-      12px;
-  }
-
-  .toastIcon{
-    width:36px;
-
-    height:36px;
-
-    min-width:36px;
-  }
-
-}
-
-@media(max-width:400px){
-
-  .stat strong{
-    font-size:23px;
-  }
-
-  .task{
-    padding:13px;
-  }
-
-  .taskName{
-    font-size:15px;
-  }
-
-}
-
 </style>
-
 </head>
-
 
 <body>
 
+<header>
+<div class="wrap">
+  <div class="brand">☑ Daily Task Manager Cloud</div>
+  <div id="headerUser" class="small"></div>
+</div>
+</header>
 
-<!-- =========================================================
-     LOGIN
-========================================================= -->
 
-<section id="loginPage">
+<!-- LOGIN -->
 
-  <div class="loginBox">
+<div id="authScreen" class="wrap">
 
-    <div class="logo">
-      ✓
-    </div>
+<div class="card">
 
-    <h1>
-      Daily Task Manager
-    </h1>
+<h1>Secure Login</h1>
 
-    <p>
-      Organize, track, and manage your daily tasks.
-    </p>
+<p class="muted">
+Login using the username and password assigned by your manager.
+</p>
 
+<div class="login-grid">
 
-    <div class="field">
+<!-- SUPER USER -->
 
-      <label>
-        Username
-      </label>
+<div class="card login-card">
 
-      <input
-        id="username"
-        type="text"
-        autocomplete="username"
-        placeholder="Enter username">
+<span class="role">HIGHEST ACCESS</span>
 
-    </div>
+<h2>👑 Super User</h2>
 
+<input
+id="suUser"
+placeholder="Super User username"
+autocomplete="username"
+>
 
-    <div class="field">
+<input
+id="suPass"
+type="password"
+placeholder="Password"
+autocomplete="current-password"
+>
 
-      <label>
-        Password
-      </label>
-
-      <input
-        id="password"
-        type="password"
-        autocomplete="current-password"
-        placeholder="Enter password">
-
-    </div>
-
-
-    <button
-      class="primaryBtn"
-      onclick="login()">
-
-      Login
-
-    </button>
-
-
-    <button
-      class="secondaryBtn"
-      onclick="signup()">
-
-      Create Account
-
-    </button>
-
-
-    <button
-      class="secondaryBtn"
-      onclick="testConnection()">
-
-      Test Cloud Connection
-
-    </button>
-
-
-    <div
-      id="loginStatus"
-      class="statusBox">
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     APP
-========================================================= -->
-
-<section
-  id="app"
-  class="hidden">
-
-
-  <header class="topbar">
-
-    <div class="topbarInner">
-
-
-      <div class="brand">
-
-        <div class="brandIcon">
-          ✓
-        </div>
-
-        <div class="brandText">
-
-          <strong>
-            Daily Tasks
-          </strong>
-
-          <small id="workspaceText">
-            Workspace
-          </small>
-
-        </div>
-
-      </div>
-
-
-      <div class="userArea">
-
-        <div
-          id="onlineDot"
-          class="onlineDot">
-        </div>
-
-        <span id="currentUser">
-          User
-        </span>
-
-        <button
-          class="logoutBtn"
-          onclick="logout()">
-
-          Logout
-
-        </button>
-
-      </div>
-
-    </div>
-
-  </header>
-
-
-  <main class="container">
-
-
-    <!-- STATS -->
-
-    <div class="stats">
-
-
-      <div class="stat">
-
-        <small>
-          Total
-        </small>
-
-        <strong id="totalCount">
-          0
-        </strong>
-
-      </div>
-
-
-      <div class="stat">
-
-        <small>
-          Pending
-        </small>
-
-        <strong id="pendingCount">
-          0
-        </strong>
-
-      </div>
-
-
-      <div class="stat">
-
-        <small>
-          Active
-        </small>
-
-        <strong id="activeCount">
-          0
-        </strong>
-
-      </div>
-
-
-      <div class="stat">
-
-        <small>
-          Completed
-        </small>
-
-        <strong id="completedCount">
-          0
-        </strong>
-
-      </div>
-
-
-    </div>
-
-
-    <!-- ADD TASK -->
-
-    <div class="addBox">
-
-      <div class="addRow">
-
-        <input
-          id="taskInput"
-          type="text"
-          placeholder="Enter a new task...">
-
-        <button
-          onclick="addTask()">
-
-          + Add Task
-
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <!-- CONTROLS -->
-
-    <div class="controls">
-
-      <input
-        id="searchInput"
-        class="search"
-        type="search"
-        placeholder="Search tasks..."
-        oninput="renderTasks()">
-
-
-      <div class="tabs">
-
-
-        <button
-          class="tab active"
-          data-tab="all"
-          onclick="setTab('all')">
-
-          All
-
-        </button>
-
-
-        <button
-          class="tab"
-          data-tab="pending"
-          onclick="setTab('pending')">
-
-          Pending
-
-        </button>
-
-
-        <button
-          class="tab"
-          data-tab="active"
-          onclick="setTab('active')">
-
-          Active
-
-        </button>
-
-
-        <button
-          class="tab"
-          data-tab="history"
-          onclick="setTab('history')">
-
-          History
-
-        </button>
-
-
-      </div>
-
-    </div>
-
-
-    <div
-      id="taskList"
-      class="taskList">
-    </div>
-
-
-  </main>
-
-</section>
-
-
-<!-- =========================================================
-     EDIT MODAL
-========================================================= -->
-
-<div
-  id="editModal"
-  class="modal hidden">
-
-
-  <div class="modalBox">
-
-    <h3>
-      Edit Task
-    </h3>
-
-
-    <input
-      id="editInput"
-      type="text">
-
-
-    <div class="modalBtns">
-
-
-      <button
-        class="cancel"
-        onclick="closeEdit()">
-
-        Cancel
-
-      </button>
-
-
-      <button
-        class="save"
-        onclick="saveEdit()">
-
-        Save
-
-      </button>
-
-
-    </div>
-
-  </div>
+<button onclick="login('super_user')">
+Login as Super User
+</button>
 
 </div>
 
 
-<!-- =========================================================
-     NOTIFICATIONS
-========================================================= -->
+<!-- ADMIN -->
 
-<div
-  id="toastContainer">
+<div class="card login-card">
+
+<span class="role">MANAGEMENT</span>
+
+<h2>👨‍💼 Admin</h2>
+
+<input
+id="adUser"
+placeholder="Admin username"
+autocomplete="username"
+>
+
+<input
+id="adPass"
+type="password"
+placeholder="Password"
+autocomplete="current-password"
+>
+
+<button onclick="login('admin')">
+Login as Admin
+</button>
+
 </div>
+
+
+<!-- USER -->
+
+<div class="card login-card">
+
+<span class="role">END USER</span>
+
+<h2>👤 End User</h2>
+
+<input
+id="usUser"
+placeholder="Username"
+autocomplete="username"
+>
+
+<input
+id="usPass"
+type="password"
+placeholder="Password"
+autocomplete="current-password"
+>
+
+<button onclick="login('user')">
+Login as End User
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>Account Creation</h3>
+
+<p class="muted">
+Accounts cannot be self-created. Super User creates Admin accounts,
+and Admin creates End User accounts.
+</p>
+
+</div>
+
+</div>
+
+
+<!-- APPLICATION -->
+
+<div id="app" class="hidden">
+
+<div class="wrap">
+
+<div class="card topline">
+
+<div>
+
+<b id="welcome"></b>
+
+<div id="roleText" class="muted"></div>
+
+</div>
+
+<button
+class="danger"
+style="width:auto"
+onclick="logout()"
+>
+Logout
+</button>
+
+</div>
+
+
+<nav id="nav"></nav>
+
+<main id="content"></main>
+
+</div>
+
+</div>
+
+
+<!-- CREATE ACCOUNT MODAL -->
+
+<div id="accountModal" class="modal hidden">
+
+<div class="modal-box">
+
+<div class="topline">
+
+<h2 id="accountModalTitle">
+Create Account
+</h2>
+
+<button
+class="gray"
+style="width:auto"
+onclick="closeAccountModal()"
+>
+✕
+</button>
+
+</div>
+
+<p
+id="accountModalInfo"
+class="muted"
+></p>
+
+<input
+id="accountName"
+placeholder="Full name"
+>
+
+<input
+id="accountUsername"
+placeholder="Username"
+>
+
+<input
+id="accountPassword"
+type="password"
+placeholder="Password (minimum 8 characters)"
+>
+
+<input
+id="accountPassword2"
+type="password"
+placeholder="Confirm password"
+>
+
+<div class="row">
+
+<button onclick="createManagedAccount()">
+Create Account
+</button>
+
+<button
+class="gray"
+onclick="closeAccountModal()"
+>
+Cancel
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- TASK MODAL -->
+
+<div id="taskModal" class="modal hidden">
+
+<div class="modal-box">
+
+<div class="topline">
+
+<h2 id="taskModalTitle">
+Assign Task
+</h2>
+
+<button
+class="gray"
+style="width:auto"
+onclick="closeTaskModal()"
+>
+✕
+</button>
+
+</div>
+
+<input
+id="tfName"
+placeholder="Task title"
+>
+
+<textarea
+id="tfDesc"
+placeholder="Detailed description / instructions"
+></textarea>
+
+<select id="tfUser"></select>
+
+<label class="small">
+Due date & time
+</label>
+
+<input
+id="tfDue"
+type="datetime-local"
+>
+
+<div class="row">
+
+<button onclick="saveTask()">
+Save Task
+</button>
+
+<button
+class="gray"
+onclick="closeTaskModal()"
+>
+Cancel
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div id="toast"></div>
 
 
 <script>
 
-
-/* =========================================================
+/* =========================================
    SUPABASE CONFIG
-========================================================= */
+========================================= */
 
 const SUPABASE_URL =
 "https://egphfcjehcygjcabugbo.supabase.co";
@@ -1699,3253 +566,2157 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_ZPa3kwOHSIi__aihHVbg6w_VM-nkn-h";
 
-
-const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY,
-  {
-    auth:{
-      persistSession:true,
-      autoRefreshToken:true,
-      detectSessionInUrl:false
-    }
-  }
+const sb =
+supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
 );
 
 
-/* =========================================================
-   WORKSPACE CONFIG
-========================================================= */
-
-const SHARED_USERNAME =
-"teacher";
-
-const SHARED_WORKSPACE =
-"11111111-1111-4111-8111-111111111111";
-
-
-/* =========================================================
+/* =========================================
    APP STATE
-========================================================= */
+========================================= */
 
-let currentUser = null;
-
-let currentProfile = null;
-
-let currentWorkspace = null;
+let me = null;
 
 let tasks = [];
 
-let activeTab = "all";
+let users = [];
 
-let editTaskId = null;
+let currentTab = "dashboard";
 
-let realtimeChannel = null;
+let editingTaskId = null;
 
-let timerInterval = null;
+let accountRoleToCreate = null;
 
-let syncing = false;
-
-
-/* =========================================================
-   LOCAL STORAGE
-========================================================= */
-
-function localKey(){
-
-  if(!currentUser){
-
-    return "daily_tasks_guest";
-
-  }
-
-  return "daily_tasks_" +
-    currentUser.id;
-
-}
+let refreshTimer = null;
 
 
-function saveLocal(){
+/* =========================================
+   HELPERS
+========================================= */
 
-  try{
+const $ = id =>
+document.getElementById(id);
 
-    localStorage.setItem(
-      localKey(),
-      JSON.stringify(tasks)
-    );
 
-  }catch(error){
+function toast(message){
 
-    console.error(
-      "Local save error:",
-      error
-    );
+$("toast").textContent = message;
 
-  }
+$("toast").style.display = "block";
+
+setTimeout(()=>{
+$("toast").style.display = "none";
+},3500);
 
 }
 
 
-function loadLocal(){
+function esc(value){
 
-  try{
+return String(value ?? "")
+.replace(/[&<>"']/g,c=>({
 
-    const data =
-      localStorage.getItem(
-        localKey()
-      );
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
 
-    if(data){
-
-      tasks =
-        JSON.parse(data);
-
-      if(!Array.isArray(tasks)){
-
-        tasks=[];
-
-      }
-
-    }else{
-
-      tasks=[];
-
-    }
-
-  }catch(error){
-
-    console.error(
-      "Local load error:",
-      error
-    );
-
-    tasks=[];
-
-  }
+}[c]));
 
 }
 
 
-/* =========================================================
-   CONNECTION UI
-========================================================= */
+function fmt(value){
 
-function updateConnectionUI(){
+if(!value) return "—";
 
-  const dot =
-    document.getElementById(
-      "onlineDot"
-    );
-
-  if(!dot){
-    return;
-  }
-
-  if(navigator.onLine){
-
-    dot.classList.remove(
-      "offline"
-    );
-
-  }else{
-
-    dot.classList.add(
-      "offline"
-    );
-
-  }
+return new Date(value).toLocaleString();
 
 }
 
 
-window.addEventListener(
-  "online",
-  async ()=>{
+function secondsText(seconds){
 
-    updateConnectionUI();
-
-    showToast(
-      "Internet connection restored.",
-      "success",
-      "Back Online"
-    );
-
-    await syncPending();
-
-  }
+seconds =
+Math.max(
+0,
+Number(seconds) || 0
 );
 
+const h =
+Math.floor(seconds/3600);
 
-window.addEventListener(
-  "offline",
-  ()=>{
+const m =
+Math.floor((seconds%3600)/60);
 
-    updateConnectionUI();
+const s =
+Math.floor(seconds%60);
 
-    showToast(
-      "Changes will be saved on this device and synced when you are online again.",
-      "offline",
-      "Offline Mode"
-    );
-
-  }
-);
-
-
-/* =========================================================
-   PROFESSIONAL TOAST
-========================================================= */
-
-function showToast(
-  message,
-  type="info",
-  title=null
-){
-
-  const container =
-    document.getElementById(
-      "toastContainer"
-    );
-
-  if(!container){
-    return;
-  }
-
-
-  const settings = {
-
-    success:{
-      icon:"✓",
-      title:
-        title || "Success"
-    },
-
-    error:{
-      icon:"!",
-      title:
-        title || "Error"
-    },
-
-    info:{
-      icon:"i",
-      title:
-        title || "Information"
-    },
-
-    warning:{
-      icon:"!",
-      title:
-        title || "Warning"
-    },
-
-    offline:{
-      icon:"☁",
-      title:
-        title || "Offline Mode"
-    }
-
-  };
-
-
-  const config =
-    settings[type] ||
-    settings.info;
-
-
-  const toast =
-    document.createElement(
-      "div"
-    );
-
-
-  toast.className =
-    "toast " + type;
-
-
-  toast.innerHTML = `
-
-    <div class="toastIcon">
-      ${config.icon}
-    </div>
-
-    <div class="toastContent">
-
-      <div class="toastTitle">
-        ${escapeHTML(config.title)}
-      </div>
-
-      <div class="toastMessage">
-        ${escapeHTML(String(message))}
-      </div>
-
-    </div>
-
-    <button
-      class="toastClose"
-      aria-label="Close notification">
-
-      ×
-
-    </button>
-
-    <div class="toastProgress"></div>
-
-  `;
-
-
-  container.appendChild(
-    toast
-  );
-
-
-  const closeToast =
-    ()=>{
-
-      if(
-        toast.classList.contains(
-          "hide"
-        )
-      ){
-
-        return;
-
-      }
-
-
-      toast.classList.add(
-        "hide"
-      );
-
-
-      setTimeout(
-        ()=>{
-          toast.remove();
-        },
-        300
-      );
-
-    };
-
-
-  toast
-    .querySelector(
-      ".toastClose"
-    )
-    .addEventListener(
-      "click",
-      closeToast
-    );
-
-
-  setTimeout(
-    closeToast,
-    2800
-  );
+return `${h}h ${m}m ${s}s`;
 
 }
 
 
-/* =========================================================
-   LOGIN STATUS
-========================================================= */
-
-function loginStatus(
-  message,
-  type="info"
-){
-
-  const box =
-    document.getElementById(
-      "loginStatus"
-    );
-
-  box.textContent =
-    message;
-
-  box.style.display =
-    "block";
-
-
-  if(type==="error"){
-
-    box.style.background =
-      "#fee2e2";
-
-    box.style.color =
-      "#991b1b";
-
-  }else if(type==="success"){
-
-    box.style.background =
-      "#dcfce7";
-
-    box.style.color =
-      "#166534";
-
-  }else{
-
-    box.style.background =
-      "#dbeafe";
-
-    box.style.color =
-      "#1d4ed8";
-
-  }
-
-}
-
-
-/* =========================================================
-   USERNAME
-========================================================= */
-
-function normalizeUsername(
-  value
-){
-
-  return value
-    .trim()
-    .toLowerCase();
-
-}
-
-
-function usernameValid(
-  username
-){
-
-  return /^[a-zA-Z0-9_]{3,30}$/
-    .test(username);
-
-}
-
-
-function usernameEmail(
-  username
-){
-
-  return username +
-    "@taskmanager.local";
-
-}
-
-
-/* =========================================================
-   SIGNUP
-========================================================= */
-
-async function signup(){
-
-  const username =
-    normalizeUsername(
-      document
-        .getElementById(
-          "username"
-        )
-        .value
-    );
-
-
-  const password =
-    document
-      .getElementById(
-        "password"
-      )
-      .value;
-
-
-  if(!usernameValid(username)){
-
-    loginStatus(
-      "Username must be 3-30 characters and may contain only letters, numbers, or underscores.",
-      "error"
-    );
-
-    showToast(
-      "Please enter a valid username.",
-      "error",
-      "Invalid Username"
-    );
-
-    return;
-
-  }
-
-
-  if(password.length < 6){
-
-    loginStatus(
-      "Password must be at least 6 characters long.",
-      "error"
-    );
-
-    showToast(
-      "Password must be at least 6 characters long.",
-      "error",
-      "Invalid Password"
-    );
-
-    return;
-
-  }
-
-
-  loginStatus(
-    "Creating account..."
-  );
-
-
-  try{
-
-    const email =
-      usernameEmail(
-        username
-      );
-
-
-    const result =
-      await supabaseClient
-        .auth
-        .signUp({
-          email,
-          password
-        });
-
-
-    if(result.error){
-
-      loginStatus(
-        result.error.message,
-        "error"
-      );
-
-      showToast(
-        result.error.message,
-        "error",
-        "Account Creation Failed"
-      );
-
-      return;
-
-    }
-
-
-    if(!result.data.user){
-
-      loginStatus(
-        "Unable to create your account.",
-        "error"
-      );
-
-      showToast(
-        "Unable to create your account.",
-        "error",
-        "Account Creation Failed"
-      );
-
-      return;
-
-    }
-
-
-    currentUser =
-      result.data.user;
-
-
-    await createProfileIfNeeded(
-      currentUser.id,
-      username
-    );
-
-
-    if(result.data.session){
-
-      loginStatus(
-        "Account created successfully.",
-        "success"
-      );
-
-      showToast(
-        "Your account has been created successfully.",
-        "success",
-        "Account Created"
-      );
-
-      await afterLogin(
-        username
-      );
-
-    }else{
-
-      loginStatus(
-        "Account created. If email confirmation is enabled, please confirm your email before logging in.",
-        "info"
-      );
-
-    }
-
-  }catch(error){
-
-    console.error(error);
-
-    loginStatus(
-      error.message ||
-      "Signup error",
-      "error"
-    );
-
-    showToast(
-      error.message ||
-      "Unable to create your account.",
-      "error",
-      "Signup Error"
-    );
-
-  }
-
-}
-
-
-/* =========================================================
+/* =========================================
    LOGIN
-========================================================= */
+========================================= */
 
-async function login(){
+async function login(expectedRole){
 
-  const username =
-    normalizeUsername(
-      document
-        .getElementById(
-          "username"
-        )
-        .value
-    );
+let usernameInput;
+
+let passwordInput;
 
 
-  const password =
-    document
-      .getElementById(
-        "password"
-      )
-      .value;
+if(expectedRole === "super_user"){
 
+usernameInput = $("suUser");
 
-  if(!usernameValid(username)){
+passwordInput = $("suPass");
 
-    loginStatus(
-      "Please enter a valid username.",
-      "error"
-    );
+}
+else if(expectedRole === "admin"){
 
-    showToast(
-      "Please enter a valid username.",
-      "error",
-      "Invalid Username"
-    );
+usernameInput = $("adUser");
 
-    return;
+passwordInput = $("adPass");
 
-  }
+}
+else{
 
+usernameInput = $("usUser");
 
-  if(!password){
-
-    loginStatus(
-      "Please enter your password.",
-      "error"
-    );
-
-    showToast(
-      "Please enter your password.",
-      "error",
-      "Password Required"
-    );
-
-    return;
-
-  }
-
-
-  loginStatus(
-    "Signing in..."
-  );
-
-
-  try{
-
-    const email =
-      usernameEmail(
-        username
-      );
-
-
-    const result =
-      await supabaseClient
-        .auth
-        .signInWithPassword({
-          email,
-          password
-        });
-
-
-    if(result.error){
-
-      loginStatus(
-        result.error.message,
-        "error"
-      );
-
-      showToast(
-        result.error.message,
-        "error",
-        "Login Failed"
-      );
-
-      return;
-
-    }
-
-
-    currentUser =
-      result.data.user;
-
-
-    await createProfileIfNeeded(
-      currentUser.id,
-      username
-    );
-
-
-    showToast(
-      "Welcome back.",
-      "success",
-      "Login Successful"
-    );
-
-
-    await afterLogin(
-      username
-    );
-
-  }catch(error){
-
-    console.error(error);
-
-    loginStatus(
-      error.message ||
-      "Login error",
-      "error"
-    );
-
-    showToast(
-      error.message ||
-      "Unable to log in.",
-      "error",
-      "Login Error"
-    );
-
-  }
+passwordInput = $("usPass");
 
 }
 
 
-/* =========================================================
-   CREATE PROFILE
-========================================================= */
+const username =
+usernameInput.value
+.trim()
+.toLowerCase();
 
-async function createProfileIfNeeded(
-  userId,
-  username
-){
-
-  try{
-
-    const existing =
-      await supabaseClient
-        .from("profiles")
-        .select("*")
-        .eq(
-          "id",
-          userId
-        )
-        .maybeSingle();
+const password =
+passwordInput.value;
 
 
-    if(existing.error){
+if(!username || !password){
 
-      console.error(
-        "Profile select:",
-        existing.error
-      );
+toast("Username and password required");
 
-      return;
-
-    }
-
-
-    if(existing.data){
-
-      currentProfile =
-        existing.data;
-
-      currentWorkspace =
-        existing.data.workspace_id;
-
-      return;
-
-    }
-
-
-    const workspace =
-      username ===
-      SHARED_USERNAME
-
-        ? SHARED_WORKSPACE
-
-        : userId;
-
-
-    const inserted =
-      await supabaseClient
-        .from("profiles")
-        .insert({
-          id:userId,
-          username:username,
-          workspace_id:workspace
-        })
-        .select()
-        .single();
-
-
-    if(inserted.error){
-
-      console.error(
-        "Profile insert:",
-        inserted.error
-      );
-
-      return;
-
-    }
-
-
-    currentProfile =
-      inserted.data;
-
-    currentWorkspace =
-      workspace;
-
-
-  }catch(error){
-
-    console.error(error);
-
-  }
+return;
 
 }
 
 
-/* =========================================================
-   AFTER LOGIN
-========================================================= */
-
-async function afterLogin(
-  username
-){
-
-  document
-    .getElementById(
-      "loginPage"
-    )
-    .classList.add(
-      "hidden"
-    );
+const email =
+username + "@taskmanager.local";
 
 
-  document
-    .getElementById(
-      "app"
-    )
-    .classList.remove(
-      "hidden"
-    );
+const {error} =
+await sb.auth.signInWithPassword({
+
+email:email,
+
+password:password
+
+});
 
 
-  document
-    .getElementById(
-      "currentUser"
-    )
-    .textContent =
-      username;
+if(error){
 
+toast(error.message);
 
-  document
-    .getElementById(
-      "workspaceText"
-    )
-    .textContent =
-      username ===
-      SHARED_USERNAME
-
-        ? "Shared Workspace"
-
-        : "Personal Workspace";
-
-
-  updateConnectionUI();
-
-
-  loadLocal();
-
-
-  renderTasks();
-
-
-  await loadCloudTasks();
-
-
-  setupRealtime();
-
-
-  startTimerLoop();
-
-
-  await syncPending();
+return;
 
 }
 
 
-/* =========================================================
-   LOAD CLOUD TASKS
-========================================================= */
-
-async function loadCloudTasks(){
-
-  if(!currentWorkspace){
-
-    return;
-
-  }
+const sessionUser =
+(await sb.auth.getUser()).data.user;
 
 
-  if(!navigator.onLine){
+if(!sessionUser){
 
-    return;
+toast("User session not found");
 
-  }
+await sb.auth.signOut();
 
-
-  try{
-
-    const result =
-      await supabaseClient
-        .from("daily_tasks")
-        .select("*")
-        .eq(
-          "workspace_id",
-          currentWorkspace
-        )
-        .order(
-          "created_at",
-          {
-            ascending:false
-          }
-        );
-
-
-    if(result.error){
-
-      console.error(
-        "Cloud load:",
-        result.error
-      );
-
-      return;
-
-    }
-
-
-    tasks =
-      result.data || [];
-
-
-    saveLocal();
-
-    renderTasks();
-
-
-  }catch(error){
-
-    console.error(error);
-
-  }
+return;
 
 }
 
 
-/* =========================================================
-   ADD TASK
-========================================================= */
-
-async function addTask(){
-
-  const input =
-    document.getElementById(
-      "taskInput"
-    );
+const {data,error:profileError} =
+await sb
+.from("profiles")
+.select("*")
+.eq("id",sessionUser.id)
+.single();
 
 
-  const name =
-    input.value.trim();
+if(profileError || !data){
 
+toast("Profile not found");
 
-  if(!name){
+await sb.auth.signOut();
 
-    showToast(
-      "Please enter a task name.",
-      "warning",
-      "Task Name Required"
-    );
-
-    input.focus();
-
-    return;
-
-  }
-
-
-  if(!currentWorkspace){
-
-    showToast(
-      "Your workspace is not available.",
-      "error",
-      "Workspace Error"
-    );
-
-    return;
-
-  }
-
-
-  const tempTask = {
-
-    id:
-      "local-" +
-      Date.now() +
-      "-" +
-      Math.random()
-        .toString(36)
-        .slice(2),
-
-    workspace_id:
-      currentWorkspace,
-
-    name:name,
-
-    task_date:
-      new Date()
-        .toISOString()
-        .slice(0,10),
-
-    status:"pending",
-
-    actual_start:null,
-
-    actual_end:null,
-
-    total_paused_time:0,
-
-    stop_start:null,
-
-    last_start:null,
-
-    start_times:[],
-
-    stop_times:[],
-
-    created_by:
-      currentUser.id,
-
-    created_at:
-      new Date()
-        .toISOString(),
-
-    updated_at:
-      new Date()
-        .toISOString(),
-
-    _localOnly:true,
-
-    _pendingAction:"insert"
-
-  };
-
-
-  tasks.unshift(
-    tempTask
-  );
-
-
-  saveLocal();
-
-  input.value="";
-
-  renderTasks();
-
-
-  if(navigator.onLine){
-
-    const success =
-      await pushTask(
-        tempTask
-      );
-
-
-    if(success){
-
-      showToast(
-        "Your task has been added.",
-        "success",
-        "Task Added"
-      );
-
-    }else{
-
-      showToast(
-        "The task is saved locally and will sync with the cloud.",
-        "warning",
-        "Cloud Sync Pending"
-      );
-
-    }
-
-  }else{
-
-    showToast(
-      "The task is saved on this device and will sync when you are online.",
-      "offline",
-      "Saved Offline"
-    );
-
-  }
+return;
 
 }
 
 
-/* =========================================================
-   PUSH NEW TASK
-========================================================= */
+if(!data.is_active){
 
-async function pushTask(
-  task
-){
+toast("This account is deactivated");
 
-  try{
+await sb.auth.signOut();
 
-    const cleanTask = {
-
-      workspace_id:
-        task.workspace_id,
-
-      name:
-        task.name,
-
-      task_date:
-        task.task_date,
-
-      status:
-        task.status,
-
-      actual_start:
-        task.actual_start,
-
-      actual_end:
-        task.actual_end,
-
-      total_paused_time:
-        task.total_paused_time || 0,
-
-      stop_start:
-        task.stop_start,
-
-      last_start:
-        task.last_start,
-
-      start_times:
-        task.start_times || [],
-
-      stop_times:
-        task.stop_times || [],
-
-      created_by:
-        task.created_by
-
-    };
-
-
-    const result =
-      await supabaseClient
-        .from("daily_tasks")
-        .insert(
-          cleanTask
-        )
-        .select()
-        .single();
-
-
-    if(result.error){
-
-      console.error(
-        "Insert:",
-        result.error
-      );
-
-      return false;
-
-    }
-
-
-    const index =
-      tasks.findIndex(
-        t=>t.id===task.id
-      );
-
-
-    if(index!==-1){
-
-      tasks[index] =
-        result.data;
-
-      saveLocal();
-
-      renderTasks();
-
-    }
-
-
-    return true;
-
-
-  }catch(error){
-
-    console.error(error);
-
-    return false;
-
-  }
+return;
 
 }
 
 
-/* =========================================================
-   START TASK
-========================================================= */
+if(data.role !== expectedRole){
 
-async function startTask(
-  id
-){
+toast("Wrong login portal for this account");
 
-  const task =
-    tasks.find(
-      t=>t.id===id
-    );
+await sb.auth.signOut();
 
-
-  if(!task){
-    return;
-  }
-
-
-  const now =
-    new Date()
-      .toISOString();
-
-
-  task.status =
-    "running";
-
-
-  task.actual_start =
-    task.actual_start ||
-    now;
-
-
-  task.last_start =
-    now;
-
-
-  task.stop_start =
-    null;
-
-
-  if(!Array.isArray(
-    task.start_times
-  )){
-
-    task.start_times=[];
-
-  }
-
-
-  task.start_times.push(
-    now
-  );
-
-
-  task.updated_at =
-    now;
-
-
-  task._pendingAction =
-    "update";
-
-
-  saveLocal();
-
-  renderTasks();
-
-
-  await saveTask(
-    task
-  );
-
-
-  showToast(
-    "The task timer is now running.",
-    "success",
-    "Task Started"
-  );
+return;
 
 }
 
 
-/* =========================================================
-   STOP TASK
-========================================================= */
+me = data;
 
-async function stopTask(
-  id
-){
-
-  const task =
-    tasks.find(
-      t=>t.id===id
-    );
-
-
-  if(!task){
-    return;
-  }
-
-
-  if(task.status !==
-     "running"){
-
-    return;
-
-  }
-
-
-  const now =
-    new Date()
-      .toISOString();
-
-
-  task.status =
-    "stopped";
-
-
-  task.stop_start =
-    now;
-
-
-  task.updated_at =
-    now;
-
-
-  if(!Array.isArray(
-    task.stop_times
-  )){
-
-    task.stop_times=[];
-
-  }
-
-
-  task.stop_times.push(
-    now
-  );
-
-
-  task._pendingAction =
-    "update";
-
-
-  saveLocal();
-
-  renderTasks();
-
-
-  await saveTask(
-    task
-  );
-
-
-  showToast(
-    "The task timer has been paused.",
-    "info",
-    "Task Paused"
-  );
+openApp();
 
 }
 
 
-/* =========================================================
-   RESUME TASK
-========================================================= */
+/* =========================================
+   OPEN APP
+========================================= */
 
-async function resumeTask(
-  id
-){
+async function openApp(){
 
-  const task =
-    tasks.find(
-      t=>t.id===id
-    );
+$("authScreen")
+.classList
+.add("hidden");
 
-
-  if(!task){
-    return;
-  }
+$("app")
+.classList
+.remove("hidden");
 
 
-  const now =
-    new Date();
+$("welcome").textContent =
+"Welcome, " +
+(me.full_name || me.username);
 
 
-  if(task.stop_start){
-
-    const stopTime =
-      new Date(
-        task.stop_start
-      );
+let roleName =
+"End User";
 
 
-    const paused =
-      now.getTime() -
-      stopTime.getTime();
+if(me.role === "super_user")
+roleName = "Super User";
 
 
-    task.total_paused_time =
-      (
-        task.total_paused_time ||
-        0
-      ) +
-      paused;
-
-  }
+if(me.role === "admin")
+roleName = "Admin";
 
 
-  task.status =
-    "running";
+$("roleText").textContent =
+roleName +
+" • @" +
+me.username;
 
 
-  task.last_start =
-    now.toISOString();
+$("headerUser").textContent =
+me.full_name ||
+me.username;
 
 
-  task.stop_start =
-    null;
+buildNav();
+
+await refresh();
 
 
-  task.updated_at =
-    now.toISOString();
+if(refreshTimer)
+clearInterval(refreshTimer);
 
 
-  task._pendingAction =
-    "update";
-
-
-  if(!Array.isArray(
-    task.start_times
-  )){
-
-    task.start_times=[];
-
-  }
-
-
-  task.start_times.push(
-    now.toISOString()
-  );
-
-
-  saveLocal();
-
-  renderTasks();
-
-
-  await saveTask(
-    task
-  );
-
-
-  showToast(
-    "The task timer has resumed.",
-    "success",
-    "Task Resumed"
-  );
+refreshTimer =
+setInterval(
+refresh,
+30000
+);
 
 }
 
 
-/* =========================================================
-   COMPLETE TASK
-========================================================= */
+/* =========================================
+   NAVIGATION
+========================================= */
 
-async function completeTask(
-  id
-){
+function buildNav(){
 
-  const task =
-    tasks.find(
-      t=>t.id===id
-    );
+let items;
 
 
-  if(!task){
-    return;
-  }
+if(me.role === "user"){
 
+items = [
+"dashboard",
+"history"
+];
 
-  const now =
-    new Date();
+}
+else if(me.role === "admin"){
 
+items = [
+"dashboard",
+"users",
+"reports",
+"history"
+];
 
-  task.status =
-    "completed";
+}
+else{
 
-
-  task.actual_end =
-    now.toISOString();
-
-
-  task.updated_at =
-    now.toISOString();
-
-
-  task.stop_start =
-    null;
-
-
-  task._pendingAction =
-    "update";
-
-
-  saveLocal();
-
-  renderTasks();
-
-
-  await saveTask(
-    task
-  );
-
-
-  showToast(
-    "The task has been completed.",
-    "success",
-    "Task Completed"
-  );
+items = [
+"dashboard",
+"users",
+"reports",
+"history"
+];
 
 }
 
 
-/* =========================================================
+$("nav").innerHTML =
+items.map(tab=>`
+
+<button
+class="${tab===currentTab ? "" : "secondary"}"
+onclick="switchTab('${tab}')"
+>
+${tab.charAt(0).toUpperCase()+tab.slice(1)}
+</button>
+
+`).join("");
+
+}
+
+
+function switchTab(tab){
+
+currentTab = tab;
+
+render();
+
+}
+
+
+/* =========================================
+   DATA REFRESH
+========================================= */
+
+async function refresh(){
+
+if(!me)
+return;
+
+
+const {data:taskData,error:taskError} =
+await sb
+.from("daily_tasks")
+.select("*")
+.order(
+"due_at",
+{
+ascending:true,
+nullsFirst:false
+}
+);
+
+
+if(taskError){
+
+console.error(taskError);
+
+}
+else{
+
+tasks =
+taskData || [];
+
+}
+
+
+if(me.role !== "user"){
+
+const {data:userData,error:userError} =
+await sb
+.from("profiles")
+.select(
+"id,username,full_name,role,is_active,workspace_id,created_by,created_at,updated_at"
+)
+.order(
+"created_at",
+{
+ascending:false
+}
+);
+
+
+if(!userError){
+
+users =
+userData || [];
+
+}
+
+}
+
+
+render();
+
+}
+
+
+/* =========================================
+   RENDER
+========================================= */
+
+function render(){
+
+buildNav();
+
+
+const content =
+$("content");
+
+
+if(currentTab === "dashboard"){
+
+renderDashboard(content);
+
+}
+else if(currentTab === "users"){
+
+renderUsers(content);
+
+}
+else if(currentTab === "reports"){
+
+renderReports(content);
+
+}
+else if(currentTab === "history"){
+
+renderHistory(content);
+
+}
+
+}
+
+
+/* =========================================
+   DASHBOARD
+========================================= */
+
+function renderDashboard(c){
+
+let list;
+
+
+if(me.role === "user"){
+
+list =
+tasks.filter(
+task =>
+task.assigned_to === me.id
+);
+
+}
+else{
+
+list = tasks;
+
+}
+
+
+let html = `
+
+<div class="topline">
+
+<div>
+
+<h2>Dashboard</h2>
+
+<div class="muted">
+Task Management Overview
+</div>
+
+</div>
+
+${
+me.role !== "user"
+?
+`
+<button
+style="width:auto"
+onclick="openTaskModal()"
+>
++ Assign Task
+</button>
+`
+:
+""
+}
+
+</div>
+
+`;
+
+
+if(me.role === "user"){
+
+const pending =
+list.filter(
+x =>
+x.status === "assigned"
+).length;
+
+const accepted =
+list.filter(
+x =>
+x.status === "accepted"
+).length;
+
+const progress =
+list.filter(
+x =>
+x.status === "in_progress"
+).length;
+
+const completed =
+list.filter(
+x =>
+x.status === "completed"
+).length;
+
+
+html += `
+
+<div class="grid">
+
+<div class="card stat">
+<div class="muted">Assigned</div>
+<h2>${pending}</h2>
+</div>
+
+<div class="card stat">
+<div class="muted">Accepted</div>
+<h2>${accepted}</h2>
+</div>
+
+<div class="card stat">
+<div class="muted">In Progress</div>
+<h2>${progress}</h2>
+</div>
+
+<div class="card stat">
+<div class="muted">Completed</div>
+<h2>${completed}</h2>
+</div>
+
+</div>
+
+`;
+
+}
+
+
+if(!list.length){
+
+html += `
+
+<div class="card empty">
+
+<h3>No tasks found</h3>
+
+<p>
+There are currently no tasks available.
+</p>
+
+</div>
+
+`;
+
+}
+else{
+
+html += list
+.map(taskCard)
+.join("");
+
+}
+
+
+c.innerHTML = html;
+
+}
+
+
+/* =========================================
+   TASK CARD
+========================================= */
+
+function taskCard(t){
+
+const assignedUser =
+users.find(
+u =>
+u.id === t.assigned_to
+);
+
+
+const creator =
+users.find(
+u =>
+u.id === t.assigned_by
+);
+
+
+let buttons = "";
+
+
+if(me.role === "user"){
+
+if(t.status === "assigned"){
+
+buttons += `
+
+<button
+onclick="taskAction('${t.id}','accept_task')"
+>
+Accept
+</button>
+
+`;
+
+}
+
+
+if(t.status === "accepted"){
+
+buttons += `
+
+<button
+onclick="taskAction('${t.id}','start_task')"
+>
+▶ Start
+</button>
+
+`;
+
+}
+
+
+if(t.status === "in_progress"){
+
+buttons += `
+
+<button
+class="success"
+onclick="taskAction('${t.id}','complete_task')"
+>
+✓ End / Complete
+</button>
+
+`;
+
+}
+
+}
+else{
+
+buttons = `
+
+<button
+class="secondary"
+onclick="openTaskModal('${t.id}')"
+>
+Edit
+</button>
+
+<button
+class="danger"
+onclick="deleteTask('${t.id}')"
+>
+Delete
+</button>
+
+`;
+
+}
+
+
+const statusText =
+t.status
+.replace("_"," ");
+
+
+return `
+
+<div class="task">
+
+<div class="topline">
+
+<h3>
+${esc(t.name)}
+</h3>
+
+<span
+class="status ${esc(t.status)}"
+>
+${esc(statusText)}
+</span>
+
+</div>
+
+
+<p>
+${esc(
+t.description ||
+"No description provided."
+)}
+</p>
+
+
+<div class="small muted">
+
+<b>Assigned to:</b>
+${esc(
+assignedUser?.full_name ||
+assignedUser?.username ||
+"—"
+)}
+
+<br>
+
+<b>Assigned by:</b>
+${esc(
+creator?.full_name ||
+creator?.username ||
+"—"
+)}
+
+</div>
+
+
+<div class="small muted">
+
+<b>Due:</b>
+${
+t.due_at
+?
+fmt(t.due_at)
+:
+"No due time"
+}
+
+</div>
+
+
+<hr>
+
+
+<div class="small">
+
+<b>Accepted:</b>
+${fmt(t.accepted_at)}
+
+<br>
+
+<b>Started:</b>
+${fmt(t.started_at)}
+
+<br>
+
+<b>Ended:</b>
+${fmt(t.ended_at)}
+
+</div>
+
+
+<div
+class="small"
+style="margin-top:8px"
+>
+
+<b>Total Working Time:</b>
+
+${secondsText(
+t.total_working_time || 0
+)}
+
+</div>
+
+
+${
+buttons
+?
+`
+<div
+class="row"
+style="margin-top:12px"
+>
+${buttons}
+</div>
+`
+:
+""
+}
+
+</div>
+
+`;
+
+}
+
+
+/* =========================================
+   TASK MODAL
+========================================= */
+
+function openTaskModal(id = ""){
+
+if(me.role === "user"){
+
+toast("You cannot create tasks");
+
+return;
+
+}
+
+
+editingTaskId =
+id || null;
+
+
+const task =
+id
+?
+tasks.find(
+x =>
+x.id === id
+)
+:
+null;
+
+
+const eligibleUsers =
+users.filter(
+u =>
+u.role === "user" &&
+u.is_active
+);
+
+
+if(!eligibleUsers.length){
+
+toast(
+"Create an active End User first"
+);
+
+return;
+
+}
+
+
+$("taskModalTitle").textContent =
+task
+?
+"Edit Task"
+:
+"Assign Task";
+
+
+$("tfName").value =
+task?.name || "";
+
+
+$("tfDesc").value =
+task?.description || "";
+
+
+$("tfDue").value =
+task?.due_at
+?
+toLocalDateTime(task.due_at)
+:
+"";
+
+
+$("tfUser").innerHTML =
+eligibleUsers
+.map(
+u => `
+
+<option
+value="${u.id}"
+${u.id === task?.assigned_to ? "selected" : ""}
+>
+${esc(
+u.full_name ||
+u.username
+)}
+</option>
+
+`
+)
+.join("");
+
+
+$("taskModal")
+.classList
+.remove("hidden");
+
+}
+
+
+function closeTaskModal(){
+
+$("taskModal")
+.classList
+.add("hidden");
+
+editingTaskId = null;
+
+}
+
+
+function toLocalDateTime(value){
+
+const d =
+new Date(value);
+
+const pad =
+n =>
+String(n).padStart(2,"0");
+
+
+return (
+d.getFullYear() +
+"-" +
+pad(d.getMonth()+1) +
+"-" +
+pad(d.getDate()) +
+"T" +
+pad(d.getHours()) +
+":" +
+pad(d.getMinutes())
+);
+
+}
+
+
+/* =========================================
    SAVE TASK
-========================================================= */
+========================================= */
 
-async function saveTask(
-  task
-){
+async function saveTask(){
 
-  if(!navigator.onLine){
-
-    showToast(
-      "Your change is saved on this device and will sync later.",
-      "offline",
-      "Saved Offline"
-    );
-
-    return false;
-
-  }
+const name =
+$("tfName")
+.value
+.trim();
 
 
-  if(
-    String(task.id)
-      .startsWith("local-")
-  ){
-
-    const success =
-      await pushTask(
-        task
-      );
+const description =
+$("tfDesc")
+.value
+.trim();
 
 
-    if(!success){
-
-      showToast(
-        "The task is waiting for cloud synchronization.",
-        "warning",
-        "Sync Pending"
-      );
-
-    }
+const assignedTo =
+$("tfUser")
+.value;
 
 
-    return success;
-
-  }
-
-
-  try{
-
-    const updateData = {
-
-      name:
-        task.name,
-
-      task_date:
-        task.task_date,
-
-      status:
-        task.status,
-
-      actual_start:
-        task.actual_start,
-
-      actual_end:
-        task.actual_end,
-
-      total_paused_time:
-        task.total_paused_time || 0,
-
-      stop_start:
-        task.stop_start,
-
-      last_start:
-        task.last_start,
-
-      start_times:
-        task.start_times || [],
-
-      stop_times:
-        task.stop_times || [],
-
-      updated_at:
-        new Date()
-          .toISOString()
-
-    };
+const due =
+$("tfDue")
+.value;
 
 
-    const result =
-      await supabaseClient
-        .from("daily_tasks")
-        .update(
-          updateData
-        )
-        .eq(
-          "id",
-          task.id
-        )
-        .eq(
-          "workspace_id",
-          currentWorkspace
-        );
+if(!name){
 
+toast("Task title required");
 
-    if(result.error){
-
-      console.error(
-        "Update:",
-        result.error
-      );
-
-      showToast(
-        "Your change is saved locally but cloud synchronization is pending.",
-        "warning",
-        "Cloud Sync Pending"
-      );
-
-      return false;
-
-    }
-
-
-    delete task._pendingAction;
-
-    saveLocal();
-
-    return true;
-
-
-  }catch(error){
-
-    console.error(error);
-
-    showToast(
-      "The cloud update could not be completed.",
-      "error",
-      "Cloud Update Failed"
-    );
-
-    return false;
-
-  }
+return;
 
 }
 
 
-/* =========================================================
+if(!assignedTo){
+
+toast("Select an End User");
+
+return;
+
+}
+
+
+const obj = {
+
+name:name,
+
+description:description,
+
+assigned_to:assignedTo,
+
+due_at:
+due
+?
+new Date(due).toISOString()
+:
+null
+
+};
+
+
+let result;
+
+
+if(editingTaskId){
+
+result =
+await sb
+.from("daily_tasks")
+.update(obj)
+.eq(
+"id",
+editingTaskId
+);
+
+}
+else{
+
+result =
+await sb
+.from("daily_tasks")
+.insert({
+
+...obj,
+
+workspace_id:
+me.workspace_id,
+
+assigned_by:
+me.id,
+
+status:
+"assigned"
+
+});
+
+}
+
+
+if(result.error){
+
+toast(
+result.error.message
+);
+
+return;
+
+}
+
+
+toast(
+editingTaskId
+?
+"Task updated"
+:
+"Task assigned"
+);
+
+
+closeTaskModal();
+
+await refresh();
+
+}
+
+
+/* =========================================
    DELETE TASK
-========================================================= */
+========================================= */
 
-async function deleteTask(
-  id
+async function deleteTask(id){
+
+if(
+!confirm(
+"Delete this task permanently?"
+)
+)
+return;
+
+
+const result =
+await sb
+.from("daily_tasks")
+.delete()
+.eq(
+"id",
+id
+);
+
+
+if(result.error){
+
+toast(
+result.error.message
+);
+
+return;
+
+}
+
+
+toast("Task deleted");
+
+await refresh();
+
+}
+
+
+/* =========================================
+   TASK ACTION
+========================================= */
+
+async function taskAction(id,fn){
+
+const result =
+await sb.rpc(
+fn,
+{
+p_task_id:id
+}
+);
+
+
+if(result.error){
+
+toast(
+result.error.message
+);
+
+return;
+
+}
+
+
+toast(
+fn === "accept_task"
+?
+"Task accepted"
+:
+fn === "start_task"
+?
+"Task started"
+:
+"Task completed"
+);
+
+
+await refresh();
+
+}
+
+
+/* =========================================
+   HISTORY
+========================================= */
+
+function renderHistory(c){
+
+const list =
+me.role === "user"
+?
+tasks.filter(
+t =>
+t.assigned_to === me.id
+)
+:
+tasks;
+
+
+let html = `
+
+<div class="topline">
+
+<div>
+
+<h2>Task History</h2>
+
+<div class="muted">
+Complete task activity
+</div>
+
+</div>
+
+</div>
+
+`;
+
+
+if(!list.length){
+
+html += `
+
+<div class="card empty">
+No task history available.
+</div>
+
+`;
+
+}
+else{
+
+html += list
+.map(t=>`
+
+<div class="card">
+
+<div class="topline">
+
+<b>
+${esc(t.name)}
+</b>
+
+<span
+class="status ${esc(t.status)}"
+>
+${esc(
+t.status.replace("_"," ")
+)}
+</span>
+
+</div>
+
+<p class="small muted">
+
+Created:
+${fmt(t.created_at)}
+
+<br>
+
+Accepted:
+${fmt(t.accepted_at)}
+
+<br>
+
+Started:
+${fmt(t.started_at)}
+
+<br>
+
+Completed:
+${fmt(t.ended_at)}
+
+<br>
+
+Working time:
+${secondsText(
+t.total_working_time
+)}
+
+</p>
+
+</div>
+
+`)
+.join("");
+
+}
+
+
+c.innerHTML = html;
+
+}
+
+
+/* =========================================
+   USERS
+========================================= */
+
+function renderUsers(c){
+
+const isSuper =
+me.role === "super_user";
+
+
+const isAdmin =
+me.role === "admin";
+
+
+let html = `
+
+<div class="topline">
+
+<div>
+
+<h2>
+${
+isSuper
+?
+"Users & Admin Management"
+:
+"End Users"
+}
+</h2>
+
+<div class="muted">
+Manage accounts according to your access level.
+</div>
+
+</div>
+
+<div class="row">
+
+${
+isSuper
+?
+`
+<button
+style="width:auto"
+onclick="openAccountModal('admin')"
+>
++ Create Admin
+</button>
+`
+:
+""
+}
+
+${
+isSuper || isAdmin
+?
+`
+<button
+style="width:auto"
+onclick="openAccountModal('user')"
+>
++ Create End User
+</button>
+`
+:
+""
+}
+
+</div>
+
+</div>
+
+`;
+
+
+let visibleUsers;
+
+
+if(isSuper){
+
+visibleUsers = users;
+
+}
+else{
+
+visibleUsers =
+users.filter(
+u =>
+u.role === "user"
+);
+
+}
+
+
+if(!visibleUsers.length){
+
+html += `
+
+<div class="card empty">
+No users found.
+</div>
+
+`;
+
+}
+else{
+
+html += `
+
+<div class="card table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Username</th>
+
+<th>Role</th>
+
+<th>Status</th>
+
+<th>Created</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+${visibleUsers
+.map(u=>`
+
+<tr>
+
+<td>
+${esc(
+u.full_name ||
+"—"
+)}
+</td>
+
+<td>
+${esc(u.username)}
+</td>
+
+<td>
+${esc(u.role)}
+</td>
+
+<td>
+
+${
+u.is_active
+?
+"🟢 Active"
+:
+"🔴 Inactive"
+}
+
+</td>
+
+<td>
+${fmt(u.created_at)}
+</td>
+
+<td>
+
+${
+u.id === me.id
+?
+"You"
+:
+canManageUser(u)
+?
+`
+<button
+onclick="toggleUser(
+'${u.id}',
+${!u.is_active}
+)"
+>
+${
+u.is_active
+?
+"Deactivate"
+:
+"Activate"
+}
+</button>
+`
+:
+""
+}
+
+</td>
+
+</tr>
+
+`)
+.join("")}
+
+</tbody>
+
+</table>
+
+</div>
+
+`;
+
+
+}
+
+
+c.innerHTML = html;
+
+}
+
+
+/* =========================================
+   USER PERMISSION
+========================================= */
+
+function canManageUser(user){
+
+if(me.role === "super_user"){
+
+return (
+user.role === "admin" ||
+user.role === "user"
+);
+
+}
+
+
+if(me.role === "admin"){
+
+return user.role === "user";
+
+}
+
+
+return false;
+
+}
+
+
+/* =========================================
+   ACTIVATE / DEACTIVATE
+========================================= */
+
+async function toggleUser(
+id,
+active
 ){
 
-  const task =
-    tasks.find(
-      t=>t.id===id
-    );
+const result =
+await sb
+.from("profiles")
+.update({
+is_active:active
+})
+.eq(
+"id",
+id
+);
 
 
-  if(!task){
-    return;
-  }
+if(result.error){
 
+toast(
+result.error.message
+);
 
-  const confirmed =
-    confirm(
-      "Are you sure you want to delete this task?"
-    );
-
-
-  if(!confirmed){
-
-    return;
-
-  }
-
-
-  tasks =
-    tasks.filter(
-      t=>t.id!==id
-    );
-
-
-  saveLocal();
-
-  renderTasks();
-
-
-  if(
-    String(id)
-      .startsWith("local-")
-  ){
-
-    showToast(
-      "The task has been deleted.",
-      "success",
-      "Task Deleted"
-    );
-
-    return;
-
-  }
-
-
-  if(!navigator.onLine){
-
-    showToast(
-      "The task was removed from this device. Cloud deletion will be retried when you are online.",
-      "offline",
-      "Offline Delete"
-    );
-
-    return;
-
-  }
-
-
-  try{
-
-    const result =
-      await supabaseClient
-        .from("daily_tasks")
-        .delete()
-        .eq(
-          "id",
-          id
-        )
-        .eq(
-          "workspace_id",
-          currentWorkspace
-        );
-
-
-    if(result.error){
-
-      console.error(
-        result.error
-      );
-
-      showToast(
-        "The task could not be deleted from the cloud.",
-        "error",
-        "Cloud Delete Failed"
-      );
-
-    }else{
-
-      showToast(
-        "The task has been deleted successfully.",
-        "success",
-        "Task Deleted"
-      );
-
-    }
-
-  }catch(error){
-
-    console.error(error);
-
-    showToast(
-      "The cloud deletion failed.",
-      "error",
-      "Delete Failed"
-    );
-
-  }
+return;
 
 }
 
 
-/* =========================================================
-   EDIT
-========================================================= */
+toast(
+active
+?
+"Account activated"
+:
+"Account deactivated"
+);
 
-function openEdit(
-  id
+
+await refresh();
+
+}
+
+
+/* =========================================
+   ACCOUNT CREATION MODAL
+========================================= */
+
+function openAccountModal(role){
+
+accountRoleToCreate =
+role;
+
+
+$("accountName").value =
+"";
+
+$("accountUsername").value =
+"";
+
+$("accountPassword").value =
+"";
+
+$("accountPassword2").value =
+"";
+
+
+if(role === "admin"){
+
+$("accountModalTitle").textContent =
+"Create Admin Account";
+
+$("accountModalInfo").textContent =
+"Super User can create Admin accounts. The username and password will be assigned directly.";
+
+}
+else{
+
+$("accountModalTitle").textContent =
+"Create End User Account";
+
+$("accountModalInfo").textContent =
+"Admin can create End User accounts. The username and password will be assigned directly.";
+
+}
+
+
+$("accountModal")
+.classList
+.remove("hidden");
+
+}
+
+
+function closeAccountModal(){
+
+$("accountModal")
+.classList
+.add("hidden");
+
+accountRoleToCreate = null;
+
+}
+
+
+/* =========================================
+   MANAGED ACCOUNT CREATION
+========================================= */
+
+async function createManagedAccount(){
+
+if(!accountRoleToCreate){
+
+toast("Account role not selected");
+
+return;
+
+}
+
+
+const fullName =
+$("accountName")
+.value
+.trim();
+
+
+const username =
+$("accountUsername")
+.value
+.trim()
+.toLowerCase();
+
+
+const password =
+$("accountPassword")
+.value;
+
+
+const password2 =
+$("accountPassword2")
+.value;
+
+
+if(!fullName){
+
+toast("Full name required");
+
+return;
+
+}
+
+
+if(!username){
+
+toast("Username required");
+
+return;
+
+}
+
+
+if(
+username.length < 3
 ){
 
-  const task =
-    tasks.find(
-      t=>t.id===id
-    );
+toast(
+"Username must be at least 3 characters"
+);
 
-
-  if(!task){
-    return;
-  }
-
-
-  editTaskId =
-    id;
-
-
-  document
-    .getElementById(
-      "editInput"
-    )
-    .value =
-      task.name;
-
-
-  document
-    .getElementById(
-      "editModal"
-    )
-    .classList
-    .remove(
-      "hidden"
-    );
-
-
-  setTimeout(
-    ()=>{
-      document
-        .getElementById(
-          "editInput"
-        )
-        .focus();
-    },
-    100
-  );
+return;
 
 }
 
 
-function closeEdit(){
-
-  editTaskId =
-    null;
-
-
-  document
-    .getElementById(
-      "editModal"
-    )
-    .classList
-    .add(
-      "hidden"
-    );
-
-}
-
-
-async function saveEdit(){
-
-  if(!editTaskId){
-
-    return;
-
-  }
-
-
-  const input =
-    document.getElementById(
-      "editInput"
-    );
-
-
-  const name =
-    input.value.trim();
-
-
-  if(!name){
-
-    showToast(
-      "Task name cannot be empty.",
-      "warning",
-      "Invalid Task Name"
-    );
-
-    input.focus();
-
-    return;
-
-  }
-
-
-  const task =
-    tasks.find(
-      t=>t.id===editTaskId
-    );
-
-
-  if(!task){
-
-    return;
-
-  }
-
-
-  task.name =
-    name;
-
-
-  task.updated_at =
-    new Date()
-      .toISOString();
-
-
-  task._pendingAction =
-    "update";
-
-
-  saveLocal();
-
-  closeEdit();
-
-  renderTasks();
-
-
-  await saveTask(
-    task
-  );
-
-
-  showToast(
-    "Your task has been updated.",
-    "success",
-    "Task Updated"
-  );
-
-}
-
-
-/* =========================================================
-   TIME CALCULATION
-========================================================= */
-
-function getWorkingMilliseconds(
-  task
+if(
+!password ||
+password.length < 8
 ){
 
-  if(!task.actual_start){
+toast(
+"Password must be at least 8 characters"
+);
 
-    return 0;
-
-  }
-
-
-  const start =
-    new Date(
-      task.actual_start
-    ).getTime();
-
-
-  let end;
-
-
-  if(
-    task.status==="running" &&
-    !task.actual_end
-  ){
-
-    end =
-      Date.now();
-
-  }else{
-
-    end =
-      task.actual_end
-
-        ? new Date(
-            task.actual_end
-          ).getTime()
-
-        : Date.now();
-
-  }
-
-
-  let total =
-    end - start;
-
-
-  total -=
-    Number(
-      task.total_paused_time ||
-      0
-    );
-
-
-  if(
-    task.status==="stopped" &&
-    task.stop_start
-  ){
-
-    total -=
-      Date.now() -
-      new Date(
-        task.stop_start
-      ).getTime();
-
-  }
-
-
-  if(total<0){
-
-    total=0;
-
-  }
-
-
-  return total;
+return;
 
 }
 
 
-function formatDuration(
-  ms
-){
+if(password !== password2){
 
-  const totalSeconds =
-    Math.floor(
-      ms/1000
-    );
+toast(
+"Passwords do not match"
+);
 
-
-  const hours =
-    Math.floor(
-      totalSeconds/3600
-    );
-
-
-  const minutes =
-    Math.floor(
-      (totalSeconds%3600)/60
-    );
-
-
-  const seconds =
-    totalSeconds%60;
-
-
-  return (
-    String(hours)
-      .padStart(2,"0")+
-    ":"+
-    String(minutes)
-      .padStart(2,"0")+
-    ":"+
-    String(seconds)
-      .padStart(2,"0")
-  );
+return;
 
 }
 
 
-/* =========================================================
-   RENDER TASKS
-========================================================= */
+/*
+IMPORTANT:
 
-function renderTasks(){
+This calls the Supabase Edge Function.
 
-  const list =
-    document.getElementById(
-      "taskList"
-    );
+The service_role key must NEVER
+be placed inside this HTML file.
+*/
 
 
-  if(!list){
+try{
 
-    return;
-
-  }
-
-
-  const searchInput =
-    document.getElementById(
-      "searchInput"
-    );
+const session =
+(await sb.auth.getSession())
+.data.session;
 
 
-  const search =
-    searchInput
-      ? searchInput.value
-          .trim()
-          .toLowerCase()
-      : "";
+if(!session){
 
+toast(
+"Your session has expired. Login again."
+);
 
-  let filtered =
-    tasks.filter(
-      task=>{
-
-        if(
-          search &&
-          !String(
-            task.name || ""
-          )
-            .toLowerCase()
-            .includes(search)
-        ){
-
-          return false;
-
-        }
-
-
-        if(
-          activeTab==="pending"
-        ){
-
-          return task.status ===
-            "pending";
-
-        }
-
-
-        if(
-          activeTab==="active"
-        ){
-
-          return (
-            task.status==="running" ||
-            task.status==="stopped"
-          );
-
-        }
-
-
-        if(
-          activeTab==="history"
-        ){
-
-          return task.status ===
-            "completed";
-
-        }
-
-
-        return true;
-
-      }
-    );
-
-
-  if(filtered.length===0){
-
-    list.innerHTML = `
-
-      <div class="empty">
-
-        <div style="font-size:40px">
-          📋
-        </div>
-
-        <h3>
-          No tasks found
-        </h3>
-
-        <p>
-          Add a new task to get started.
-        </p>
-
-      </div>
-
-    `;
-
-
-    updateStats();
-
-    return;
-
-  }
-
-
-  list.innerHTML =
-    filtered
-      .map(taskHTML)
-      .join("");
-
-
-  updateStats();
+return;
 
 }
 
 
-/* =========================================================
-   TASK HTML
-========================================================= */
+const response =
+await fetch(
+SUPABASE_URL +
+"/functions/v1/create-managed-user",
+{
 
-function taskHTML(
-  task
-){
+method:"POST",
 
-  const status =
-    task.status ||
-    "pending";
+headers:{
 
+"Content-Type":
+"application/json",
 
-  const working =
-    formatDuration(
-      getWorkingMilliseconds(
-        task
-      )
-    );
+"Authorization":
+"Bearer " +
+session.access_token
 
+},
 
-  let buttons="";
+body:
+JSON.stringify({
 
+username:username,
 
-  if(
-    status==="pending"
-  ){
+password:password,
 
-    buttons += `
+full_name:fullName,
 
-      <button
-        class="start"
-        onclick="startTask('${task.id}')">
+role:accountRoleToCreate
 
-        ▶ Start
+})
 
-      </button>
+});
 
-    `;
 
-  }
+const result =
+await response.json()
+.catch(
+() => ({})
+);
 
 
-  if(
-    status==="running"
-  ){
+if(!response.ok){
 
-    buttons += `
+toast(
+result.error ||
+result.message ||
+"Account creation failed"
+);
 
-      <button
-        class="stop"
-        onclick="stopTask('${task.id}')">
-
-        ⏸ Stop
-
-      </button>
-
-
-      <button
-        class="complete"
-        onclick="completeTask('${task.id}')">
-
-        ✓ Complete
-
-      </button>
-
-    `;
-
-  }
-
-
-  if(
-    status==="stopped"
-  ){
-
-    buttons += `
-
-      <button
-        class="resume"
-        onclick="resumeTask('${task.id}')">
-
-        ▶ Resume
-
-      </button>
-
-
-      <button
-        class="complete"
-        onclick="completeTask('${task.id}')">
-
-        ✓ Complete
-
-      </button>
-
-    `;
-
-  }
-
-
-  if(
-    status==="completed"
-  ){
-
-    buttons += `
-
-      <span style="
-        padding:9px 12px;
-        border-radius:9px;
-        background:#dcfce7;
-        color:#166534;
-        font-weight:bold;
-        font-size:13px;">
-
-        ✓ Completed
-
-      </span>
-
-    `;
-
-  }
-
-
-  buttons += `
-
-    <button
-      class="edit"
-      onclick="openEdit('${task.id}')">
-
-      ✎ Edit
-
-    </button>
-
-
-    <button
-      class="delete"
-      onclick="deleteTask('${task.id}')">
-
-      Delete
-
-    </button>
-
-  `;
-
-
-  return `
-
-    <article class="task">
-
-
-      <div class="taskTop">
-
-        <div class="taskName">
-
-          ${escapeHTML(
-            task.name || ""
-          )}
-
-        </div>
-
-
-        <span
-          class="badge ${status}">
-
-          ${status.toUpperCase()}
-
-        </span>
-
-      </div>
-
-
-      <div class="timer">
-
-        ${working}
-
-      </div>
-
-
-      <div class="taskInfo">
-
-        Date:
-        ${task.task_date || "-"}
-
-        <br>
-
-        Started:
-
-        ${
-          task.actual_start
-
-            ? formatDate(
-                task.actual_start
-              )
-
-            : "Not started"
-        }
-
-
-        ${
-          task.actual_end
-
-            ? `
-              <br>
-              Ended:
-              ${formatDate(
-                task.actual_end
-              )}
-            `
-
-            : ""
-        }
-
-      </div>
-
-
-      <div class="taskButtons">
-
-        ${buttons}
-
-      </div>
-
-
-    </article>
-
-  `;
+return;
 
 }
 
 
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHTML(
-  text
-){
-
-  const div =
-    document.createElement(
-      "div"
-    );
+toast(
+accountRoleToCreate === "admin"
+?
+"Admin account created successfully"
+:
+"End User account created successfully"
+);
 
 
-  div.textContent =
-    text;
+closeAccountModal();
 
+await refresh();
 
-  return div.innerHTML;
+}
+catch(error){
+
+console.error(error);
+
+toast(
+"Could not connect to account creation service"
+);
+
+}
 
 }
 
 
-function formatDate(
-  value
-){
+/* =========================================
+   REPORTS
+========================================= */
 
-  try{
+function renderReports(c){
 
-    return new Date(
-      value
-    ).toLocaleString();
+const all =
+tasks.length;
 
-  }catch(error){
 
-    return value;
+const assigned =
+tasks.filter(
+x =>
+x.status === "assigned"
+).length;
 
-  }
+
+const accepted =
+tasks.filter(
+x =>
+x.status === "accepted"
+).length;
+
+
+const inProgress =
+tasks.filter(
+x =>
+x.status === "in_progress"
+).length;
+
+
+const completed =
+tasks.filter(
+x =>
+x.status === "completed"
+).length;
+
+
+const totalTime =
+tasks.reduce(
+(total,x)=>
+total +
+Number(
+x.total_working_time || 0
+),
+0
+);
+
+
+let html = `
+
+<h2>Reports</h2>
+
+<div class="grid">
+
+<div class="card stat">
+
+<div class="muted">
+Total Tasks
+</div>
+
+<h2>
+${all}
+</h2>
+
+</div>
+
+
+<div class="card stat">
+
+<div class="muted">
+Assigned
+</div>
+
+<h2>
+${assigned}
+</h2>
+
+</div>
+
+
+<div class="card stat">
+
+<div class="muted">
+Accepted
+</div>
+
+<h2>
+${accepted}
+</h2>
+
+</div>
+
+
+<div class="card stat">
+
+<div class="muted">
+In Progress
+</div>
+
+<h2>
+${inProgress}
+</h2>
+
+</div>
+
+
+<div class="card stat">
+
+<div class="muted">
+Completed
+</div>
+
+<h2>
+${completed}
+</h2>
+
+</div>
+
+
+<div class="card stat">
+
+<div class="muted">
+Working Time
+</div>
+
+<h2 style="font-size:22px">
+${secondsText(totalTime)}
+</h2>
+
+</div>
+
+</div>
+
+`;
+
+
+if(me.role === "super_user"){
+
+const admins =
+users.filter(
+u =>
+u.role === "admin"
+);
+
+
+const endUsers =
+users.filter(
+u =>
+u.role === "user"
+);
+
+
+const active =
+users.filter(
+u =>
+u.is_active
+);
+
+
+html += `
+
+<div class="card">
+
+<h3>
+System Summary
+</h3>
+
+<div class="grid">
+
+<div>
+<b>Total Accounts</b>
+<br>
+${users.length}
+</div>
+
+<div>
+<b>Admins</b>
+<br>
+${admins.length}
+</div>
+
+<div>
+<b>End Users</b>
+<br>
+${endUsers.length}
+</div>
+
+<div>
+<b>Active Accounts</b>
+<br>
+${active.length}
+</div>
+
+</div>
+
+</div>
+
+`;
 
 }
 
 
-/* =========================================================
-   STATS
-========================================================= */
-
-function updateStats(){
-
-  const total =
-    tasks.length;
-
-
-  const pending =
-    tasks.filter(
-      t=>
-        t.status==="pending"
-    ).length;
-
-
-  const active =
-    tasks.filter(
-      t=>
-        t.status==="running" ||
-        t.status==="stopped"
-    ).length;
-
-
-  const completed =
-    tasks.filter(
-      t=>
-        t.status==="completed"
-    ).length;
-
-
-  document
-    .getElementById(
-      "totalCount"
-    )
-    .textContent =
-      total;
-
-
-  document
-    .getElementById(
-      "pendingCount"
-    )
-    .textContent =
-      pending;
-
-
-  document
-    .getElementById(
-      "activeCount"
-    )
-    .textContent =
-      active;
-
-
-  document
-    .getElementById(
-      "completedCount"
-    )
-    .textContent =
-      completed;
+c.innerHTML = html;
 
 }
 
 
-/* =========================================================
-   TAB
-========================================================= */
-
-function setTab(
-  tab
-){
-
-  activeTab =
-    tab;
-
-
-  document
-    .querySelectorAll(
-      ".tab"
-    )
-    .forEach(
-      btn=>{
-
-        btn.classList.toggle(
-          "active",
-          btn.dataset.tab===tab
-        );
-
-      }
-    );
-
-
-  renderTasks();
-
-}
-
-
-/* =========================================================
-   REALTIME
-========================================================= */
-
-function setupRealtime(){
-
-  if(!currentWorkspace){
-
-    return;
-
-  }
-
-
-  if(realtimeChannel){
-
-    try{
-
-      supabaseClient
-        .removeChannel(
-          realtimeChannel
-        );
-
-    }catch(error){}
-
-  }
-
-
-  realtimeChannel =
-    supabaseClient
-      .channel(
-        "daily_tasks_workspace_" +
-        currentWorkspace
-      )
-      .on(
-        "postgres_changes",
-        {
-          event:"*",
-          schema:"public",
-          table:"daily_tasks",
-          filter:
-            "workspace_id=eq."+
-            currentWorkspace
-        },
-        payload=>{
-
-          console.log(
-            "Realtime:",
-            payload
-          );
-
-
-          handleRealtime(
-            payload
-          );
-
-        }
-      )
-      .subscribe();
-
-}
-
-
-function handleRealtime(
-  payload
-){
-
-  const event =
-    payload.eventType;
-
-
-  if(
-    event==="INSERT"
-  ){
-
-    const newTask =
-      payload.new;
-
-
-    const exists =
-      tasks.some(
-        t=>t.id===newTask.id
-      );
-
-
-    if(!exists){
-
-      tasks.unshift(
-        newTask
-      );
-
-    }
-
-
-  }else if(
-    event==="UPDATE"
-  ){
-
-    const updated =
-      payload.new;
-
-
-    const index =
-      tasks.findIndex(
-        t=>t.id===updated.id
-      );
-
-
-    if(index!==-1){
-
-      tasks[index] =
-        updated;
-
-    }else{
-
-      tasks.unshift(
-        updated
-      );
-
-    }
-
-
-  }else if(
-    event==="DELETE"
-  ){
-
-    tasks =
-      tasks.filter(
-        t=>
-          t.id!==payload.old.id
-      );
-
-  }
-
-
-  saveLocal();
-
-  renderTasks();
-
-}
-
-
-/* =========================================================
-   TIMER LOOP
-========================================================= */
-
-function startTimerLoop(){
-
-  clearInterval(
-    timerInterval
-  );
-
-
-  timerInterval =
-    setInterval(
-      ()=>{
-
-        const hasRunning =
-          tasks.some(
-            t=>
-              t.status==="running"
-          );
-
-
-        if(hasRunning){
-
-          renderTasks();
-
-        }
-
-      },
-      1000
-    );
-
-}
-
-
-/* =========================================================
-   OFFLINE SYNC
-========================================================= */
-
-async function syncPending(){
-
-  if(syncing){
-
-    return;
-
-  }
-
-
-  if(!navigator.onLine){
-
-    return;
-
-  }
-
-
-  if(
-    !currentUser ||
-    !currentWorkspace
-  ){
-
-    return;
-
-  }
-
-
-  syncing=true;
-
-
-  try{
-
-    /* Upload local tasks */
-
-    const localTasks =
-      tasks.filter(
-        t=>
-          String(t.id)
-            .startsWith(
-              "local-"
-            )
-      );
-
-
-    for(
-      const task of localTasks
-    ){
-
-      await pushTask(
-        task
-      );
-
-    }
-
-
-    /* Update pending tasks */
-
-    const pending =
-      tasks.filter(
-        t=>
-          t._pendingAction ===
-          "update" &&
-          !String(t.id)
-            .startsWith(
-              "local-"
-            )
-      );
-
-
-    for(
-      const task of pending
-    ){
-
-      const success =
-        await saveTask(
-          task
-        );
-
-
-      if(success){
-
-        delete task._pendingAction;
-
-      }
-
-    }
-
-
-    saveLocal();
-
-
-    await loadCloudTasks();
-
-
-  }catch(error){
-
-    console.error(
-      "Sync error:",
-      error
-    );
-
-  }finally{
-
-    syncing=false;
-
-  }
-
-}
-
-
-/* =========================================================
-   CLOUD CONNECTION TEST
-========================================================= */
-
-async function testConnection(){
-
-  loginStatus(
-    "Testing Supabase connection..."
-  );
-
-
-  try{
-
-    const result =
-      await supabaseClient
-        .from("daily_tasks")
-        .select("id")
-        .limit(1);
-
-
-    if(result.error){
-
-      loginStatus(
-        "Connection error: " +
-        result.error.message,
-        "error"
-      );
-
-
-      showToast(
-        result.error.message,
-        "error",
-        "Cloud Connection Failed"
-      );
-
-      return;
-
-    }
-
-
-    loginStatus(
-      "Supabase connection successful.",
-      "success"
-    );
-
-
-    showToast(
-      "Your Supabase connection is working correctly.",
-      "success",
-      "Cloud Connection"
-    );
-
-
-  }catch(error){
-
-    loginStatus(
-      "Connection failed: " +
-      error.message,
-      "error"
-    );
-
-
-    showToast(
-      error.message,
-      "error",
-      "Connection Failed"
-    );
-
-  }
-
-}
-
-
-/* =========================================================
+/* =========================================
    LOGOUT
-========================================================= */
+========================================= */
 
 async function logout(){
 
-  try{
+if(refreshTimer){
 
-    if(realtimeChannel){
+clearInterval(
+refreshTimer
+);
 
-      await supabaseClient
-        .removeChannel(
-          realtimeChannel
-        );
-
-      realtimeChannel=null;
-
-    }
-
-
-    await supabaseClient
-      .auth
-      .signOut();
-
-
-  }catch(error){
-
-    console.error(
-      error
-    );
-
-  }
-
-
-  currentUser=null;
-
-  currentProfile=null;
-
-  currentWorkspace=null;
-
-  tasks=[];
-
-
-  clearInterval(
-    timerInterval
-  );
-
-
-  document
-    .getElementById(
-      "app"
-    )
-    .classList.add(
-      "hidden"
-    );
-
-
-  document
-    .getElementById(
-      "loginPage"
-    )
-    .classList.remove(
-      "hidden"
-    );
-
-
-  document
-    .getElementById(
-      "password"
-    )
-    .value="";
-
-
-  showToast(
-    "You have been logged out successfully.",
-    "success",
-    "Logged Out"
-  );
+refreshTimer = null;
 
 }
 
 
-/* =========================================================
-   EXISTING SESSION
-========================================================= */
+await sb.auth.signOut();
 
-async function checkExistingSession(){
-
-  try{
-
-    const result =
-      await supabaseClient
-        .auth
-        .getSession();
-
-
-    const session =
-      result.data.session;
-
-
-    if(!session){
-
-      updateConnectionUI();
-
-      return;
-
-    }
-
-
-    currentUser =
-      session.user;
-
-
-    let username =
-      currentUser.email
-
-        ? currentUser.email
-            .split("@")[0]
-
-        : "user";
-
-
-    await createProfileIfNeeded(
-      currentUser.id,
-      username
-    );
-
-
-    await afterLogin(
-      username
-    );
-
-
-  }catch(error){
-
-    console.error(
-      "Session error:",
-      error
-    );
-
-  }
+location.reload();
 
 }
 
 
-/* =========================================================
-   KEYBOARD
-========================================================= */
+/* =========================================
+   SESSION CHECK
+========================================= */
 
-document
-  .getElementById(
-    "taskInput"
-  )
-  .addEventListener(
-    "keydown",
-    e=>{
+sb.auth.onAuthStateChange(
+async(event,session)=>{
 
-      if(e.key==="Enter"){
+if(event === "SIGNED_OUT"){
 
-        addTask();
+return;
 
-      }
+}
 
-    }
-  );
+}
+);
 
 
-document
-  .getElementById(
-    "password"
-  )
-  .addEventListener(
-    "keydown",
-    e=>{
+/* =========================================
+   START APP
+========================================= */
 
-      if(e.key==="Enter"){
+(async()=>{
 
-        login();
-
-      }
-
-    }
-  );
+const {
+data
+} =
+await sb.auth.getSession();
 
 
-document
-  .getElementById(
-    "username"
-  )
-  .addEventListener(
-    "keydown",
-    e=>{
+if(data.session){
 
-      if(e.key==="Enter"){
+const {
+data:profile,
+error
+} =
+await sb
+.from("profiles")
+.select("*")
+.eq(
+"id",
+data.session.user.id
+)
+.single();
 
-        login();
-
-      }
-
-    }
-  );
-
-
-document
-  .getElementById(
-    "editInput"
-  )
-  .addEventListener(
-    "keydown",
-    e=>{
-
-      if(e.key==="Enter"){
-
-        saveEdit();
-
-      }
-
-      if(e.key==="Escape"){
-
-        closeEdit();
-
-      }
-
-    }
-  );
-
-
-/* =========================================================
-   SERVICE WORKER
-========================================================= */
 
 if(
-  "serviceWorker" in navigator
+!error &&
+profile &&
+profile.is_active
 ){
 
-  window.addEventListener(
-    "load",
-    ()=>{
+me = profile;
 
-      navigator.serviceWorker
-        .register(
-          "sw.js"
-        )
-        .then(
-          ()=>{
-            console.log(
-              "Service worker registered."
-            );
-          }
-        )
-        .catch(
-          error=>{
-            console.log(
-              "Service worker registration failed:",
-              error
-            );
-          }
-        );
+openApp();
 
-    }
-  );
+}
+else{
+
+await sb.auth.signOut();
 
 }
 
+}
 
-/* =========================================================
-   START
-========================================================= */
-
-updateConnectionUI();
-
-checkExistingSession();
+})();
 
 </script>
 
 </body>
-  </html>
+      </html>
