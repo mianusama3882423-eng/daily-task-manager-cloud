@@ -1,0 +1,4951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+      maximum-scale=1.0, user-scalable=no">
+
+<meta name="theme-color" content="#2563eb">
+
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Daily Tasks">
+
+<link rel="manifest" href="manifest.json">
+
+<title>Daily Task Manager</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<style>
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  font-family:
+    Inter,
+    Arial,
+    Helvetica,
+    sans-serif;
+  background:#f1f5f9;
+  color:#0f172a;
+}
+
+button,
+input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+button:active{
+  transform:scale(.97);
+}
+
+.hidden{
+  display:none!important;
+}
+
+
+/* =========================================================
+   LOGIN PAGE
+========================================================= */
+
+#loginPage{
+  min-height:100vh;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  padding:20px;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      #bfdbfe 0,
+      transparent 35%
+    ),
+    linear-gradient(
+      135deg,
+      #dbeafe,
+      #eff6ff,
+      #f8fafc
+    );
+}
+
+.loginBox{
+  width:100%;
+  max-width:430px;
+
+  background:rgba(255,255,255,.96);
+
+  padding:32px 24px;
+
+  border-radius:26px;
+
+  box-shadow:
+    0 25px 70px rgba(15,23,42,.16);
+
+  border:1px solid rgba(255,255,255,.8);
+
+  animation:loginAppear .45s ease;
+}
+
+@keyframes loginAppear{
+
+  from{
+    opacity:0;
+    transform:translateY(20px) scale(.97);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+
+}
+
+.logo{
+  width:74px;
+  height:74px;
+
+  margin:auto;
+
+  border-radius:22px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+    );
+
+  color:white;
+
+  font-size:36px;
+  font-weight:bold;
+
+  box-shadow:
+    0 12px 25px rgba(37,99,235,.28);
+}
+
+.loginBox h1{
+  text-align:center;
+
+  margin:18px 0 6px;
+
+  font-size:26px;
+}
+
+.loginBox p{
+  text-align:center;
+
+  color:#64748b;
+
+  margin:0 0 26px;
+
+  line-height:1.5;
+}
+
+.field{
+  margin-bottom:16px;
+}
+
+.field label{
+  display:block;
+
+  margin-bottom:7px;
+
+  font-weight:700;
+
+  font-size:14px;
+}
+
+.field input{
+  width:100%;
+
+  padding:14px;
+
+  border:
+    1px solid #cbd5e1;
+
+  border-radius:13px;
+
+  outline:none;
+
+  background:#f8fafc;
+
+  transition:.2s;
+}
+
+.field input:focus{
+  border-color:#2563eb;
+
+  background:white;
+
+  box-shadow:
+    0 0 0 3px rgba(37,99,235,.10);
+}
+
+.primaryBtn,
+.secondaryBtn{
+  transition:.2s;
+}
+
+.primaryBtn{
+  width:100%;
+
+  border:0;
+
+  padding:14px;
+
+  border-radius:13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+    );
+
+  color:white;
+
+  font-weight:bold;
+
+  margin-top:4px;
+
+  box-shadow:
+    0 8px 18px rgba(37,99,235,.20);
+}
+
+.primaryBtn:hover{
+  filter:brightness(1.05);
+}
+
+.secondaryBtn{
+  width:100%;
+
+  border:
+    1px solid #cbd5e1;
+
+  padding:13px;
+
+  border-radius:13px;
+
+  background:white;
+
+  color:#0f172a;
+
+  font-weight:bold;
+
+  margin-top:10px;
+}
+
+.secondaryBtn:hover{
+  background:#f8fafc;
+}
+
+.statusBox{
+  margin-top:16px;
+
+  padding:12px 14px;
+
+  border-radius:12px;
+
+  font-size:13px;
+
+  line-height:1.5;
+
+  display:none;
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+#app{
+  min-height:100vh;
+}
+
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.topbar{
+  position:sticky;
+
+  top:0;
+
+  z-index:20;
+
+  background:
+    rgba(255,255,255,.94);
+
+  backdrop-filter:blur(12px);
+
+  border-bottom:
+    1px solid #e2e8f0;
+
+  padding:11px 15px;
+}
+
+.topbarInner{
+  max-width:1100px;
+
+  margin:auto;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:10px;
+}
+
+.brand{
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+}
+
+.brandIcon{
+  width:42px;
+  height:42px;
+
+  border-radius:13px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+    );
+
+  color:white;
+
+  font-weight:bold;
+
+  box-shadow:
+    0 6px 14px rgba(37,99,235,.20);
+}
+
+.brandText strong{
+  display:block;
+
+  font-size:15px;
+}
+
+.brandText small{
+  color:#64748b;
+
+  font-size:11px;
+}
+
+.userArea{
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+}
+
+.onlineDot{
+  width:9px;
+  height:9px;
+
+  border-radius:50%;
+
+  background:#22c55e;
+
+  box-shadow:
+    0 0 0 4px rgba(34,197,94,.12);
+}
+
+.onlineDot.offline{
+  background:#ef4444;
+
+  box-shadow:
+    0 0 0 4px rgba(239,68,68,.12);
+}
+
+.logoutBtn{
+  border:0;
+
+  background:#fee2e2;
+
+  color:#b91c1c;
+
+  padding:9px 12px;
+
+  border-radius:10px;
+
+  font-weight:bold;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.container{
+  max-width:1100px;
+
+  margin:auto;
+
+  padding:18px 15px 40px;
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:12px;
+
+  margin-bottom:18px;
+}
+
+.stat{
+  background:white;
+
+  border-radius:17px;
+
+  padding:17px;
+
+  box-shadow:
+    0 5px 18px rgba(15,23,42,.05);
+
+  border:
+    1px solid #f1f5f9;
+}
+
+.stat small{
+  color:#64748b;
+
+  font-size:12px;
+}
+
+.stat strong{
+  display:block;
+
+  font-size:28px;
+
+  margin-top:5px;
+}
+
+
+/* =========================================================
+   ADD TASK
+========================================================= */
+
+.addBox{
+  background:white;
+
+  padding:15px;
+
+  border-radius:19px;
+
+  margin-bottom:18px;
+
+  box-shadow:
+    0 5px 18px rgba(15,23,42,.05);
+}
+
+.addRow{
+  display:flex;
+
+  gap:10px;
+}
+
+.addRow input{
+  flex:1;
+
+  min-width:0;
+
+  padding:14px;
+
+  border:
+    1px solid #cbd5e1;
+
+  border-radius:12px;
+
+  outline:none;
+}
+
+.addRow input:focus{
+  border-color:#2563eb;
+
+  box-shadow:
+    0 0 0 3px rgba(37,99,235,.08);
+}
+
+.addRow button{
+  border:0;
+
+  padding:0 20px;
+
+  border-radius:12px;
+
+  background:#2563eb;
+
+  color:white;
+
+  font-weight:bold;
+}
+
+
+/* =========================================================
+   FILTERS
+========================================================= */
+
+.controls{
+  background:white;
+
+  border-radius:19px;
+
+  padding:12px;
+
+  margin-bottom:18px;
+
+  box-shadow:
+    0 5px 18px rgba(15,23,42,.05);
+}
+
+.search{
+  width:100%;
+
+  padding:12px;
+
+  border:
+    1px solid #cbd5e1;
+
+  border-radius:11px;
+
+  margin-bottom:10px;
+
+  outline:none;
+}
+
+.search:focus{
+  border-color:#2563eb;
+}
+
+.tabs{
+  display:flex;
+
+  gap:7px;
+
+  overflow-x:auto;
+
+  scrollbar-width:none;
+}
+
+.tabs::-webkit-scrollbar{
+  display:none;
+}
+
+.tab{
+  border:0;
+
+  padding:10px 15px;
+
+  border-radius:10px;
+
+  background:#f1f5f9;
+
+  white-space:nowrap;
+
+  font-weight:bold;
+
+  transition:.2s;
+}
+
+.tab.active{
+  background:#2563eb;
+
+  color:white;
+
+  box-shadow:
+    0 5px 12px rgba(37,99,235,.18);
+}
+
+
+/* =========================================================
+   TASK
+========================================================= */
+
+.taskList{
+  display:flex;
+
+  flex-direction:column;
+
+  gap:12px;
+}
+
+.task{
+  background:white;
+
+  border-radius:18px;
+
+  padding:16px;
+
+  box-shadow:
+    0 5px 18px rgba(15,23,42,.05);
+
+  border:
+    1px solid #f1f5f9;
+
+  animation:taskAppear .25s ease;
+}
+
+@keyframes taskAppear{
+
+  from{
+    opacity:0;
+    transform:translateY(8px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+.taskTop{
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:10px;
+}
+
+.taskName{
+  font-weight:bold;
+
+  font-size:17px;
+
+  word-break:break-word;
+
+  line-height:1.4;
+}
+
+.badge{
+  padding:5px 9px;
+
+  border-radius:999px;
+
+  font-size:11px;
+
+  font-weight:bold;
+
+  white-space:nowrap;
+
+  height:max-content;
+}
+
+.badge.pending{
+  background:#fef3c7;
+
+  color:#92400e;
+}
+
+.badge.running{
+  background:#dcfce7;
+
+  color:#166534;
+}
+
+.badge.stopped{
+  background:#fee2e2;
+
+  color:#991b1b;
+}
+
+.badge.completed{
+  background:#dbeafe;
+
+  color:#1d4ed8;
+}
+
+.taskInfo{
+  margin-top:10px;
+
+  color:#64748b;
+
+  font-size:13px;
+
+  line-height:1.7;
+}
+
+.timer{
+  font-size:24px;
+
+  font-weight:bold;
+
+  margin:10px 0;
+
+  color:#2563eb;
+
+  font-variant-numeric:
+    tabular-nums;
+}
+
+.taskButtons{
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:7px;
+
+  margin-top:12px;
+}
+
+.taskButtons button{
+  border:0;
+
+  padding:9px 12px;
+
+  border-radius:9px;
+
+  font-size:13px;
+
+  font-weight:bold;
+}
+
+.start{
+  background:#dcfce7;
+
+  color:#166534;
+}
+
+.stop{
+  background:#fee2e2;
+
+  color:#991b1b;
+}
+
+.resume{
+  background:#dbeafe;
+
+  color:#1d4ed8;
+}
+
+.complete{
+  background:#2563eb;
+
+  color:white;
+}
+
+.edit{
+  background:#fef3c7;
+
+  color:#92400e;
+}
+
+.delete{
+  background:#f1f5f9;
+
+  color:#475569;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty{
+  text-align:center;
+
+  padding:50px 20px;
+
+  color:#64748b;
+
+  background:white;
+
+  border-radius:18px;
+}
+
+.empty h3{
+  color:#0f172a;
+
+  margin-bottom:6px;
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal{
+  position:fixed;
+
+  inset:0;
+
+  background:
+    rgba(15,23,42,.58);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:20px;
+
+  z-index:100;
+
+  backdrop-filter:blur(4px);
+}
+
+.modalBox{
+  width:100%;
+
+  max-width:420px;
+
+  background:white;
+
+  border-radius:21px;
+
+  padding:20px;
+
+  box-shadow:
+    0 25px 70px rgba(0,0,0,.20);
+
+  animation:modalAppear .25s ease;
+}
+
+@keyframes modalAppear{
+
+  from{
+    opacity:0;
+    transform:scale(.94);
+  }
+
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+
+}
+
+.modalBox h3{
+  margin-top:0;
+}
+
+.modalBox input{
+  width:100%;
+
+  padding:13px;
+
+  border:
+    1px solid #cbd5e1;
+
+  border-radius:10px;
+
+  margin:10px 0;
+
+  outline:none;
+}
+
+.modalBox input:focus{
+  border-color:#2563eb;
+}
+
+.modalBtns{
+  display:flex;
+
+  gap:8px;
+}
+
+.modalBtns button{
+  flex:1;
+
+  border:0;
+
+  padding:12px;
+
+  border-radius:10px;
+
+  font-weight:bold;
+}
+
+.save{
+  background:#2563eb;
+
+  color:white;
+}
+
+.cancel{
+  background:#e2e8f0;
+}
+
+
+/* =========================================================
+   PROFESSIONAL TOAST NOTIFICATIONS
+========================================================= */
+
+#toastContainer{
+  position:fixed;
+
+  top:18px;
+
+  right:18px;
+
+  z-index:9999;
+
+  width:min(
+    380px,
+    calc(100vw - 30px)
+  );
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:10px;
+
+  pointer-events:none;
+}
+
+.toast{
+  position:relative;
+
+  display:flex;
+
+  align-items:flex-start;
+
+  gap:12px;
+
+  width:100%;
+
+  padding:
+    14px
+    42px
+    14px
+    14px;
+
+  background:#ffffff;
+
+  border-radius:16px;
+
+  box-shadow:
+    0 15px 40px rgba(15,23,42,.17),
+    0 4px 12px rgba(15,23,42,.08);
+
+  border:1px solid #e2e8f0;
+
+  overflow:hidden;
+
+  animation:
+    toastIn .35s ease forwards;
+
+  pointer-events:auto;
+}
+
+.toast.hide{
+  animation:
+    toastOut .3s ease forwards;
+}
+
+.toastIcon{
+  width:38px;
+
+  height:38px;
+
+  min-width:38px;
+
+  border-radius:12px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-size:19px;
+
+  font-weight:bold;
+}
+
+.toastContent{
+  flex:1;
+
+  min-width:0;
+}
+
+.toastTitle{
+  font-size:14px;
+
+  font-weight:700;
+
+  color:#0f172a;
+
+  margin-bottom:3px;
+}
+
+.toastMessage{
+  font-size:12.5px;
+
+  line-height:1.45;
+
+  color:#64748b;
+
+  word-break:break-word;
+}
+
+.toastClose{
+  position:absolute;
+
+  top:8px;
+
+  right:8px;
+
+  width:28px;
+
+  height:28px;
+
+  border:0;
+
+  border-radius:8px;
+
+  background:transparent;
+
+  color:#94a3b8;
+
+  font-size:18px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+}
+
+.toastClose:hover{
+  background:#f1f5f9;
+
+  color:#475569;
+}
+
+.toastProgress{
+  position:absolute;
+
+  left:0;
+
+  bottom:0;
+
+  height:3px;
+
+  width:100%;
+
+  transform-origin:left;
+
+  animation:
+    toastProgress 2.8s linear forwards;
+}
+
+
+/* SUCCESS */
+
+.toast.success{
+  border-left:
+    4px solid #22c55e;
+}
+
+.toast.success .toastIcon{
+  background:#dcfce7;
+
+  color:#16a34a;
+}
+
+.toast.success .toastProgress{
+  background:#22c55e;
+}
+
+
+/* ERROR */
+
+.toast.error{
+  border-left:
+    4px solid #ef4444;
+}
+
+.toast.error .toastIcon{
+  background:#fee2e2;
+
+  color:#dc2626;
+}
+
+.toast.error .toastProgress{
+  background:#ef4444;
+}
+
+
+/* INFO */
+
+.toast.info{
+  border-left:
+    4px solid #2563eb;
+}
+
+.toast.info .toastIcon{
+  background:#dbeafe;
+
+  color:#2563eb;
+}
+
+.toast.info .toastProgress{
+  background:#2563eb;
+}
+
+
+/* WARNING */
+
+.toast.warning{
+  border-left:
+    4px solid #f59e0b;
+}
+
+.toast.warning .toastIcon{
+  background:#fef3c7;
+
+  color:#d97706;
+}
+
+.toast.warning .toastProgress{
+  background:#f59e0b;
+}
+
+
+/* OFFLINE */
+
+.toast.offline{
+  border-left:
+    4px solid #64748b;
+}
+
+.toast.offline .toastIcon{
+  background:#f1f5f9;
+
+  color:#475569;
+}
+
+.toast.offline .toastProgress{
+  background:#64748b;
+}
+
+
+@keyframes toastIn{
+
+  from{
+    opacity:0;
+
+    transform:
+      translateX(120px)
+      scale(.95);
+  }
+
+  to{
+    opacity:1;
+
+    transform:
+      translateX(0)
+      scale(1);
+  }
+
+}
+
+@keyframes toastOut{
+
+  from{
+    opacity:1;
+
+    transform:
+      translateX(0)
+      scale(1);
+  }
+
+  to{
+    opacity:0;
+
+    transform:
+      translateX(120px)
+      scale(.95);
+  }
+
+}
+
+@keyframes toastProgress{
+
+  from{
+    transform:scaleX(1);
+  }
+
+  to{
+    transform:scaleX(0);
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:700px){
+
+  .stats{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .addRow{
+    flex-direction:column;
+  }
+
+  .addRow button{
+    padding:13px;
+  }
+
+  .brandText small{
+    display:none;
+  }
+
+  .userArea span{
+    display:none;
+  }
+
+  .container{
+    padding:
+      14px
+      10px
+      30px;
+  }
+
+}
+
+@media(max-width:600px){
+
+  #toastContainer{
+    top:12px;
+
+    left:12px;
+
+    right:12px;
+
+    width:auto;
+  }
+
+  .toast{
+    border-radius:14px;
+
+    padding:
+      13px
+      40px
+      13px
+      12px;
+  }
+
+  .toastIcon{
+    width:36px;
+
+    height:36px;
+
+    min-width:36px;
+  }
+
+}
+
+@media(max-width:400px){
+
+  .stat strong{
+    font-size:23px;
+  }
+
+  .task{
+    padding:13px;
+  }
+
+  .taskName{
+    font-size:15px;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     LOGIN
+========================================================= -->
+
+<section id="loginPage">
+
+  <div class="loginBox">
+
+    <div class="logo">
+      ✓
+    </div>
+
+    <h1>
+      Daily Task Manager
+    </h1>
+
+    <p>
+      Organize, track, and manage your daily tasks.
+    </p>
+
+
+    <div class="field">
+
+      <label>
+        Username
+      </label>
+
+      <input
+        id="username"
+        type="text"
+        autocomplete="username"
+        placeholder="Enter username">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        Password
+      </label>
+
+      <input
+        id="password"
+        type="password"
+        autocomplete="current-password"
+        placeholder="Enter password">
+
+    </div>
+
+
+    <button
+      class="primaryBtn"
+      onclick="login()">
+
+      Login
+
+    </button>
+
+
+    <button
+      class="secondaryBtn"
+      onclick="signup()">
+
+      Create Account
+
+    </button>
+
+
+    <button
+      class="secondaryBtn"
+      onclick="testConnection()">
+
+      Test Cloud Connection
+
+    </button>
+
+
+    <div
+      id="loginStatus"
+      class="statusBox">
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     APP
+========================================================= -->
+
+<section
+  id="app"
+  class="hidden">
+
+
+  <header class="topbar">
+
+    <div class="topbarInner">
+
+
+      <div class="brand">
+
+        <div class="brandIcon">
+          ✓
+        </div>
+
+        <div class="brandText">
+
+          <strong>
+            Daily Tasks
+          </strong>
+
+          <small id="workspaceText">
+            Workspace
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <div class="userArea">
+
+        <div
+          id="onlineDot"
+          class="onlineDot">
+        </div>
+
+        <span id="currentUser">
+          User
+        </span>
+
+        <button
+          class="logoutBtn"
+          onclick="logout()">
+
+          Logout
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <main class="container">
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+
+      <div class="stat">
+
+        <small>
+          Total
+        </small>
+
+        <strong id="totalCount">
+          0
+        </strong>
+
+      </div>
+
+
+      <div class="stat">
+
+        <small>
+          Pending
+        </small>
+
+        <strong id="pendingCount">
+          0
+        </strong>
+
+      </div>
+
+
+      <div class="stat">
+
+        <small>
+          Active
+        </small>
+
+        <strong id="activeCount">
+          0
+        </strong>
+
+      </div>
+
+
+      <div class="stat">
+
+        <small>
+          Completed
+        </small>
+
+        <strong id="completedCount">
+          0
+        </strong>
+
+      </div>
+
+
+    </div>
+
+
+    <!-- ADD TASK -->
+
+    <div class="addBox">
+
+      <div class="addRow">
+
+        <input
+          id="taskInput"
+          type="text"
+          placeholder="Enter a new task...">
+
+        <button
+          onclick="addTask()">
+
+          + Add Task
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- CONTROLS -->
+
+    <div class="controls">
+
+      <input
+        id="searchInput"
+        class="search"
+        type="search"
+        placeholder="Search tasks..."
+        oninput="renderTasks()">
+
+
+      <div class="tabs">
+
+
+        <button
+          class="tab active"
+          data-tab="all"
+          onclick="setTab('all')">
+
+          All
+
+        </button>
+
+
+        <button
+          class="tab"
+          data-tab="pending"
+          onclick="setTab('pending')">
+
+          Pending
+
+        </button>
+
+
+        <button
+          class="tab"
+          data-tab="active"
+          onclick="setTab('active')">
+
+          Active
+
+        </button>
+
+
+        <button
+          class="tab"
+          data-tab="history"
+          onclick="setTab('history')">
+
+          History
+
+        </button>
+
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="taskList"
+      class="taskList">
+    </div>
+
+
+  </main>
+
+</section>
+
+
+<!-- =========================================================
+     EDIT MODAL
+========================================================= -->
+
+<div
+  id="editModal"
+  class="modal hidden">
+
+
+  <div class="modalBox">
+
+    <h3>
+      Edit Task
+    </h3>
+
+
+    <input
+      id="editInput"
+      type="text">
+
+
+    <div class="modalBtns">
+
+
+      <button
+        class="cancel"
+        onclick="closeEdit()">
+
+        Cancel
+
+      </button>
+
+
+      <button
+        class="save"
+        onclick="saveEdit()">
+
+        Save
+
+      </button>
+
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     NOTIFICATIONS
+========================================================= -->
+
+<div
+  id="toastContainer">
+</div>
+
+
+<script>
+
+
+/* =========================================================
+   SUPABASE CONFIG
+========================================================= */
+
+const SUPABASE_URL =
+"https://egphfcjehcygjcabugbo.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_ZPa3kwOHSIi__aihHVbg6w_VM-nkn-h";
+
+
+const supabaseClient =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY,
+  {
+    auth:{
+      persistSession:true,
+      autoRefreshToken:true,
+      detectSessionInUrl:false
+    }
+  }
+);
+
+
+/* =========================================================
+   WORKSPACE CONFIG
+========================================================= */
+
+const SHARED_USERNAME =
+"teacher";
+
+const SHARED_WORKSPACE =
+"11111111-1111-4111-8111-111111111111";
+
+
+/* =========================================================
+   APP STATE
+========================================================= */
+
+let currentUser = null;
+
+let currentProfile = null;
+
+let currentWorkspace = null;
+
+let tasks = [];
+
+let activeTab = "all";
+
+let editTaskId = null;
+
+let realtimeChannel = null;
+
+let timerInterval = null;
+
+let syncing = false;
+
+
+/* =========================================================
+   LOCAL STORAGE
+========================================================= */
+
+function localKey(){
+
+  if(!currentUser){
+
+    return "daily_tasks_guest";
+
+  }
+
+  return "daily_tasks_" +
+    currentUser.id;
+
+}
+
+
+function saveLocal(){
+
+  try{
+
+    localStorage.setItem(
+      localKey(),
+      JSON.stringify(tasks)
+    );
+
+  }catch(error){
+
+    console.error(
+      "Local save error:",
+      error
+    );
+
+  }
+
+}
+
+
+function loadLocal(){
+
+  try{
+
+    const data =
+      localStorage.getItem(
+        localKey()
+      );
+
+    if(data){
+
+      tasks =
+        JSON.parse(data);
+
+      if(!Array.isArray(tasks)){
+
+        tasks=[];
+
+      }
+
+    }else{
+
+      tasks=[];
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Local load error:",
+      error
+    );
+
+    tasks=[];
+
+  }
+
+}
+
+
+/* =========================================================
+   CONNECTION UI
+========================================================= */
+
+function updateConnectionUI(){
+
+  const dot =
+    document.getElementById(
+      "onlineDot"
+    );
+
+  if(!dot){
+    return;
+  }
+
+  if(navigator.onLine){
+
+    dot.classList.remove(
+      "offline"
+    );
+
+  }else{
+
+    dot.classList.add(
+      "offline"
+    );
+
+  }
+
+}
+
+
+window.addEventListener(
+  "online",
+  async ()=>{
+
+    updateConnectionUI();
+
+    showToast(
+      "Internet connection restored.",
+      "success",
+      "Back Online"
+    );
+
+    await syncPending();
+
+  }
+);
+
+
+window.addEventListener(
+  "offline",
+  ()=>{
+
+    updateConnectionUI();
+
+    showToast(
+      "Changes will be saved on this device and synced when you are online again.",
+      "offline",
+      "Offline Mode"
+    );
+
+  }
+);
+
+
+/* =========================================================
+   PROFESSIONAL TOAST
+========================================================= */
+
+function showToast(
+  message,
+  type="info",
+  title=null
+){
+
+  const container =
+    document.getElementById(
+      "toastContainer"
+    );
+
+  if(!container){
+    return;
+  }
+
+
+  const settings = {
+
+    success:{
+      icon:"✓",
+      title:
+        title || "Success"
+    },
+
+    error:{
+      icon:"!",
+      title:
+        title || "Error"
+    },
+
+    info:{
+      icon:"i",
+      title:
+        title || "Information"
+    },
+
+    warning:{
+      icon:"!",
+      title:
+        title || "Warning"
+    },
+
+    offline:{
+      icon:"☁",
+      title:
+        title || "Offline Mode"
+    }
+
+  };
+
+
+  const config =
+    settings[type] ||
+    settings.info;
+
+
+  const toast =
+    document.createElement(
+      "div"
+    );
+
+
+  toast.className =
+    "toast " + type;
+
+
+  toast.innerHTML = `
+
+    <div class="toastIcon">
+      ${config.icon}
+    </div>
+
+    <div class="toastContent">
+
+      <div class="toastTitle">
+        ${escapeHTML(config.title)}
+      </div>
+
+      <div class="toastMessage">
+        ${escapeHTML(String(message))}
+      </div>
+
+    </div>
+
+    <button
+      class="toastClose"
+      aria-label="Close notification">
+
+      ×
+
+    </button>
+
+    <div class="toastProgress"></div>
+
+  `;
+
+
+  container.appendChild(
+    toast
+  );
+
+
+  const closeToast =
+    ()=>{
+
+      if(
+        toast.classList.contains(
+          "hide"
+        )
+      ){
+
+        return;
+
+      }
+
+
+      toast.classList.add(
+        "hide"
+      );
+
+
+      setTimeout(
+        ()=>{
+          toast.remove();
+        },
+        300
+      );
+
+    };
+
+
+  toast
+    .querySelector(
+      ".toastClose"
+    )
+    .addEventListener(
+      "click",
+      closeToast
+    );
+
+
+  setTimeout(
+    closeToast,
+    2800
+  );
+
+}
+
+
+/* =========================================================
+   LOGIN STATUS
+========================================================= */
+
+function loginStatus(
+  message,
+  type="info"
+){
+
+  const box =
+    document.getElementById(
+      "loginStatus"
+    );
+
+  box.textContent =
+    message;
+
+  box.style.display =
+    "block";
+
+
+  if(type==="error"){
+
+    box.style.background =
+      "#fee2e2";
+
+    box.style.color =
+      "#991b1b";
+
+  }else if(type==="success"){
+
+    box.style.background =
+      "#dcfce7";
+
+    box.style.color =
+      "#166534";
+
+  }else{
+
+    box.style.background =
+      "#dbeafe";
+
+    box.style.color =
+      "#1d4ed8";
+
+  }
+
+}
+
+
+/* =========================================================
+   USERNAME
+========================================================= */
+
+function normalizeUsername(
+  value
+){
+
+  return value
+    .trim()
+    .toLowerCase();
+
+}
+
+
+function usernameValid(
+  username
+){
+
+  return /^[a-zA-Z0-9_]{3,30}$/
+    .test(username);
+
+}
+
+
+function usernameEmail(
+  username
+){
+
+  return username +
+    "@taskmanager.local";
+
+}
+
+
+/* =========================================================
+   SIGNUP
+========================================================= */
+
+async function signup(){
+
+  const username =
+    normalizeUsername(
+      document
+        .getElementById(
+          "username"
+        )
+        .value
+    );
+
+
+  const password =
+    document
+      .getElementById(
+        "password"
+      )
+      .value;
+
+
+  if(!usernameValid(username)){
+
+    loginStatus(
+      "Username must be 3-30 characters and may contain only letters, numbers, or underscores.",
+      "error"
+    );
+
+    showToast(
+      "Please enter a valid username.",
+      "error",
+      "Invalid Username"
+    );
+
+    return;
+
+  }
+
+
+  if(password.length < 6){
+
+    loginStatus(
+      "Password must be at least 6 characters long.",
+      "error"
+    );
+
+    showToast(
+      "Password must be at least 6 characters long.",
+      "error",
+      "Invalid Password"
+    );
+
+    return;
+
+  }
+
+
+  loginStatus(
+    "Creating account..."
+  );
+
+
+  try{
+
+    const email =
+      usernameEmail(
+        username
+      );
+
+
+    const result =
+      await supabaseClient
+        .auth
+        .signUp({
+          email,
+          password
+        });
+
+
+    if(result.error){
+
+      loginStatus(
+        result.error.message,
+        "error"
+      );
+
+      showToast(
+        result.error.message,
+        "error",
+        "Account Creation Failed"
+      );
+
+      return;
+
+    }
+
+
+    if(!result.data.user){
+
+      loginStatus(
+        "Unable to create your account.",
+        "error"
+      );
+
+      showToast(
+        "Unable to create your account.",
+        "error",
+        "Account Creation Failed"
+      );
+
+      return;
+
+    }
+
+
+    currentUser =
+      result.data.user;
+
+
+    await createProfileIfNeeded(
+      currentUser.id,
+      username
+    );
+
+
+    if(result.data.session){
+
+      loginStatus(
+        "Account created successfully.",
+        "success"
+      );
+
+      showToast(
+        "Your account has been created successfully.",
+        "success",
+        "Account Created"
+      );
+
+      await afterLogin(
+        username
+      );
+
+    }else{
+
+      loginStatus(
+        "Account created. If email confirmation is enabled, please confirm your email before logging in.",
+        "info"
+      );
+
+    }
+
+  }catch(error){
+
+    console.error(error);
+
+    loginStatus(
+      error.message ||
+      "Signup error",
+      "error"
+    );
+
+    showToast(
+      error.message ||
+      "Unable to create your account.",
+      "error",
+      "Signup Error"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+async function login(){
+
+  const username =
+    normalizeUsername(
+      document
+        .getElementById(
+          "username"
+        )
+        .value
+    );
+
+
+  const password =
+    document
+      .getElementById(
+        "password"
+      )
+      .value;
+
+
+  if(!usernameValid(username)){
+
+    loginStatus(
+      "Please enter a valid username.",
+      "error"
+    );
+
+    showToast(
+      "Please enter a valid username.",
+      "error",
+      "Invalid Username"
+    );
+
+    return;
+
+  }
+
+
+  if(!password){
+
+    loginStatus(
+      "Please enter your password.",
+      "error"
+    );
+
+    showToast(
+      "Please enter your password.",
+      "error",
+      "Password Required"
+    );
+
+    return;
+
+  }
+
+
+  loginStatus(
+    "Signing in..."
+  );
+
+
+  try{
+
+    const email =
+      usernameEmail(
+        username
+      );
+
+
+    const result =
+      await supabaseClient
+        .auth
+        .signInWithPassword({
+          email,
+          password
+        });
+
+
+    if(result.error){
+
+      loginStatus(
+        result.error.message,
+        "error"
+      );
+
+      showToast(
+        result.error.message,
+        "error",
+        "Login Failed"
+      );
+
+      return;
+
+    }
+
+
+    currentUser =
+      result.data.user;
+
+
+    await createProfileIfNeeded(
+      currentUser.id,
+      username
+    );
+
+
+    showToast(
+      "Welcome back.",
+      "success",
+      "Login Successful"
+    );
+
+
+    await afterLogin(
+      username
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    loginStatus(
+      error.message ||
+      "Login error",
+      "error"
+    );
+
+    showToast(
+      error.message ||
+      "Unable to log in.",
+      "error",
+      "Login Error"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   CREATE PROFILE
+========================================================= */
+
+async function createProfileIfNeeded(
+  userId,
+  username
+){
+
+  try{
+
+    const existing =
+      await supabaseClient
+        .from("profiles")
+        .select("*")
+        .eq(
+          "id",
+          userId
+        )
+        .maybeSingle();
+
+
+    if(existing.error){
+
+      console.error(
+        "Profile select:",
+        existing.error
+      );
+
+      return;
+
+    }
+
+
+    if(existing.data){
+
+      currentProfile =
+        existing.data;
+
+      currentWorkspace =
+        existing.data.workspace_id;
+
+      return;
+
+    }
+
+
+    const workspace =
+      username ===
+      SHARED_USERNAME
+
+        ? SHARED_WORKSPACE
+
+        : userId;
+
+
+    const inserted =
+      await supabaseClient
+        .from("profiles")
+        .insert({
+          id:userId,
+          username:username,
+          workspace_id:workspace
+        })
+        .select()
+        .single();
+
+
+    if(inserted.error){
+
+      console.error(
+        "Profile insert:",
+        inserted.error
+      );
+
+      return;
+
+    }
+
+
+    currentProfile =
+      inserted.data;
+
+    currentWorkspace =
+      workspace;
+
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+}
+
+
+/* =========================================================
+   AFTER LOGIN
+========================================================= */
+
+async function afterLogin(
+  username
+){
+
+  document
+    .getElementById(
+      "loginPage"
+    )
+    .classList.add(
+      "hidden"
+    );
+
+
+  document
+    .getElementById(
+      "app"
+    )
+    .classList.remove(
+      "hidden"
+    );
+
+
+  document
+    .getElementById(
+      "currentUser"
+    )
+    .textContent =
+      username;
+
+
+  document
+    .getElementById(
+      "workspaceText"
+    )
+    .textContent =
+      username ===
+      SHARED_USERNAME
+
+        ? "Shared Workspace"
+
+        : "Personal Workspace";
+
+
+  updateConnectionUI();
+
+
+  loadLocal();
+
+
+  renderTasks();
+
+
+  await loadCloudTasks();
+
+
+  setupRealtime();
+
+
+  startTimerLoop();
+
+
+  await syncPending();
+
+}
+
+
+/* =========================================================
+   LOAD CLOUD TASKS
+========================================================= */
+
+async function loadCloudTasks(){
+
+  if(!currentWorkspace){
+
+    return;
+
+  }
+
+
+  if(!navigator.onLine){
+
+    return;
+
+  }
+
+
+  try{
+
+    const result =
+      await supabaseClient
+        .from("daily_tasks")
+        .select("*")
+        .eq(
+          "workspace_id",
+          currentWorkspace
+        )
+        .order(
+          "created_at",
+          {
+            ascending:false
+          }
+        );
+
+
+    if(result.error){
+
+      console.error(
+        "Cloud load:",
+        result.error
+      );
+
+      return;
+
+    }
+
+
+    tasks =
+      result.data || [];
+
+
+    saveLocal();
+
+    renderTasks();
+
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+}
+
+
+/* =========================================================
+   ADD TASK
+========================================================= */
+
+async function addTask(){
+
+  const input =
+    document.getElementById(
+      "taskInput"
+    );
+
+
+  const name =
+    input.value.trim();
+
+
+  if(!name){
+
+    showToast(
+      "Please enter a task name.",
+      "warning",
+      "Task Name Required"
+    );
+
+    input.focus();
+
+    return;
+
+  }
+
+
+  if(!currentWorkspace){
+
+    showToast(
+      "Your workspace is not available.",
+      "error",
+      "Workspace Error"
+    );
+
+    return;
+
+  }
+
+
+  const tempTask = {
+
+    id:
+      "local-" +
+      Date.now() +
+      "-" +
+      Math.random()
+        .toString(36)
+        .slice(2),
+
+    workspace_id:
+      currentWorkspace,
+
+    name:name,
+
+    task_date:
+      new Date()
+        .toISOString()
+        .slice(0,10),
+
+    status:"pending",
+
+    actual_start:null,
+
+    actual_end:null,
+
+    total_paused_time:0,
+
+    stop_start:null,
+
+    last_start:null,
+
+    start_times:[],
+
+    stop_times:[],
+
+    created_by:
+      currentUser.id,
+
+    created_at:
+      new Date()
+        .toISOString(),
+
+    updated_at:
+      new Date()
+        .toISOString(),
+
+    _localOnly:true,
+
+    _pendingAction:"insert"
+
+  };
+
+
+  tasks.unshift(
+    tempTask
+  );
+
+
+  saveLocal();
+
+  input.value="";
+
+  renderTasks();
+
+
+  if(navigator.onLine){
+
+    const success =
+      await pushTask(
+        tempTask
+      );
+
+
+    if(success){
+
+      showToast(
+        "Your task has been added.",
+        "success",
+        "Task Added"
+      );
+
+    }else{
+
+      showToast(
+        "The task is saved locally and will sync with the cloud.",
+        "warning",
+        "Cloud Sync Pending"
+      );
+
+    }
+
+  }else{
+
+    showToast(
+      "The task is saved on this device and will sync when you are online.",
+      "offline",
+      "Saved Offline"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   PUSH NEW TASK
+========================================================= */
+
+async function pushTask(
+  task
+){
+
+  try{
+
+    const cleanTask = {
+
+      workspace_id:
+        task.workspace_id,
+
+      name:
+        task.name,
+
+      task_date:
+        task.task_date,
+
+      status:
+        task.status,
+
+      actual_start:
+        task.actual_start,
+
+      actual_end:
+        task.actual_end,
+
+      total_paused_time:
+        task.total_paused_time || 0,
+
+      stop_start:
+        task.stop_start,
+
+      last_start:
+        task.last_start,
+
+      start_times:
+        task.start_times || [],
+
+      stop_times:
+        task.stop_times || [],
+
+      created_by:
+        task.created_by
+
+    };
+
+
+    const result =
+      await supabaseClient
+        .from("daily_tasks")
+        .insert(
+          cleanTask
+        )
+        .select()
+        .single();
+
+
+    if(result.error){
+
+      console.error(
+        "Insert:",
+        result.error
+      );
+
+      return false;
+
+    }
+
+
+    const index =
+      tasks.findIndex(
+        t=>t.id===task.id
+      );
+
+
+    if(index!==-1){
+
+      tasks[index] =
+        result.data;
+
+      saveLocal();
+
+      renderTasks();
+
+    }
+
+
+    return true;
+
+
+  }catch(error){
+
+    console.error(error);
+
+    return false;
+
+  }
+
+}
+
+
+/* =========================================================
+   START TASK
+========================================================= */
+
+async function startTask(
+  id
+){
+
+  const task =
+    tasks.find(
+      t=>t.id===id
+    );
+
+
+  if(!task){
+    return;
+  }
+
+
+  const now =
+    new Date()
+      .toISOString();
+
+
+  task.status =
+    "running";
+
+
+  task.actual_start =
+    task.actual_start ||
+    now;
+
+
+  task.last_start =
+    now;
+
+
+  task.stop_start =
+    null;
+
+
+  if(!Array.isArray(
+    task.start_times
+  )){
+
+    task.start_times=[];
+
+  }
+
+
+  task.start_times.push(
+    now
+  );
+
+
+  task.updated_at =
+    now;
+
+
+  task._pendingAction =
+    "update";
+
+
+  saveLocal();
+
+  renderTasks();
+
+
+  await saveTask(
+    task
+  );
+
+
+  showToast(
+    "The task timer is now running.",
+    "success",
+    "Task Started"
+  );
+
+}
+
+
+/* =========================================================
+   STOP TASK
+========================================================= */
+
+async function stopTask(
+  id
+){
+
+  const task =
+    tasks.find(
+      t=>t.id===id
+    );
+
+
+  if(!task){
+    return;
+  }
+
+
+  if(task.status !==
+     "running"){
+
+    return;
+
+  }
+
+
+  const now =
+    new Date()
+      .toISOString();
+
+
+  task.status =
+    "stopped";
+
+
+  task.stop_start =
+    now;
+
+
+  task.updated_at =
+    now;
+
+
+  if(!Array.isArray(
+    task.stop_times
+  )){
+
+    task.stop_times=[];
+
+  }
+
+
+  task.stop_times.push(
+    now
+  );
+
+
+  task._pendingAction =
+    "update";
+
+
+  saveLocal();
+
+  renderTasks();
+
+
+  await saveTask(
+    task
+  );
+
+
+  showToast(
+    "The task timer has been paused.",
+    "info",
+    "Task Paused"
+  );
+
+}
+
+
+/* =========================================================
+   RESUME TASK
+========================================================= */
+
+async function resumeTask(
+  id
+){
+
+  const task =
+    tasks.find(
+      t=>t.id===id
+    );
+
+
+  if(!task){
+    return;
+  }
+
+
+  const now =
+    new Date();
+
+
+  if(task.stop_start){
+
+    const stopTime =
+      new Date(
+        task.stop_start
+      );
+
+
+    const paused =
+      now.getTime() -
+      stopTime.getTime();
+
+
+    task.total_paused_time =
+      (
+        task.total_paused_time ||
+        0
+      ) +
+      paused;
+
+  }
+
+
+  task.status =
+    "running";
+
+
+  task.last_start =
+    now.toISOString();
+
+
+  task.stop_start =
+    null;
+
+
+  task.updated_at =
+    now.toISOString();
+
+
+  task._pendingAction =
+    "update";
+
+
+  if(!Array.isArray(
+    task.start_times
+  )){
+
+    task.start_times=[];
+
+  }
+
+
+  task.start_times.push(
+    now.toISOString()
+  );
+
+
+  saveLocal();
+
+  renderTasks();
+
+
+  await saveTask(
+    task
+  );
+
+
+  showToast(
+    "The task timer has resumed.",
+    "success",
+    "Task Resumed"
+  );
+
+}
+
+
+/* =========================================================
+   COMPLETE TASK
+========================================================= */
+
+async function completeTask(
+  id
+){
+
+  const task =
+    tasks.find(
+      t=>t.id===id
+    );
+
+
+  if(!task){
+    return;
+  }
+
+
+  const now =
+    new Date();
+
+
+  task.status =
+    "completed";
+
+
+  task.actual_end =
+    now.toISOString();
+
+
+  task.updated_at =
+    now.toISOString();
+
+
+  task.stop_start =
+    null;
+
+
+  task._pendingAction =
+    "update";
+
+
+  saveLocal();
+
+  renderTasks();
+
+
+  await saveTask(
+    task
+  );
+
+
+  showToast(
+    "The task has been completed.",
+    "success",
+    "Task Completed"
+  );
+
+}
+
+
+/* =========================================================
+   SAVE TASK
+========================================================= */
+
+async function saveTask(
+  task
+){
+
+  if(!navigator.onLine){
+
+    showToast(
+      "Your change is saved on this device and will sync later.",
+      "offline",
+      "Saved Offline"
+    );
+
+    return false;
+
+  }
+
+
+  if(
+    String(task.id)
+      .startsWith("local-")
+  ){
+
+    const success =
+      await pushTask(
+        task
+      );
+
+
+    if(!success){
+
+      showToast(
+        "The task is waiting for cloud synchronization.",
+        "warning",
+        "Sync Pending"
+      );
+
+    }
+
+
+    return success;
+
+  }
+
+
+  try{
+
+    const updateData = {
+
+      name:
+        task.name,
+
+      task_date:
+        task.task_date,
+
+      status:
+        task.status,
+
+      actual_start:
+        task.actual_start,
+
+      actual_end:
+        task.actual_end,
+
+      total_paused_time:
+        task.total_paused_time || 0,
+
+      stop_start:
+        task.stop_start,
+
+      last_start:
+        task.last_start,
+
+      start_times:
+        task.start_times || [],
+
+      stop_times:
+        task.stop_times || [],
+
+      updated_at:
+        new Date()
+          .toISOString()
+
+    };
+
+
+    const result =
+      await supabaseClient
+        .from("daily_tasks")
+        .update(
+          updateData
+        )
+        .eq(
+          "id",
+          task.id
+        )
+        .eq(
+          "workspace_id",
+          currentWorkspace
+        );
+
+
+    if(result.error){
+
+      console.error(
+        "Update:",
+        result.error
+      );
+
+      showToast(
+        "Your change is saved locally but cloud synchronization is pending.",
+        "warning",
+        "Cloud Sync Pending"
+      );
+
+      return false;
+
+    }
+
+
+    delete task._pendingAction;
+
+    saveLocal();
+
+    return true;
+
+
+  }catch(error){
+
+    console.error(error);
+
+    showToast(
+      "The cloud update could not be completed.",
+      "error",
+      "Cloud Update Failed"
+    );
+
+    return false;
+
+  }
+
+}
+
+
+/* =========================================================
+   DELETE TASK
+========================================================= */
+
+async function deleteTask(
+  id
+){
+
+  const task =
+    tasks.find(
+      t=>t.id===id
+    );
+
+
+  if(!task){
+    return;
+  }
+
+
+  const confirmed =
+    confirm(
+      "Are you sure you want to delete this task?"
+    );
+
+
+  if(!confirmed){
+
+    return;
+
+  }
+
+
+  tasks =
+    tasks.filter(
+      t=>t.id!==id
+    );
+
+
+  saveLocal();
+
+  renderTasks();
+
+
+  if(
+    String(id)
+      .startsWith("local-")
+  ){
+
+    showToast(
+      "The task has been deleted.",
+      "success",
+      "Task Deleted"
+    );
+
+    return;
+
+  }
+
+
+  if(!navigator.onLine){
+
+    showToast(
+      "The task was removed from this device. Cloud deletion will be retried when you are online.",
+      "offline",
+      "Offline Delete"
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    const result =
+      await supabaseClient
+        .from("daily_tasks")
+        .delete()
+        .eq(
+          "id",
+          id
+        )
+        .eq(
+          "workspace_id",
+          currentWorkspace
+        );
+
+
+    if(result.error){
+
+      console.error(
+        result.error
+      );
+
+      showToast(
+        "The task could not be deleted from the cloud.",
+        "error",
+        "Cloud Delete Failed"
+      );
+
+    }else{
+
+      showToast(
+        "The task has been deleted successfully.",
+        "success",
+        "Task Deleted"
+      );
+
+    }
+
+  }catch(error){
+
+    console.error(error);
+
+    showToast(
+      "The cloud deletion failed.",
+      "error",
+      "Delete Failed"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   EDIT
+========================================================= */
+
+function openEdit(
+  id
+){
+
+  const task =
+    tasks.find(
+      t=>t.id===id
+    );
+
+
+  if(!task){
+    return;
+  }
+
+
+  editTaskId =
+    id;
+
+
+  document
+    .getElementById(
+      "editInput"
+    )
+    .value =
+      task.name;
+
+
+  document
+    .getElementById(
+      "editModal"
+    )
+    .classList
+    .remove(
+      "hidden"
+    );
+
+
+  setTimeout(
+    ()=>{
+      document
+        .getElementById(
+          "editInput"
+        )
+        .focus();
+    },
+    100
+  );
+
+}
+
+
+function closeEdit(){
+
+  editTaskId =
+    null;
+
+
+  document
+    .getElementById(
+      "editModal"
+    )
+    .classList
+    .add(
+      "hidden"
+    );
+
+}
+
+
+async function saveEdit(){
+
+  if(!editTaskId){
+
+    return;
+
+  }
+
+
+  const input =
+    document.getElementById(
+      "editInput"
+    );
+
+
+  const name =
+    input.value.trim();
+
+
+  if(!name){
+
+    showToast(
+      "Task name cannot be empty.",
+      "warning",
+      "Invalid Task Name"
+    );
+
+    input.focus();
+
+    return;
+
+  }
+
+
+  const task =
+    tasks.find(
+      t=>t.id===editTaskId
+    );
+
+
+  if(!task){
+
+    return;
+
+  }
+
+
+  task.name =
+    name;
+
+
+  task.updated_at =
+    new Date()
+      .toISOString();
+
+
+  task._pendingAction =
+    "update";
+
+
+  saveLocal();
+
+  closeEdit();
+
+  renderTasks();
+
+
+  await saveTask(
+    task
+  );
+
+
+  showToast(
+    "Your task has been updated.",
+    "success",
+    "Task Updated"
+  );
+
+}
+
+
+/* =========================================================
+   TIME CALCULATION
+========================================================= */
+
+function getWorkingMilliseconds(
+  task
+){
+
+  if(!task.actual_start){
+
+    return 0;
+
+  }
+
+
+  const start =
+    new Date(
+      task.actual_start
+    ).getTime();
+
+
+  let end;
+
+
+  if(
+    task.status==="running" &&
+    !task.actual_end
+  ){
+
+    end =
+      Date.now();
+
+  }else{
+
+    end =
+      task.actual_end
+
+        ? new Date(
+            task.actual_end
+          ).getTime()
+
+        : Date.now();
+
+  }
+
+
+  let total =
+    end - start;
+
+
+  total -=
+    Number(
+      task.total_paused_time ||
+      0
+    );
+
+
+  if(
+    task.status==="stopped" &&
+    task.stop_start
+  ){
+
+    total -=
+      Date.now() -
+      new Date(
+        task.stop_start
+      ).getTime();
+
+  }
+
+
+  if(total<0){
+
+    total=0;
+
+  }
+
+
+  return total;
+
+}
+
+
+function formatDuration(
+  ms
+){
+
+  const totalSeconds =
+    Math.floor(
+      ms/1000
+    );
+
+
+  const hours =
+    Math.floor(
+      totalSeconds/3600
+    );
+
+
+  const minutes =
+    Math.floor(
+      (totalSeconds%3600)/60
+    );
+
+
+  const seconds =
+    totalSeconds%60;
+
+
+  return (
+    String(hours)
+      .padStart(2,"0")+
+    ":"+
+    String(minutes)
+      .padStart(2,"0")+
+    ":"+
+    String(seconds)
+      .padStart(2,"0")
+  );
+
+}
+
+
+/* =========================================================
+   RENDER TASKS
+========================================================= */
+
+function renderTasks(){
+
+  const list =
+    document.getElementById(
+      "taskList"
+    );
+
+
+  if(!list){
+
+    return;
+
+  }
+
+
+  const searchInput =
+    document.getElementById(
+      "searchInput"
+    );
+
+
+  const search =
+    searchInput
+      ? searchInput.value
+          .trim()
+          .toLowerCase()
+      : "";
+
+
+  let filtered =
+    tasks.filter(
+      task=>{
+
+        if(
+          search &&
+          !String(
+            task.name || ""
+          )
+            .toLowerCase()
+            .includes(search)
+        ){
+
+          return false;
+
+        }
+
+
+        if(
+          activeTab==="pending"
+        ){
+
+          return task.status ===
+            "pending";
+
+        }
+
+
+        if(
+          activeTab==="active"
+        ){
+
+          return (
+            task.status==="running" ||
+            task.status==="stopped"
+          );
+
+        }
+
+
+        if(
+          activeTab==="history"
+        ){
+
+          return task.status ===
+            "completed";
+
+        }
+
+
+        return true;
+
+      }
+    );
+
+
+  if(filtered.length===0){
+
+    list.innerHTML = `
+
+      <div class="empty">
+
+        <div style="font-size:40px">
+          📋
+        </div>
+
+        <h3>
+          No tasks found
+        </h3>
+
+        <p>
+          Add a new task to get started.
+        </p>
+
+      </div>
+
+    `;
+
+
+    updateStats();
+
+    return;
+
+  }
+
+
+  list.innerHTML =
+    filtered
+      .map(taskHTML)
+      .join("");
+
+
+  updateStats();
+
+}
+
+
+/* =========================================================
+   TASK HTML
+========================================================= */
+
+function taskHTML(
+  task
+){
+
+  const status =
+    task.status ||
+    "pending";
+
+
+  const working =
+    formatDuration(
+      getWorkingMilliseconds(
+        task
+      )
+    );
+
+
+  let buttons="";
+
+
+  if(
+    status==="pending"
+  ){
+
+    buttons += `
+
+      <button
+        class="start"
+        onclick="startTask('${task.id}')">
+
+        ▶ Start
+
+      </button>
+
+    `;
+
+  }
+
+
+  if(
+    status==="running"
+  ){
+
+    buttons += `
+
+      <button
+        class="stop"
+        onclick="stopTask('${task.id}')">
+
+        ⏸ Stop
+
+      </button>
+
+
+      <button
+        class="complete"
+        onclick="completeTask('${task.id}')">
+
+        ✓ Complete
+
+      </button>
+
+    `;
+
+  }
+
+
+  if(
+    status==="stopped"
+  ){
+
+    buttons += `
+
+      <button
+        class="resume"
+        onclick="resumeTask('${task.id}')">
+
+        ▶ Resume
+
+      </button>
+
+
+      <button
+        class="complete"
+        onclick="completeTask('${task.id}')">
+
+        ✓ Complete
+
+      </button>
+
+    `;
+
+  }
+
+
+  if(
+    status==="completed"
+  ){
+
+    buttons += `
+
+      <span style="
+        padding:9px 12px;
+        border-radius:9px;
+        background:#dcfce7;
+        color:#166534;
+        font-weight:bold;
+        font-size:13px;">
+
+        ✓ Completed
+
+      </span>
+
+    `;
+
+  }
+
+
+  buttons += `
+
+    <button
+      class="edit"
+      onclick="openEdit('${task.id}')">
+
+      ✎ Edit
+
+    </button>
+
+
+    <button
+      class="delete"
+      onclick="deleteTask('${task.id}')">
+
+      Delete
+
+    </button>
+
+  `;
+
+
+  return `
+
+    <article class="task">
+
+
+      <div class="taskTop">
+
+        <div class="taskName">
+
+          ${escapeHTML(
+            task.name || ""
+          )}
+
+        </div>
+
+
+        <span
+          class="badge ${status}">
+
+          ${status.toUpperCase()}
+
+        </span>
+
+      </div>
+
+
+      <div class="timer">
+
+        ${working}
+
+      </div>
+
+
+      <div class="taskInfo">
+
+        Date:
+        ${task.task_date || "-"}
+
+        <br>
+
+        Started:
+
+        ${
+          task.actual_start
+
+            ? formatDate(
+                task.actual_start
+              )
+
+            : "Not started"
+        }
+
+
+        ${
+          task.actual_end
+
+            ? `
+              <br>
+              Ended:
+              ${formatDate(
+                task.actual_end
+              )}
+            `
+
+            : ""
+        }
+
+      </div>
+
+
+      <div class="taskButtons">
+
+        ${buttons}
+
+      </div>
+
+
+    </article>
+
+  `;
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(
+  text
+){
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+
+  div.textContent =
+    text;
+
+
+  return div.innerHTML;
+
+}
+
+
+function formatDate(
+  value
+){
+
+  try{
+
+    return new Date(
+      value
+    ).toLocaleString();
+
+  }catch(error){
+
+    return value;
+
+  }
+
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function updateStats(){
+
+  const total =
+    tasks.length;
+
+
+  const pending =
+    tasks.filter(
+      t=>
+        t.status==="pending"
+    ).length;
+
+
+  const active =
+    tasks.filter(
+      t=>
+        t.status==="running" ||
+        t.status==="stopped"
+    ).length;
+
+
+  const completed =
+    tasks.filter(
+      t=>
+        t.status==="completed"
+    ).length;
+
+
+  document
+    .getElementById(
+      "totalCount"
+    )
+    .textContent =
+      total;
+
+
+  document
+    .getElementById(
+      "pendingCount"
+    )
+    .textContent =
+      pending;
+
+
+  document
+    .getElementById(
+      "activeCount"
+    )
+    .textContent =
+      active;
+
+
+  document
+    .getElementById(
+      "completedCount"
+    )
+    .textContent =
+      completed;
+
+}
+
+
+/* =========================================================
+   TAB
+========================================================= */
+
+function setTab(
+  tab
+){
+
+  activeTab =
+    tab;
+
+
+  document
+    .querySelectorAll(
+      ".tab"
+    )
+    .forEach(
+      btn=>{
+
+        btn.classList.toggle(
+          "active",
+          btn.dataset.tab===tab
+        );
+
+      }
+    );
+
+
+  renderTasks();
+
+}
+
+
+/* =========================================================
+   REALTIME
+========================================================= */
+
+function setupRealtime(){
+
+  if(!currentWorkspace){
+
+    return;
+
+  }
+
+
+  if(realtimeChannel){
+
+    try{
+
+      supabaseClient
+        .removeChannel(
+          realtimeChannel
+        );
+
+    }catch(error){}
+
+  }
+
+
+  realtimeChannel =
+    supabaseClient
+      .channel(
+        "daily_tasks_workspace_" +
+        currentWorkspace
+      )
+      .on(
+        "postgres_changes",
+        {
+          event:"*",
+          schema:"public",
+          table:"daily_tasks",
+          filter:
+            "workspace_id=eq."+
+            currentWorkspace
+        },
+        payload=>{
+
+          console.log(
+            "Realtime:",
+            payload
+          );
+
+
+          handleRealtime(
+            payload
+          );
+
+        }
+      )
+      .subscribe();
+
+}
+
+
+function handleRealtime(
+  payload
+){
+
+  const event =
+    payload.eventType;
+
+
+  if(
+    event==="INSERT"
+  ){
+
+    const newTask =
+      payload.new;
+
+
+    const exists =
+      tasks.some(
+        t=>t.id===newTask.id
+      );
+
+
+    if(!exists){
+
+      tasks.unshift(
+        newTask
+      );
+
+    }
+
+
+  }else if(
+    event==="UPDATE"
+  ){
+
+    const updated =
+      payload.new;
+
+
+    const index =
+      tasks.findIndex(
+        t=>t.id===updated.id
+      );
+
+
+    if(index!==-1){
+
+      tasks[index] =
+        updated;
+
+    }else{
+
+      tasks.unshift(
+        updated
+      );
+
+    }
+
+
+  }else if(
+    event==="DELETE"
+  ){
+
+    tasks =
+      tasks.filter(
+        t=>
+          t.id!==payload.old.id
+      );
+
+  }
+
+
+  saveLocal();
+
+  renderTasks();
+
+}
+
+
+/* =========================================================
+   TIMER LOOP
+========================================================= */
+
+function startTimerLoop(){
+
+  clearInterval(
+    timerInterval
+  );
+
+
+  timerInterval =
+    setInterval(
+      ()=>{
+
+        const hasRunning =
+          tasks.some(
+            t=>
+              t.status==="running"
+          );
+
+
+        if(hasRunning){
+
+          renderTasks();
+
+        }
+
+      },
+      1000
+    );
+
+}
+
+
+/* =========================================================
+   OFFLINE SYNC
+========================================================= */
+
+async function syncPending(){
+
+  if(syncing){
+
+    return;
+
+  }
+
+
+  if(!navigator.onLine){
+
+    return;
+
+  }
+
+
+  if(
+    !currentUser ||
+    !currentWorkspace
+  ){
+
+    return;
+
+  }
+
+
+  syncing=true;
+
+
+  try{
+
+    /* Upload local tasks */
+
+    const localTasks =
+      tasks.filter(
+        t=>
+          String(t.id)
+            .startsWith(
+              "local-"
+            )
+      );
+
+
+    for(
+      const task of localTasks
+    ){
+
+      await pushTask(
+        task
+      );
+
+    }
+
+
+    /* Update pending tasks */
+
+    const pending =
+      tasks.filter(
+        t=>
+          t._pendingAction ===
+          "update" &&
+          !String(t.id)
+            .startsWith(
+              "local-"
+            )
+      );
+
+
+    for(
+      const task of pending
+    ){
+
+      const success =
+        await saveTask(
+          task
+        );
+
+
+      if(success){
+
+        delete task._pendingAction;
+
+      }
+
+    }
+
+
+    saveLocal();
+
+
+    await loadCloudTasks();
+
+
+  }catch(error){
+
+    console.error(
+      "Sync error:",
+      error
+    );
+
+  }finally{
+
+    syncing=false;
+
+  }
+
+}
+
+
+/* =========================================================
+   CLOUD CONNECTION TEST
+========================================================= */
+
+async function testConnection(){
+
+  loginStatus(
+    "Testing Supabase connection..."
+  );
+
+
+  try{
+
+    const result =
+      await supabaseClient
+        .from("daily_tasks")
+        .select("id")
+        .limit(1);
+
+
+    if(result.error){
+
+      loginStatus(
+        "Connection error: " +
+        result.error.message,
+        "error"
+      );
+
+
+      showToast(
+        result.error.message,
+        "error",
+        "Cloud Connection Failed"
+      );
+
+      return;
+
+    }
+
+
+    loginStatus(
+      "Supabase connection successful.",
+      "success"
+    );
+
+
+    showToast(
+      "Your Supabase connection is working correctly.",
+      "success",
+      "Cloud Connection"
+    );
+
+
+  }catch(error){
+
+    loginStatus(
+      "Connection failed: " +
+      error.message,
+      "error"
+    );
+
+
+    showToast(
+      error.message,
+      "error",
+      "Connection Failed"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout(){
+
+  try{
+
+    if(realtimeChannel){
+
+      await supabaseClient
+        .removeChannel(
+          realtimeChannel
+        );
+
+      realtimeChannel=null;
+
+    }
+
+
+    await supabaseClient
+      .auth
+      .signOut();
+
+
+  }catch(error){
+
+    console.error(
+      error
+    );
+
+  }
+
+
+  currentUser=null;
+
+  currentProfile=null;
+
+  currentWorkspace=null;
+
+  tasks=[];
+
+
+  clearInterval(
+    timerInterval
+  );
+
+
+  document
+    .getElementById(
+      "app"
+    )
+    .classList.add(
+      "hidden"
+    );
+
+
+  document
+    .getElementById(
+      "loginPage"
+    )
+    .classList.remove(
+      "hidden"
+    );
+
+
+  document
+    .getElementById(
+      "password"
+    )
+    .value="";
+
+
+  showToast(
+    "You have been logged out successfully.",
+    "success",
+    "Logged Out"
+  );
+
+}
+
+
+/* =========================================================
+   EXISTING SESSION
+========================================================= */
+
+async function checkExistingSession(){
+
+  try{
+
+    const result =
+      await supabaseClient
+        .auth
+        .getSession();
+
+
+    const session =
+      result.data.session;
+
+
+    if(!session){
+
+      updateConnectionUI();
+
+      return;
+
+    }
+
+
+    currentUser =
+      session.user;
+
+
+    let username =
+      currentUser.email
+
+        ? currentUser.email
+            .split("@")[0]
+
+        : "user";
+
+
+    await createProfileIfNeeded(
+      currentUser.id,
+      username
+    );
+
+
+    await afterLogin(
+      username
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "Session error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document
+  .getElementById(
+    "taskInput"
+  )
+  .addEventListener(
+    "keydown",
+    e=>{
+
+      if(e.key==="Enter"){
+
+        addTask();
+
+      }
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "password"
+  )
+  .addEventListener(
+    "keydown",
+    e=>{
+
+      if(e.key==="Enter"){
+
+        login();
+
+      }
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "username"
+  )
+  .addEventListener(
+    "keydown",
+    e=>{
+
+      if(e.key==="Enter"){
+
+        login();
+
+      }
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "editInput"
+  )
+  .addEventListener(
+    "keydown",
+    e=>{
+
+      if(e.key==="Enter"){
+
+        saveEdit();
+
+      }
+
+      if(e.key==="Escape"){
+
+        closeEdit();
+
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   SERVICE WORKER
+========================================================= */
+
+if(
+  "serviceWorker" in navigator
+){
+
+  window.addEventListener(
+    "load",
+    ()=>{
+
+      navigator.serviceWorker
+        .register(
+          "sw.js"
+        )
+        .then(
+          ()=>{
+            console.log(
+              "Service worker registered."
+            );
+          }
+        )
+        .catch(
+          error=>{
+            console.log(
+              "Service worker registration failed:",
+              error
+            );
+          }
+        );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+updateConnectionUI();
+
+checkExistingSession();
+
+</script>
+
+</body>
+  </html>
