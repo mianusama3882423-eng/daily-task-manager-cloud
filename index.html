@@ -14,7 +14,7 @@ body{
   margin:0;
   font-family:Arial,sans-serif;
   background:#f3f6fb;
-  color:#172033
+  color:#172033;
 }
 
 header{
@@ -23,22 +23,22 @@ header{
   padding:16px;
   position:sticky;
   top:0;
-  z-index:5
+  z-index:5;
 }
 
 .wrap{
-  max-width:1150px;
+  max-width:1100px;
   margin:auto;
-  padding:16px
+  padding:16px;
 }
 
 .brand{
   font-size:22px;
-  font-weight:800
+  font-weight:800;
 }
 
 .muted{
-  color:#687386
+  color:#687386;
 }
 
 .card{
@@ -46,7 +46,7 @@ header{
   border-radius:16px;
   padding:18px;
   margin:12px 0;
-  box-shadow:0 4px 18px #0000000d
+  box-shadow:0 4px 18px #0000000d;
 }
 
 input,
@@ -58,12 +58,12 @@ button{
   border:1px solid #d6dce8;
   border-radius:10px;
   font-size:15px;
-  margin-top:7px
+  margin-top:7px;
 }
 
 textarea{
-  min-height:110px;
-  resize:vertical
+  min-height:100px;
+  resize:vertical;
 }
 
 button{
@@ -71,49 +71,41 @@ button{
   color:white;
   border:0;
   font-weight:700;
-  cursor:pointer
+  cursor:pointer;
 }
 
 button.secondary{
   background:#eaf0ff;
-  color:#155eef
+  color:#155eef;
 }
 
 button.danger{
-  background:#d92d20
+  background:#d92d20;
 }
 
 button.gray{
-  background:#667085
-}
-
-button.success{
-  background:#067647
-}
-
-button.warning{
-  background:#b54708
+  background:#667085;
 }
 
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:12px
+  gap:12px;
 }
 
 .hidden{
-  display:none!important
+  display:none!important;
 }
 
 .login-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
   gap:15px;
-  margin-top:25px
+  margin-top:25px;
 }
 
 .login-card h2{
-  margin-top:8px
+  margin-top:0;
 }
 
 .role{
@@ -122,27 +114,27 @@ button.warning{
   color:#155eef;
   padding:5px 8px;
   border-radius:20px;
-  display:inline-block
+  display:inline-block;
 }
 
 nav{
   display:flex;
   gap:8px;
   overflow:auto;
-  padding:10px 0
+  padding:10px 0;
 }
 
 nav button{
   min-width:max-content;
   width:auto;
-  padding:9px 14px
+  padding:9px 14px;
 }
 
 .task{
   border:1px solid #e0e5ed;
   border-radius:14px;
   padding:14px;
-  margin:10px 0
+  margin:10px 0;
 }
 
 .status{
@@ -151,38 +143,38 @@ nav button{
   padding:5px 8px;
   border-radius:20px;
   background:#eef2f6;
-  display:inline-block
+  display:inline-block;
 }
 
 .status.assigned{
-  background:#fff4d6
+  background:#fff4d6;
 }
 
 .status.accepted{
-  background:#e7f6ec
+  background:#e7f6ec;
 }
 
 .status.in_progress{
-  background:#e7efff
+  background:#e7efff;
 }
 
 .status.completed{
-  background:#e8f7f0
+  background:#e8f7f0;
 }
 
 .row{
   display:flex;
   gap:8px;
-  flex-wrap:wrap
+  flex-wrap:wrap;
 }
 
 .row>*{
   flex:1;
-  min-width:130px
+  min-width:130px;
 }
 
 .small{
-  font-size:13px
+  font-size:13px;
 }
 
 .topline{
@@ -190,45 +182,19 @@ nav button{
   justify-content:space-between;
   gap:10px;
   align-items:center;
-  flex-wrap:wrap
+  flex-wrap:wrap;
 }
 
 table{
   width:100%;
-  border-collapse:collapse
+  border-collapse:collapse;
 }
 
 td,th{
   padding:9px;
   border-bottom:1px solid #edf0f5;
   text-align:left;
-  font-size:13px
-}
-
-.table-wrap{
-  overflow-x:auto
-}
-
-.stat{
-  text-align:center
-}
-
-.stat h2{
-  margin:8px 0;
-  font-size:30px
-}
-
-.profile-box{
-  background:#eef4ff;
-  border-radius:14px;
-  padding:14px;
-  margin-top:12px
-}
-
-.user-id{
-  font-weight:800;
-  color:#155eef;
-  font-size:16px
+  font-size:13px;
 }
 
 #toast{
@@ -241,44 +207,19 @@ td,th{
   padding:12px 18px;
   border-radius:12px;
   display:none;
-  z-index:100;
+  z-index:20;
   max-width:90%;
-  text-align:center
-}
-
-.modal{
-  position:fixed;
-  inset:0;
-  background:#0008;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:15px;
-  z-index:50
-}
-
-.modal-box{
-  background:white;
-  width:100%;
-  max-width:520px;
-  max-height:90vh;
-  overflow:auto;
-  border-radius:18px;
-  padding:20px
-}
-
-.empty{
   text-align:center;
-  padding:30px;
-  color:#667085
 }
 
-.result-box{
-  background:#eaf7ee;
-  border:1px solid #b7e1c2;
-  border-radius:14px;
-  padding:15px;
-  margin-top:12px
+.user-id{
+  display:inline-block;
+  background:#eef4ff;
+  color:#155eef;
+  padding:5px 9px;
+  border-radius:8px;
+  font-weight:bold;
+  font-size:12px;
 }
 </style>
 </head>
@@ -286,317 +227,242 @@ td,th{
 <body>
 
 <header>
-<div class="wrap">
-
-<div class="brand">
-☑ Daily Task Manager Cloud
-</div>
-
-<div id="headerUser" class="small"></div>
-
-</div>
+  <div class="wrap">
+    <div class="brand">☑ Daily Task Manager Cloud</div>
+    <div id="headerUser" class="small"></div>
+  </div>
 </header>
 
 
-<!-- ================= LOGIN ================= -->
-
+<!-- LOGIN -->
 <div id="authScreen" class="wrap">
 
-<div class="card">
+  <div class="card">
 
-<h1>Secure Login</h1>
+    <h1>Secure Login</h1>
 
-<p class="muted">
-Login using the username and password assigned by your manager.
-</p>
+    <p class="muted">
+      Choose your account type.
+    </p>
 
-<div class="login-grid">
+    <div class="login-grid">
 
+      <!-- SUPER USER -->
+      <div class="card login-card">
 
-<!-- SUPER USER -->
+        <span class="role">HIGHEST ACCESS</span>
 
-<div class="card login-card">
+        <h2>Super User</h2>
 
-<span class="role">
-HIGHEST ACCESS
-</span>
+        <input
+          id="suUser"
+          placeholder="Super User username"
+          autocomplete="username"
+        >
 
-<h2>👑 Super User</h2>
+        <input
+          id="suPass"
+          type="password"
+          placeholder="Password"
+          autocomplete="current-password"
+        >
 
-<input
-id="suUser"
-placeholder="Super User username"
-autocomplete="username"
->
+        <button onclick="login('super_user')">
+          Login as Super User
+        </button>
 
-<input
-id="suPass"
-type="password"
-placeholder="Password"
-autocomplete="current-password"
->
-
-<button onclick="login('super_user')">
-Login as Super User
-</button>
-
-</div>
+      </div>
 
 
-<!-- ADMIN -->
+      <!-- ADMIN -->
+      <div class="card login-card">
 
-<div class="card login-card">
+        <span class="role">MANAGEMENT</span>
 
-<span class="role">
-MANAGEMENT
-</span>
+        <h2>Admin</h2>
 
-<h2>👨‍💼 Admin</h2>
+        <input
+          id="adUser"
+          placeholder="Admin username"
+          autocomplete="username"
+        >
 
-<input
-id="adUser"
-placeholder="Admin username"
-autocomplete="username"
->
+        <input
+          id="adPass"
+          type="password"
+          placeholder="Password"
+          autocomplete="current-password"
+        >
 
-<input
-id="adPass"
-type="password"
-placeholder="Password"
-autocomplete="current-password"
->
+        <button onclick="login('admin')">
+          Login as Admin
+        </button>
 
-<button onclick="login('admin')">
-Login as Admin
-</button>
-
-</div>
+      </div>
 
 
-<!-- END USER -->
+      <!-- END USER -->
+      <div class="card login-card">
 
-<div class="card login-card">
+        <span class="role">END USER</span>
 
-<span class="role">
-END USER
-</span>
+        <h2>End User</h2>
 
-<h2>👤 End User</h2>
+        <input
+          id="usUser"
+          placeholder="Username"
+          autocomplete="username"
+        >
 
-<input
-id="usUser"
-placeholder="Username"
-autocomplete="username"
->
+        <input
+          id="usPass"
+          type="password"
+          placeholder="Password"
+          autocomplete="current-password"
+        >
 
-<input
-id="usPass"
-type="password"
-placeholder="Password"
-autocomplete="current-password"
->
+        <button onclick="login('user')">
+          Login as End User
+        </button>
 
-<button onclick="login('user')">
-Login as End User
-</button>
+      </div>
 
-</div>
-
-</div>
-
-</div>
+    </div>
+  </div>
 
 
-<div class="card">
+  <div class="card">
 
-<h3>Account Creation</h3>
+    <h3>New account</h3>
 
-<p class="muted">
-Accounts cannot be self-created.
-Super User creates Admin accounts,
-and Admin creates End User accounts.
-</p>
+    <p class="muted">
+      Admins and End Users can be created through the management system.
+    </p>
 
-</div>
+    <button
+      class="secondary"
+      onclick="showSignup()"
+    >
+      Create account with invite
+    </button>
+
+  </div>
 
 </div>
 
 
-<!-- ================= APPLICATION ================= -->
+<!-- SIGNUP -->
+<div id="signupScreen" class="wrap hidden">
 
+  <div class="card">
+
+    <h2>Create Account</h2>
+
+    <p class="muted">
+      Enter the invite code given by your manager.
+    </p>
+
+    <input
+      id="inviteCode"
+      placeholder="Invite code"
+    >
+
+    <button
+      class="secondary"
+      onclick="checkInvite()"
+    >
+      Check Invite
+    </button>
+
+    <div
+      id="inviteInfo"
+      class="card hidden"
+    ></div>
+
+
+    <div id="signupFields" class="hidden">
+
+      <input
+        id="newName"
+        placeholder="Full name"
+      >
+
+      <input
+        id="newUser"
+        placeholder="Username"
+      >
+
+      <input
+        id="newPass"
+        type="password"
+        placeholder="Password (8+ characters)"
+      >
+
+      <input
+        id="newPass2"
+        type="password"
+        placeholder="Confirm password"
+      >
+
+      <button onclick="signup()">
+        Create Account
+      </button>
+
+    </div>
+
+
+    <button
+      class="gray"
+      onclick="showLogin()"
+    >
+      Back to Login
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- APP -->
 <div id="app" class="hidden">
 
-<div class="wrap">
+  <div class="wrap">
 
-<div class="card">
+    <div class="card topline">
 
-<div class="topline">
+      <div>
 
-<div>
+        <b id="welcome"></b>
 
-<b id="welcome"></b>
+        <div
+          id="roleText"
+          class="muted"
+        ></div>
 
-<div id="roleText" class="muted"></div>
+        <div
+          id="myUserId"
+          class="user-id"
+          style="margin-top:7px"
+        ></div>
 
-<div id="myUserId" class="user-id"></div>
+      </div>
 
-</div>
+      <button
+        class="danger"
+        style="width:auto"
+        onclick="logout()"
+      >
+        Logout
+      </button>
 
-<button
-class="danger"
-style="width:auto"
-onclick="logout()"
->
-Logout
-</button>
-
-</div>
-
-</div>
-
-
-<nav id="nav"></nav>
-
-<main id="content"></main>
-
-</div>
-
-</div>
+    </div>
 
 
-<!-- ================= ACCOUNT MODAL ================= -->
+    <nav id="nav"></nav>
 
-<div id="accountModal" class="modal hidden">
+    <main id="content"></main>
 
-<div class="modal-box">
-
-<div class="topline">
-
-<h2 id="accountModalTitle">
-Create Account
-</h2>
-
-<button
-class="gray"
-style="width:auto"
-onclick="closeAccountModal()"
->
-✕
-</button>
-
-</div>
-
-<p
-id="accountModalInfo"
-class="muted"
-></p>
-
-<input
-id="accountName"
-placeholder="Full name"
->
-
-<input
-id="accountUsername"
-placeholder="Username"
->
-
-<input
-id="accountPassword"
-type="password"
-placeholder="Password (minimum 8 characters)"
->
-
-<input
-id="accountPassword2"
-type="password"
-placeholder="Confirm password"
->
-
-<div class="row">
-
-<button onclick="createManagedAccount()">
-Create Account
-</button>
-
-<button
-class="gray"
-onclick="closeAccountModal()"
->
-Cancel
-</button>
-
-</div>
-
-<div
-id="accountResult"
-class="result-box hidden"
-></div>
-
-</div>
-
-</div>
-
-
-<!-- ================= TASK MODAL ================= -->
-
-<div id="taskModal" class="modal hidden">
-
-<div class="modal-box">
-
-<div class="topline">
-
-<h2 id="taskModalTitle">
-Assign Task
-</h2>
-
-<button
-class="gray"
-style="width:auto"
-onclick="closeTaskModal()"
->
-✕
-</button>
-
-</div>
-
-<input
-id="tfName"
-placeholder="Task title"
->
-
-<textarea
-id="tfDesc"
-placeholder="Detailed description / instructions"
-></textarea>
-
-<select id="tfUser"></select>
-
-<label class="small">
-Due date & time
-</label>
-
-<input
-id="tfDue"
-type="datetime-local"
->
-
-<div class="row">
-
-<button onclick="saveTask()">
-Save Task
-</button>
-
-<button
-class="gray"
-onclick="closeTaskModal()"
->
-Cancel
-</button>
-
-</div>
-
-</div>
+  </div>
 
 </div>
 
@@ -606,9 +472,9 @@ Cancel
 
 <script>
 
-/* =========================================
-   SUPABASE CONFIG
-========================================= */
+/* =========================================================
+   SUPABASE
+========================================================= */
 
 const SUPABASE_URL =
 "https://egphfcjehcygjcabugbo.supabase.co";
@@ -618,27 +484,25 @@ const SUPABASE_KEY =
 
 const sb =
 supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
 
-/* =========================================
-   APP STATE
-========================================= */
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
 
 let me = null;
 let tasks = [];
 let users = [];
 let currentTab = "dashboard";
-let editingTaskId = null;
-let accountRoleToCreate = null;
 let refreshTimer = null;
 
 
-/* =========================================
+/* =========================================================
    HELPERS
-========================================= */
+========================================================= */
 
 const $ = id =>
 document.getElementById(id);
@@ -646,2439 +510,2060 @@ document.getElementById(id);
 
 function toast(message){
 
-$("toast").textContent = message;
+  const box = $("toast");
 
-$("toast").style.display = "block";
+  box.textContent = message;
 
-setTimeout(()=>{
-$("toast").style.display = "none";
-},3500);
+  box.style.display = "block";
+
+  setTimeout(()=>{
+    box.style.display = "none";
+  },3000);
 
 }
 
 
 function esc(value){
 
-return String(value ?? "")
-.replace(/[&<>"']/g,c=>({
+  return String(value ?? "")
+    .replace(/[&<>"']/g,c=>({
 
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
 
-}[c]));
+    }[c]));
 
 }
 
 
 function fmt(value){
 
-if(!value)
-return "—";
+  if(!value) return "—";
 
-const d = new Date(value);
-
-if(Number.isNaN(d.getTime()))
-return "—";
-
-return d.toLocaleString();
+  return new Date(value).toLocaleString();
 
 }
 
 
 function secondsText(seconds){
 
-seconds =
-Math.max(
-0,
-Number(seconds) || 0
-);
+  seconds =
+  Math.max(
+    0,
+    Number(seconds) || 0
+  );
 
-const h =
-Math.floor(seconds/3600);
+  const h =
+  Math.floor(seconds / 3600);
 
-const m =
-Math.floor((seconds%3600)/60);
+  const m =
+  Math.floor(
+    (seconds % 3600) / 60
+  );
 
-const s =
-Math.floor(seconds%60);
+  const s =
+  Math.floor(seconds % 60);
 
-return `${h}h ${m}m ${s}s`;
-
-}
-
-
-/*
-Supports both old and upgraded
-database column names.
-*/
-
-function getTaskEndTime(task){
-
-return task.ended_at ||
-task.completed_at ||
-null;
+  return `${h}h ${m}m ${s}s`;
 
 }
 
 
-function getTaskWorkingTime(task){
+/* =========================================================
+   SCREEN CONTROL
+========================================================= */
 
-if(
-task.total_working_time !== undefined &&
-task.total_working_time !== null
-){
+function showLogin(){
 
-return Number(task.total_working_time) || 0;
+  $("signupScreen")
+    .classList
+    .add("hidden");
+
+  $("authScreen")
+    .classList
+    .remove("hidden");
 
 }
 
-return Number(
-task.total_work_seconds || 0
-);
+
+function showSignup(){
+
+  $("authScreen")
+    .classList
+    .add("hidden");
+
+  $("signupScreen")
+    .classList
+    .remove("hidden");
 
 }
 
 
-/* =========================================
-   PROFILE RPC
-========================================= */
+/* =========================================================
+   IMPORTANT:
+   LOAD CURRENT USER PROFILE THROUGH RPC
+========================================================= */
 
 async function getMyProfile(){
 
-const {
-data,
-error
-} =
-await sb.rpc(
-"get_my_profile"
-);
+  const {
+    data:sessionData,
+    error:sessionError
+  } =
+  await sb.auth.getSession();
+
+  if(sessionError)
+    throw sessionError;
+
+  const session =
+  sessionData?.session;
+
+  if(!session?.user?.id){
+
+    throw new Error(
+      "No active session"
+    );
+
+  }
 
 
-if(error){
-
-console.error(
-"get_my_profile error:",
-error
-);
-
-return {
-profile:null,
-error:error
-};
-
-}
+  const {
+    data,
+    error
+  } =
+  await sb.rpc(
+    "get_my_profile",
+    {
+      p_user_id:
+      session.user.id
+    }
+  );
 
 
-let profile = data;
+  if(error)
+    throw error;
 
 
-/*
-Some Supabase responses may return
-JSON as a string.
-*/
+  if(!data){
 
-if(typeof profile === "string"){
+    throw new Error(
+      "Profile not found"
+    );
 
-try{
-
-profile =
-JSON.parse(profile);
-
-}
-catch(e){
-
-console.error(e);
-
-}
-
-}
+  }
 
 
-return {
-profile:profile,
-error:null
-};
+  return data;
 
 }
 
 
-/* =========================================
+/* =========================================================
    LOGIN
-========================================= */
+========================================================= */
 
 async function login(expectedRole){
 
-let usernameInput;
-let passwordInput;
+  const username =
+  $(
+    expectedRole === "super_user"
+      ? "suUser"
+      : expectedRole === "admin"
+      ? "adUser"
+      : "usUser"
+  )
+  .value
+  .trim()
+  .toLowerCase();
 
 
-if(expectedRole === "super_user"){
-
-usernameInput = $("suUser");
-passwordInput = $("suPass");
-
-}
-else if(expectedRole === "admin"){
-
-usernameInput = $("adUser");
-passwordInput = $("adPass");
-
-}
-else{
-
-usernameInput = $("usUser");
-passwordInput = $("usPass");
-
-}
+  const password =
+  $(
+    expectedRole === "super_user"
+      ? "suPass"
+      : expectedRole === "admin"
+      ? "adPass"
+      : "usPass"
+  )
+  .value;
 
 
-const username =
-usernameInput.value
-.trim()
-.toLowerCase();
+  if(!username || !password){
 
-const password =
-passwordInput.value;
+    toast(
+      "Username and password required"
+    );
 
+    return;
 
-if(!username || !password){
-
-toast(
-"Username and password required"
-);
-
-return;
-
-}
+  }
 
 
-const email =
-username +
-"@taskmanager.local";
+  toast("Signing in...");
 
 
-/* AUTH LOGIN */
+  const {
+    error
+  } =
+  await sb.auth.signInWithPassword({
 
-const {
-error
-} =
-await sb.auth.signInWithPassword({
+    email:
+    username +
+    "@taskmanager.local",
 
-email:email,
+    password:
+    password
 
-password:password
-
-});
-
-
-if(error){
-
-console.error(
-"Login error:",
-error
-);
-
-toast(
-error.message
-);
-
-return;
-
-}
+  });
 
 
-/*
-Authentication succeeded.
-Now get profile through secure RPC.
-*/
+  if(error){
 
-const {
-profile,
-error:profileError
-} =
-await getMyProfile();
+    toast(error.message);
+
+    return;
+
+  }
 
 
-if(
-profileError ||
-!profile
-){
+  try{
 
-console.error(
-"Profile RPC error:",
-profileError
-);
+    /*
+      NEW SECURE PROFILE METHOD
+    */
 
-toast(
-"Login successful, but profile could not be loaded."
-);
-
-await sb.auth.signOut();
-
-return;
-
-}
+    me =
+    await getMyProfile();
 
 
-if(!profile.is_active){
+    if(!me){
 
-toast(
-"This account is deactivated"
-);
+      await sb.auth.signOut();
 
-await sb.auth.signOut();
+      toast(
+        "Profile could not be loaded"
+      );
 
-return;
+      return;
 
-}
+    }
 
 
-if(profile.role !== expectedRole){
+    if(!me.is_active){
 
-toast(
-"Wrong login portal for this account"
-);
+      await sb.auth.signOut();
 
-await sb.auth.signOut();
+      toast(
+        "This account is deactivated"
+      );
 
-return;
+      return;
+
+    }
+
+
+    if(me.role !== expectedRole){
+
+      await sb.auth.signOut();
+
+      toast(
+        "Wrong login portal for this account"
+      );
+
+      return;
+
+    }
+
+
+    openApp();
+
+  }
+  catch(error){
+
+    console.error(
+      "PROFILE ERROR:",
+      error
+    );
+
+
+    await sb.auth.signOut();
+
+
+    toast(
+      "Profile could not be loaded: " +
+      error.message
+    );
+
+  }
 
 }
 
 
-me = profile;
-
-openApp();
-
-}
-
-
-/* =========================================
+/* =========================================================
    OPEN APP
-========================================= */
+========================================================= */
 
 async function openApp(){
 
-$("authScreen")
-.classList
-.add("hidden");
+  $("authScreen")
+    .classList
+    .add("hidden");
 
-$("app")
-.classList
-.remove("hidden");
+  $("signupScreen")
+    .classList
+    .add("hidden");
 
-
-$("welcome").textContent =
-"Welcome, " +
-(
-me.full_name ||
-me.username
-);
+  $("app")
+    .classList
+    .remove("hidden");
 
 
-let roleName =
-"End User";
+  $("welcome").textContent =
+  "Welcome, " +
+  (
+    me.full_name ||
+    me.username
+  );
 
 
-if(me.role === "super_user")
-roleName = "Super User";
+  $("roleText").textContent =
+  me.role === "super_user"
+    ? "Super User"
+    : me.role === "admin"
+    ? "Admin"
+    : "End User";
 
 
-if(me.role === "admin")
-roleName = "Admin";
+  $("myUserId").textContent =
+  "User ID: " +
+  (me.user_id || "—");
 
 
-$("roleText").textContent =
-roleName +
-" • @" +
-me.username;
+  $("headerUser").textContent =
+  me.username
+  ? "Logged in as @" + me.username
+  : "";
 
 
-$("myUserId").textContent =
-"User ID: " +
-(
-me.user_id ||
-"Not assigned"
-);
+  buildNav();
+
+  await refresh();
 
 
-$("headerUser").textContent =
-(
-me.full_name ||
-me.username
-) +
-" • " +
-(
-me.user_id ||
-""
-);
+  if(refreshTimer)
+    clearInterval(refreshTimer);
 
 
-buildNav();
-
-await refresh();
-
-
-if(refreshTimer)
-clearInterval(refreshTimer);
-
-
-refreshTimer =
-setInterval(
-refresh,
-30000
-);
+  refreshTimer =
+  setInterval(
+    refresh,
+    30000
+  );
 
 }
 
 
-/* =========================================
+/* =========================================================
    NAVIGATION
-========================================= */
+========================================================= */
 
 function buildNav(){
 
-let items;
+  let items;
 
 
-if(me.role === "user"){
+  if(me.role === "user"){
 
-items = [
-"dashboard",
-"history"
-];
+    items = [
+      "dashboard",
+      "history"
+    ];
 
-}
-else if(me.role === "admin"){
+  }
+  else{
 
-items = [
-"dashboard",
-"users",
-"reports",
-"history"
-];
+    items = [
+      "dashboard",
+      "users",
+      "reports",
+      "history"
+    ];
 
-}
-else{
-
-items = [
-"dashboard",
-"users",
-"reports",
-"history"
-];
-
-}
+  }
 
 
-$("nav").innerHTML =
-items.map(tab=>`
+  $("nav").innerHTML =
+  items
+  .map(tab=>`
 
-<button
-class="${tab===currentTab ? "" : "secondary"}"
-onclick="switchTab('${tab}')"
->
-${tab.charAt(0).toUpperCase()+tab.slice(1)}
-</button>
+    <button
+      class="${tab === currentTab ? "" : "secondary"}"
+      onclick="
+        currentTab='${tab}';
+        render();
+      "
+    >
+      ${
+        tab.charAt(0).toUpperCase()
+        +
+        tab.slice(1)
+      }
+    </button>
 
-`).join("");
-
-}
-
-
-function switchTab(tab){
-
-currentTab = tab;
-
-render();
+  `)
+  .join("");
 
 }
 
 
-/* =========================================
-   DATA REFRESH
-========================================= */
+/* =========================================================
+   REFRESH DATA
+========================================================= */
 
 async function refresh(){
 
-if(!me)
-return;
+  /*
+    TASKS
+  */
+
+  const {
+    data:taskData,
+    error:taskError
+  } =
+  await sb
+    .from("daily_tasks")
+    .select("*")
+    .order(
+      "due_at",
+      {
+        ascending:true,
+        nullsFirst:false
+      }
+    );
 
 
-/* TASKS */
+  if(taskError){
 
-const {
-data:taskData,
-error:taskError
-} =
-await sb
-.from("daily_tasks")
-.select("*")
-.order(
-"due_at",
-{
-ascending:true,
-nullsFirst:false
+    console.error(
+      "TASK ERROR:",
+      taskError
+    );
+
+  }
+  else{
+
+    tasks =
+    taskData || [];
+
+  }
+
+
+  /*
+    USERS
+  */
+
+  if(me.role !== "user"){
+
+    const {
+      data:userData,
+      error:userError
+    } =
+    await sb
+      .from("profiles")
+      .select(
+        "id,user_id,username,full_name,role,is_active,workspace_id,created_at,created_by"
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+
+    if(userError){
+
+      console.error(
+        "USER ERROR:",
+        userError
+      );
+
+    }
+    else{
+
+      users =
+      userData || [];
+
+    }
+
+  }
+
+
+  render();
+
 }
-);
 
 
-if(taskError){
-
-console.error(
-"Task refresh error:",
-taskError
-);
-
-}
-else{
-
-tasks =
-taskData || [];
-
-}
-
-
-/* USERS */
-
-if(me.role !== "user"){
-
-const {
-data:userData,
-error:userError
-} =
-await sb
-.from("profiles")
-.select(
-"id,user_id,username,full_name,role,is_active,workspace_id,created_by,created_at,updated_at"
-)
-.order(
-"created_at",
-{
-ascending:false
-}
-);
-
-
-if(userError){
-
-console.error(
-"Users refresh error:",
-userError
-);
-
-}
-else{
-
-users =
-userData || [];
-
-}
-
-}
-
-
-render();
-
-}
-
-
-/* =========================================
+/* =========================================================
    RENDER
-========================================= */
+========================================================= */
 
 function render(){
 
-buildNav();
-
-const content =
-$("content");
+  buildNav();
 
 
-if(currentTab === "dashboard"){
+  const content =
+  $("content");
 
-renderDashboard(content);
+
+  if(currentTab === "dashboard"){
+
+    renderDashboard(content);
+
+  }
+  else if(currentTab === "history"){
+
+    renderHistory(content);
+
+  }
+  else if(currentTab === "users"){
+
+    renderUsers(content);
+
+  }
+  else if(currentTab === "reports"){
+
+    renderReports(content);
+
+  }
 
 }
-else if(currentTab === "users"){
-
-renderUsers(content);
-
-}
-else if(currentTab === "reports"){
-
-renderReports(content);
-
-}
-else if(currentTab === "history"){
-
-renderHistory(content);
-
-}
-
-}
 
 
-/* =========================================
+/* =========================================================
    DASHBOARD
-========================================= */
+========================================================= */
 
-function renderDashboard(c){
+function renderDashboard(content){
 
-let list;
-
-
-if(me.role === "user"){
-
-list =
-tasks.filter(
-task =>
-task.assigned_to === me.id
-);
-
-}
-else{
-
-list = tasks;
-
-}
+  let list;
 
 
-let html = `
+  if(me.role === "user"){
 
-<div class="topline">
+    list =
+    tasks.filter(
+      task =>
+      task.assigned_to === me.id
+    );
 
-<div>
+  }
+  else{
 
-<h2>Dashboard</h2>
+    list = tasks;
 
-<div class="muted">
-Task Management Overview
-</div>
-
-</div>
-
-${
-me.role !== "user"
-?
-`
-<button
-style="width:auto"
-onclick="openTaskModal()"
->
-+ Assign Task
-</button>
-`
-:
-""
-}
-
-</div>
-
-`;
+  }
 
 
-/* END USER STATS */
+  content.innerHTML = `
 
-if(me.role === "user"){
+    <div class="topline">
 
-const pending =
-list.filter(
-x =>
-x.status === "assigned"
-).length;
+      <h2>Dashboard</h2>
 
-const accepted =
-list.filter(
-x =>
-x.status === "accepted"
-).length;
+      ${
+        me.role !== "user"
+        ?
+        `
+        <button
+          style="width:auto"
+          onclick="taskForm()"
+        >
+          + Assign Task
+        </button>
+        `
+        :
+        ""
+      }
 
-const progress =
-list.filter(
-x =>
-x.status === "in_progress"
-).length;
+    </div>
 
-const completed =
-list.filter(
-x =>
-x.status === "completed"
-).length;
+  `;
 
 
-html += `
+  if(me.role === "user"){
 
-<div class="grid">
+    content.innerHTML += `
 
-<div class="card stat">
-<div class="muted">Assigned</div>
-<h2>${pending}</h2>
-</div>
+      <div class="card">
 
-<div class="card stat">
-<div class="muted">Accepted</div>
-<h2>${accepted}</h2>
-</div>
+        <b>
+          My Tasks: ${list.length}
+        </b>
 
-<div class="card stat">
-<div class="muted">In Progress</div>
-<h2>${progress}</h2>
-</div>
+        <div class="muted">
+          Assigned → Accepted → In Progress → Completed
+        </div>
 
-<div class="card stat">
-<div class="muted">Completed</div>
-<h2>${completed}</h2>
-</div>
+      </div>
 
-</div>
+    `;
 
-<div class="profile-box">
+  }
 
-<div class="small muted">
-Your account
-</div>
 
-<div>
-<b>${esc(me.full_name || me.username)}</b>
-</div>
+  if(!list.length){
 
-<div class="user-id">
-${esc(me.user_id || "—")}
-</div>
+    content.innerHTML += `
 
-<div class="small muted">
-Username: @${esc(me.username)}
-</div>
+      <div class="card">
+        No tasks found.
+      </div>
 
-</div>
+    `;
 
-`;
+  }
+
+
+  list.forEach(task=>{
+
+    content.innerHTML +=
+    taskCard(task);
+
+  });
 
 }
 
 
-if(!list.length){
-
-html += `
-
-<div class="card empty">
-
-<h3>No tasks found</h3>
-
-<p>
-There are currently no tasks available.
-</p>
-
-</div>
-
-`;
-
-}
-else{
-
-html += list
-.map(taskCard)
-.join("");
-
-}
-
-
-c.innerHTML = html;
-
-}
-
-
-/* =========================================
+/* =========================================================
    TASK CARD
-========================================= */
+========================================================= */
 
-function taskCard(t){
+function taskCard(task){
 
-const assignedUser =
-users.find(
-u =>
-u.id === t.assigned_to
-);
-
-
-const creator =
-users.find(
-u =>
-u.id === t.assigned_by
-);
+  const assignedUser =
+  users.find(
+    u =>
+    u.id === task.assigned_to
+  );
 
 
-/*
-For End User, the assigned user is
-the logged-in account itself.
-*/
-
-const assignedName =
-assignedUser?.full_name ||
-assignedUser?.username ||
-(
-t.assigned_to === me.id
-?
-me.full_name ||
-me.username
-:
-"—"
-);
+  const creator =
+  users.find(
+    u =>
+    u.id === task.assigned_by
+  );
 
 
-const creatorName =
-creator?.full_name ||
-creator?.username ||
-(
-t.assigned_by === me.id
-?
-me.full_name ||
-me.username
-:
-"—"
-);
+  let buttons = "";
 
 
-let buttons = "";
+  if(me.role === "user"){
+
+    if(task.status === "assigned"){
+
+      buttons += `
+
+        <button
+          onclick="
+            taskAction(
+              '${task.id}',
+              'accept_task'
+            )
+          "
+        >
+          Accept
+        </button>
+
+      `;
+
+    }
 
 
-/* END USER ACTIONS */
+    if(task.status === "accepted"){
 
-if(me.role === "user"){
+      buttons += `
 
-if(t.status === "assigned"){
+        <button
+          onclick="
+            taskAction(
+              '${task.id}',
+              'start_task'
+            )
+          "
+        >
+          Start
+        </button>
 
-buttons += `
+      `;
 
-<button
-onclick="taskAction('${t.id}','accept_task')"
->
-Accept
-</button>
+    }
 
-`;
+
+    if(task.status === "in_progress"){
+
+      buttons += `
+
+        <button
+          onclick="
+            taskAction(
+              '${task.id}',
+              'complete_task'
+            )
+          "
+        >
+          End / Complete
+        </button>
+
+      `;
+
+    }
+
+  }
+  else{
+
+    buttons = `
+
+      <button
+        class="secondary"
+        onclick="
+          taskForm('${task.id}')
+        "
+      >
+        Edit
+      </button>
+
+      <button
+        class="danger"
+        onclick="
+          deleteTask('${task.id}')
+        "
+      >
+        Delete
+      </button>
+
+    `;
+
+  }
+
+
+  const completedTime =
+  task.completed_at ||
+  task.ended_at;
+
+
+  const workingSeconds =
+  task.total_work_seconds ??
+  task.total_working_time ??
+  0;
+
+
+  return `
+
+    <div class="task">
+
+      <div class="topline">
+
+        <h3>
+          ${esc(task.name)}
+        </h3>
+
+        <span
+          class="status ${esc(task.status)}"
+        >
+          ${esc(
+            String(task.status || "")
+            .replaceAll("_"," ")
+          )}
+        </span>
+
+      </div>
+
+
+      <p>
+        ${esc(
+          task.description ||
+          "No description"
+        )}
+      </p>
+
+
+      <div class="small muted">
+
+        Assigned to:
+        ${esc(
+          assignedUser?.full_name ||
+          assignedUser?.username ||
+          "—"
+        )}
+
+        ·
+
+        By:
+        ${esc(
+          creator?.full_name ||
+          creator?.username ||
+          "—"
+        )}
+
+      </div>
+
+
+      <div class="small muted">
+
+        Due:
+        ${
+          task.due_at
+          ?
+          new Date(
+            task.due_at
+          ).toLocaleString()
+          :
+          "No due time"
+        }
+
+      </div>
+
+
+      <div class="small">
+
+        Accepted:
+        ${fmt(task.accepted_at)}
+
+        ·
+
+        Started:
+        ${fmt(task.started_at)}
+
+        ·
+
+        Completed:
+        ${fmt(completedTime)}
+
+      </div>
+
+
+      <div class="small">
+
+        <b>Working time:</b>
+
+        ${secondsText(
+          workingSeconds
+        )}
+
+      </div>
+
+
+      <div
+        class="row"
+        style="margin-top:10px"
+      >
+
+        ${buttons}
+
+      </div>
+
+    </div>
+
+  `;
 
 }
 
 
-if(t.status === "accepted"){
+/* =========================================================
+   HISTORY
+========================================================= */
 
-buttons += `
+function renderHistory(content){
 
-<button
-onclick="taskAction('${t.id}','start_task')"
->
-▶ Start
-</button>
-
-`;
-
-}
+  let list;
 
 
-if(t.status === "in_progress"){
+  if(me.role === "user"){
 
-buttons += `
+    list =
+    tasks.filter(
+      task =>
+      task.assigned_to === me.id
+    );
 
-<button
-class="success"
-onclick="taskAction('${t.id}','complete_task')"
->
-✓ End / Complete
-</button>
+  }
+  else{
 
-`;
+    list = tasks;
 
-}
-
-}
+  }
 
 
-/* ADMIN / SUPER USER */
-
-else{
-
-buttons = `
-
-<button
-class="secondary"
-onclick="openTaskModal('${t.id}')"
->
-Edit
-</button>
-
-<button
-class="danger"
-onclick="deleteTask('${t.id}')"
->
-Delete
-</button>
-
-`;
-
-}
+  content.innerHTML =
+  "<h2>Task History</h2>";
 
 
-const statusText =
-String(t.status || "")
-.replaceAll("_"," ");
+  if(!list.length){
+
+    content.innerHTML += `
+
+      <div class="card">
+        No history.
+      </div>
+
+    `;
+
+    return;
+
+  }
 
 
-return `
+  list.forEach(task=>{
 
-<div class="task">
-
-<div class="topline">
-
-<h3>
-${esc(t.name)}
-</h3>
-
-<span
-class="status ${esc(t.status)}"
->
-${esc(statusText)}
-</span>
-
-</div>
+    const endTime =
+    task.completed_at ||
+    task.ended_at;
 
 
-<p>
-${esc(
-t.description ||
-"No description provided."
-)}
-</p>
+    const working =
+    task.total_work_seconds ??
+    task.total_working_time ??
+    0;
 
 
-<div class="small muted">
+    content.innerHTML += `
 
-<b>Assigned to:</b>
-${esc(assignedName)}
+      <div class="card">
 
-<br>
+        <b>
+          ${esc(task.name)}
+        </b>
 
-<b>Assigned by:</b>
-${esc(creatorName)}
+        —
 
-</div>
+        ${esc(task.status)}
 
+        <br>
 
-<div class="small muted">
+        <span class="small muted">
 
-<b>Due:</b>
-${
-t.due_at
-?
-fmt(t.due_at)
-:
-"No due time"
-}
+          Created:
+          ${fmt(task.created_at)}
 
-</div>
+          ·
 
+          Completed:
+          ${fmt(endTime)}
 
-<hr>
+          ·
 
+          Working:
+          ${secondsText(working)}
 
-<div class="small">
+        </span>
 
-<b>Accepted:</b>
-${fmt(t.accepted_at)}
+      </div>
 
-<br>
+    `;
 
-<b>Started:</b>
-${fmt(t.started_at)}
-
-<br>
-
-<b>Ended:</b>
-${fmt(getTaskEndTime(t))}
-
-</div>
-
-
-<div
-class="small"
-style="margin-top:8px"
->
-
-<b>Total Working Time:</b>
-
-${secondsText(
-getTaskWorkingTime(t)
-)}
-
-</div>
-
-
-${
-buttons
-?
-`
-<div
-class="row"
-style="margin-top:12px"
->
-${buttons}
-</div>
-`
-:
-""
-}
-
-</div>
-
-`;
+  });
 
 }
 
 
-/* =========================================
-   TASK MODAL
-========================================= */
+/* =========================================================
+   USERS
+========================================================= */
 
-function openTaskModal(id = ""){
+function renderUsers(content){
 
-if(me.role === "user"){
+  content.innerHTML = `
 
-toast(
-"You cannot create tasks"
-);
+    <div class="topline">
 
-return;
+      <h2>
+        ${
+          me.role === "super_user"
+          ?
+          "Users & Admin Management"
+          :
+          "Users"
+        }
+      </h2>
+
+
+      <div class="row">
+
+        ${
+          me.role === "super_user"
+          ?
+          `
+          <button
+            style="width:auto"
+            onclick="
+              inviteForm('admin')
+            "
+          >
+            + Create Admin Invite
+          </button>
+          `
+          :
+          ""
+        }
+
+
+        <button
+          style="width:auto"
+          onclick="
+            inviteForm('user')
+          "
+        >
+          + Create User Invite
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  content.innerHTML += `
+
+    <div class="card">
+
+      <div style="overflow:auto">
+
+        <table>
+
+          <tr>
+
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Action</th>
+
+          </tr>
+
+          ${
+            users
+            .map(user=>`
+
+              <tr>
+
+                <td>
+                  ${esc(
+                    user.user_id || "—"
+                  )}
+                </td>
+
+                <td>
+                  ${esc(
+                    user.full_name
+                  )}
+                </td>
+
+                <td>
+                  ${esc(
+                    user.username
+                  )}
+                </td>
+
+                <td>
+                  ${esc(
+                    user.role
+                  )}
+                </td>
+
+                <td>
+
+                  ${
+                    user.is_active
+                    ?
+                    "Active"
+                    :
+                    "Inactive"
+                  }
+
+                </td>
+
+                <td>
+
+                  ${
+                    user.id === me.id
+                    ?
+                    "You"
+                    :
+                    (
+                      me.role === "super_user" ||
+                      user.role === "user"
+                    )
+                    ?
+                    `
+                    <button
+                      onclick="
+                        toggleUser(
+                          '${user.id}',
+                          ${!user.is_active}
+                        )
+                      "
+                    >
+                      ${
+                        user.is_active
+                        ?
+                        "Deactivate"
+                        :
+                        "Activate"
+                      }
+                    </button>
+                    `
+                    :
+                    ""
+                  }
+
+                </td>
+
+              </tr>
+
+            `)
+            .join("")
+          }
+
+        </table>
+
+      </div>
+
+    </div>
+
+  `;
 
 }
 
 
-editingTaskId =
-id || null;
+/* =========================================================
+   REPORTS
+========================================================= */
+
+function renderReports(content){
+
+  const total =
+  tasks.length;
 
 
-const task =
-id
-?
-tasks.find(
-x =>
-x.id === id
-)
-:
-null;
+  const completed =
+  tasks.filter(
+    x =>
+    x.status === "completed"
+  ).length;
 
 
-const eligibleUsers =
-users.filter(
-u =>
-u.role === "user" &&
-u.is_active
-);
+  const inProgress =
+  tasks.filter(
+    x =>
+    x.status === "in_progress"
+  ).length;
 
 
-if(!eligibleUsers.length){
-
-toast(
-"Create an active End User first"
-);
-
-return;
-
-}
-
-
-$("taskModalTitle").textContent =
-task
-?
-"Edit Task"
-:
-"Assign Task";
+  const totalSeconds =
+  tasks.reduce(
+    (sum,x)=>
+    sum +
+    Number(
+      x.total_work_seconds ??
+      x.total_working_time ??
+      0
+    ),
+    0
+  );
 
 
-$("tfName").value =
-task?.name || "";
+  content.innerHTML = `
+
+    <h2>Reports</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <b>Total Tasks</b>
+        <h2>${total}</h2>
+      </div>
+
+      <div class="card">
+        <b>Completed</b>
+        <h2>${completed}</h2>
+      </div>
+
+      <div class="card">
+        <b>In Progress</b>
+        <h2>${inProgress}</h2>
+      </div>
+
+      <div class="card">
+        <b>Total Working Time</b>
+        <h2>
+          ${secondsText(totalSeconds)}
+        </h2>
+      </div>
+
+    </div>
+
+  `;
 
 
-$("tfDesc").value =
-task?.description || "";
+  if(me.role === "super_user"){
 
+    content.innerHTML += `
 
-$("tfDue").value =
-task?.due_at
-?
-toLocalDateTime(task.due_at)
-:
-"";
+      <div class="card">
 
+        <h3>System Summary</h3>
 
-$("tfUser").innerHTML =
-eligibleUsers
-.map(
-u => `
+        Users:
+        ${users.length}
 
-<option
-value="${esc(u.id)}"
-${u.id === task?.assigned_to ? "selected" : ""}
->
-${esc(
-u.full_name ||
-u.username
-)}
- — ${esc(u.user_id || "")}
-</option>
+        <br>
 
-`
-)
-.join("");
+        Admins:
+        ${
+          users.filter(
+            x =>
+            x.role === "admin"
+          ).length
+        }
 
+        <br>
 
-$("taskModal")
-.classList
-.remove("hidden");
+        End Users:
+        ${
+          users.filter(
+            x =>
+            x.role === "user"
+          ).length
+        }
 
-}
+        <br>
 
+        Active:
+        ${
+          users.filter(
+            x =>
+            x.is_active
+          ).length
+        }
 
-function closeTaskModal(){
+      </div>
 
-$("taskModal")
-.classList
-.add("hidden");
+    `;
 
-editingTaskId = null;
-
-}
-
-
-function toLocalDateTime(value){
-
-const d =
-new Date(value);
-
-const pad =
-n =>
-String(n).padStart(2,"0");
-
-
-return (
-d.getFullYear() +
-"-" +
-pad(d.getMonth()+1) +
-"-" +
-pad(d.getDate()) +
-"T" +
-pad(d.getHours()) +
-":" +
-pad(d.getMinutes())
-);
+  }
 
 }
 
 
-/* =========================================
+/* =========================================================
+   TASK FORM
+========================================================= */
+
+async function taskForm(id){
+
+  const task =
+  id
+  ?
+  tasks.find(
+    x =>
+    x.id === id
+  )
+  :
+  null;
+
+
+  const eligibleUsers =
+  users.filter(
+    user =>
+    user.role === "user" &&
+    user.is_active
+  );
+
+
+  if(!eligibleUsers.length){
+
+    toast(
+      "Create an active End User first"
+    );
+
+    return;
+
+  }
+
+
+  const box =
+  document.createElement(
+    "div"
+  );
+
+
+  box.className =
+  "card";
+
+
+  box.innerHTML = `
+
+    <h2>
+      ${
+        task
+        ?
+        "Edit Task"
+        :
+        "Assign Task"
+      }
+    </h2>
+
+
+    <input
+      id="tfName"
+      placeholder="Task title"
+      value="${esc(
+        task?.name || ""
+      )}"
+    >
+
+
+    <textarea
+      id="tfDesc"
+      placeholder="Detailed description / instructions"
+    >${esc(
+      task?.description || ""
+    )}</textarea>
+
+
+    <select id="tfUser">
+
+      ${
+        eligibleUsers
+        .map(user=>`
+
+          <option
+            value="${user.id}"
+            ${
+              user.id ===
+              task?.assigned_to
+              ?
+              "selected"
+              :
+              ""
+            }
+          >
+
+            ${esc(
+              user.full_name ||
+              user.username
+            )}
+
+          </option>
+
+        `)
+        .join("")
+      }
+
+    </select>
+
+
+    <input
+      id="tfDue"
+      type="datetime-local"
+      value="${
+        task?.due_at
+        ?
+        new Date(
+          task.due_at
+        )
+        .toISOString()
+        .slice(0,16)
+        :
+        ""
+      }"
+    >
+
+
+    <div class="row">
+
+      <button
+        onclick="
+          saveTask(
+            '${id || ""}'
+          )
+        "
+      >
+        Save
+      </button>
+
+
+      <button
+        class="gray"
+        onclick="render()"
+      >
+        Cancel
+      </button>
+
+    </div>
+
+  `;
+
+
+  $("content")
+    .prepend(box);
+
+
+  window.scrollTo(
+    0,
+    0
+  );
+
+}
+
+
+/* =========================================================
    SAVE TASK
-========================================= */
+========================================================= */
 
-async function saveTask(){
+async function saveTask(id){
 
-const name =
-$("tfName")
-.value
-.trim();
-
-
-const description =
-$("tfDesc")
-.value
-.trim();
+  const name =
+  $("tfName")
+  .value
+  .trim();
 
 
-const assignedTo =
-$("tfUser")
-.value;
+  const description =
+  $("tfDesc")
+  .value
+  .trim();
 
 
-const due =
-$("tfDue")
-.value;
+  const assignedTo =
+  $("tfUser")
+  .value;
 
 
-if(!name){
-
-toast(
-"Task title required"
-);
-
-return;
-
-}
+  const due =
+  $("tfDue")
+  .value;
 
 
-if(!assignedTo){
+  if(!name){
 
-toast(
-"Select an End User"
-);
+    toast(
+      "Task title required"
+    );
 
-return;
+    return;
 
-}
-
-
-const obj = {
-
-name:name,
-
-description:description,
-
-assigned_to:assignedTo,
-
-due_at:
-due
-?
-new Date(due).toISOString()
-:
-null
-
-};
+  }
 
 
-let result;
+  const taskData = {
+
+    name:name,
+
+    description:
+    description,
+
+    assigned_to:
+    assignedTo,
+
+    due_at:
+    due
+    ?
+    new Date(
+      due
+    ).toISOString()
+    :
+    null
+
+  };
 
 
-if(editingTaskId){
-
-result =
-await sb
-.from("daily_tasks")
-.update(obj)
-.eq(
-"id",
-editingTaskId
-);
-
-}
-else{
-
-result =
-await sb
-.from("daily_tasks")
-.insert({
-
-...obj,
-
-workspace_id:
-me.workspace_id,
-
-assigned_by:
-me.id,
-
-status:
-"assigned"
-
-});
-
-}
+  let result;
 
 
-if(result.error){
+  if(id){
 
-console.error(
-result.error
-);
+    result =
+    await sb
+      .from("daily_tasks")
+      .update(
+        taskData
+      )
+      .eq(
+        "id",
+        id
+      );
 
-toast(
-result.error.message
-);
+  }
+  else{
 
-return;
+    result =
+    await sb
+      .from("daily_tasks")
+      .insert({
 
-}
+        ...taskData,
+
+        workspace_id:
+        me.workspace_id,
+
+        assigned_by:
+        me.id,
+
+        status:
+        "assigned"
+
+      });
+
+  }
 
 
-toast(
-editingTaskId
-?
-"Task updated"
-:
-"Task assigned"
-);
+  if(result.error){
+
+    toast(
+      result.error.message
+    );
+
+    return;
+
+  }
 
 
-closeTaskModal();
+  toast(
+    "Task saved successfully"
+  );
 
-await refresh();
+
+  await refresh();
 
 }
 
 
-/* =========================================
+/* =========================================================
    DELETE TASK
-========================================= */
+========================================================= */
 
 async function deleteTask(id){
 
-if(
-!confirm(
-"Delete this task permanently?"
-)
-)
-return;
+  if(
+    !confirm(
+      "Delete this task?"
+    )
+  )
+  return;
 
 
-const result =
-await sb
-.from("daily_tasks")
-.delete()
-.eq(
-"id",
-id
-);
+  const result =
+  await sb
+    .from("daily_tasks")
+    .delete()
+    .eq(
+      "id",
+      id
+    );
 
 
-if(result.error){
+  if(result.error){
 
-toast(
-result.error.message
-);
+    toast(
+      result.error.message
+    );
 
-return;
+    return;
+
+  }
+
+
+  toast(
+    "Task deleted"
+  );
+
+
+  await refresh();
 
 }
 
 
-toast(
-"Task deleted"
-);
-
-await refresh();
-
-}
-
-
-/* =========================================
+/* =========================================================
    TASK ACTION
-========================================= */
+========================================================= */
 
-async function taskAction(id,fn){
+async function taskAction(
+  taskId,
+  functionName
+){
 
-const result =
-await sb.rpc(
-fn,
-{
-p_task_id:id
-}
-);
-
-
-if(result.error){
-
-console.error(
-result.error
-);
-
-toast(
-result.error.message
-);
-
-return;
-
-}
+  const result =
+  await sb.rpc(
+    functionName,
+    {
+      p_task_id:
+      taskId
+    }
+  );
 
 
-toast(
-fn === "accept_task"
-?
-"Task accepted"
-:
-fn === "start_task"
-?
-"Task started"
-:
-"Task completed"
-);
+  if(result.error){
+
+    toast(
+      result.error.message
+    );
+
+    return;
+
+  }
 
 
-await refresh();
+  toast(
+    "Task updated"
+  );
+
+
+  await refresh();
 
 }
 
 
-/* =========================================
-   HISTORY
-========================================= */
-
-function renderHistory(c){
-
-const list =
-me.role === "user"
-?
-tasks.filter(
-t =>
-t.assigned_to === me.id
-)
-:
-tasks;
-
-
-let html = `
-
-<div class="topline">
-
-<div>
-
-<h2>Task History</h2>
-
-<div class="muted">
-Complete task activity
-</div>
-
-</div>
-
-</div>
-
-`;
-
-
-if(!list.length){
-
-html += `
-
-<div class="card empty">
-No task history available.
-</div>
-
-`;
-
-}
-else{
-
-html += list
-.map(t=>`
-
-<div class="card">
-
-<div class="topline">
-
-<b>
-${esc(t.name)}
-</b>
-
-<span
-class="status ${esc(t.status)}"
->
-${esc(
-String(t.status || "")
-.replaceAll("_"," ")
-)}
-</span>
-
-</div>
-
-<p class="small muted">
-
-Created:
-${fmt(t.created_at)}
-
-<br>
-
-Accepted:
-${fmt(t.accepted_at)}
-
-<br>
-
-Started:
-${fmt(t.started_at)}
-
-<br>
-
-Completed:
-${fmt(getTaskEndTime(t))}
-
-<br>
-
-Working time:
-${secondsText(
-getTaskWorkingTime(t)
-)}
-
-</p>
-
-</div>
-
-`)
-.join("");
-
-}
-
-
-c.innerHTML = html;
-
-}
-
-
-/* =========================================
-   USERS
-========================================= */
-
-function renderUsers(c){
-
-const isSuper =
-me.role === "super_user";
-
-const isAdmin =
-me.role === "admin";
-
-
-let html = `
-
-<div class="topline">
-
-<div>
-
-<h2>
-${
-isSuper
-?
-"Users & Admin Management"
-:
-"End Users"
-}
-</h2>
-
-<div class="muted">
-Manage accounts according to your access level.
-</div>
-
-</div>
-
-<div class="row">
-
-${
-isSuper
-?
-`
-<button
-style="width:auto"
-onclick="openAccountModal('admin')"
->
-+ Create Admin
-</button>
-`
-:
-""
-}
-
-${
-isSuper || isAdmin
-?
-`
-<button
-style="width:auto"
-onclick="openAccountModal('user')"
->
-+ Create End User
-</button>
-`
-:
-""
-}
-
-</div>
-
-</div>
-
-`;
-
-
-let visibleUsers;
-
-
-if(isSuper){
-
-visibleUsers =
-users;
-
-}
-else{
-
-visibleUsers =
-users.filter(
-u =>
-u.role === "user"
-);
-
-}
-
-
-if(!visibleUsers.length){
-
-html += `
-
-<div class="card empty">
-No users found.
-</div>
-
-`;
-
-}
-else{
-
-html += `
-
-<div class="card table-wrap">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>User ID</th>
-
-<th>Name</th>
-
-<th>Username</th>
-
-<th>Role</th>
-
-<th>Status</th>
-
-<th>Created</th>
-
-<th>Action</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-${visibleUsers
-.map(u=>`
-
-<tr>
-
-<td>
-<b>
-${esc(u.user_id || "—")}
-</b>
-</td>
-
-<td>
-${esc(
-u.full_name ||
-"—"
-)}
-</td>
-
-<td>
-${esc(u.username)}
-</td>
-
-<td>
-${esc(u.role)}
-</td>
-
-<td>
-
-${
-u.is_active
-?
-"🟢 Active"
-:
-"🔴 Inactive"
-}
-
-</td>
-
-<td>
-${fmt(u.created_at)}
-</td>
-
-<td>
-
-${
-u.id === me.id
-?
-"You"
-:
-canManageUser(u)
-?
-`
-<button
-onclick="toggleUser(
-'${u.id}',
-${!u.is_active}
-)"
->
-${
-u.is_active
-?
-"Deactivate"
-:
-"Activate"
-}
-</button>
-`
-:
-""
-}
-
-</td>
-
-</tr>
-
-`)
-.join("")}
-
-</tbody>
-
-</table>
-
-</div>
-
-`;
-
-}
-
-
-c.innerHTML = html;
-
-}
-
-
-/* =========================================
-   USER PERMISSION
-========================================= */
-
-function canManageUser(user){
-
-if(me.role === "super_user"){
-
-return (
-user.role === "admin" ||
-user.role === "user"
-);
-
-}
-
-
-if(me.role === "admin"){
-
-return user.role === "user";
-
-}
-
-
-return false;
-
-}
-
-
-/* =========================================
-   ACTIVATE / DEACTIVATE
-========================================= */
+/* =========================================================
+   USER ACTIVE / INACTIVE
+========================================================= */
 
 async function toggleUser(
-id,
-active
+  id,
+  active
 ){
 
-const result =
-await sb
-.from("profiles")
-.update({
-is_active:active
-})
-.eq(
-"id",
-id
-);
+  const result =
+  await sb
+    .from("profiles")
+    .update({
+      is_active:
+      active
+    })
+    .eq(
+      "id",
+      id
+    );
 
 
-if(result.error){
+  if(result.error){
 
-toast(
-result.error.message
-);
+    toast(
+      result.error.message
+    );
 
-return;
+    return;
 
-}
-
-
-toast(
-active
-?
-"Account activated"
-:
-"Account deactivated"
-);
+  }
 
 
-await refresh();
-
-}
-
-
-/* =========================================
-   ACCOUNT CREATION MODAL
-========================================= */
-
-function openAccountModal(role){
-
-accountRoleToCreate =
-role;
+  toast(
+    active
+    ?
+    "User activated"
+    :
+    "User deactivated"
+  );
 
 
-$("accountName").value =
-"";
-
-$("accountUsername").value =
-"";
-
-$("accountPassword").value =
-"";
-
-$("accountPassword2").value =
-"";
-
-
-$("accountResult")
-.classList
-.add("hidden");
-
-
-$("accountResult")
-.innerHTML = "";
-
-
-if(role === "admin"){
-
-$("accountModalTitle").textContent =
-"Create Admin Account";
-
-$("accountModalInfo").textContent =
-"Super User can create Admin accounts.";
-
-}
-else{
-
-$("accountModalTitle").textContent =
-"Create End User Account";
-
-$("accountModalInfo").textContent =
-"Admin can create End User accounts.";
+  await refresh();
 
 }
 
 
-$("accountModal")
-.classList
-.remove("hidden");
+/* =========================================================
+   INVITE
+========================================================= */
+
+async function inviteForm(role){
+
+  const code =
+  Math.random()
+    .toString(36)
+    .slice(2,8)
+    .toUpperCase();
+
+
+  const days =
+  prompt(
+    "Invite valid for how many days?",
+    "7"
+  );
+
+
+  if(days === null)
+    return;
+
+
+  const result =
+  await sb.rpc(
+    "create_invite",
+    {
+      p_role:
+      role,
+
+      p_code:
+      code,
+
+      p_days:
+      Number(days) || 7
+    }
+  );
+
+
+  if(result.error){
+
+    toast(
+      result.error.message
+    );
+
+    return;
+
+  }
+
+
+  alert(
+
+    "Invite created\n\n" +
+
+    "Role: " +
+    role +
+    "\n\n" +
+
+    "Code: " +
+    code +
+    "\n\n" +
+
+    "Give this code to the new user."
+
+  );
 
 }
 
 
-function closeAccountModal(){
+/* =========================================================
+   CHECK INVITE
+========================================================= */
 
-$("accountModal")
-.classList
-.add("hidden");
+async function checkInvite(){
 
-accountRoleToCreate = null;
-
-}
-
-
-/* =========================================
-   MANAGED ACCOUNT CREATION
-========================================= */
-
-async function createManagedAccount(){
-
-if(!accountRoleToCreate){
-
-toast(
-"Account role not selected"
-);
-
-return;
-
-}
+  const code =
+  $("inviteCode")
+  .value
+  .trim()
+  .toUpperCase();
 
 
-const fullName =
-$("accountName")
-.value
-.trim();
+  if(!code){
+
+    toast(
+      "Enter invite code"
+    );
+
+    return;
+
+  }
 
 
-const username =
-$("accountUsername")
-.value
-.trim()
-.toLowerCase();
+  const result =
+  await sb.rpc(
+    "check_invite",
+    {
+      p_code:
+      code
+    }
+  );
 
 
-const password =
-$("accountPassword")
-.value;
+  if(
+    result.error ||
+    !result.data ||
+    !result.data.length
+  ){
+
+    toast(
+      "Invalid, expired or used invite"
+    );
+
+    return;
+
+  }
 
 
-const password2 =
-$("accountPassword2")
-.value;
+  const info =
+  result.data[0];
 
 
-if(!fullName){
-
-toast(
-"Full name required"
-);
-
-return;
-
-}
+  $("inviteInfo")
+    .classList
+    .remove("hidden");
 
 
-if(!username){
+  $("inviteInfo")
+    .innerHTML = `
 
-toast(
-"Username required"
-);
+      <b>Invite valid</b>
 
-return;
+      <br>
 
-}
+      Role:
+      ${esc(info.role)}
 
+      <br>
 
-if(username.length < 3){
+      Workspace:
+      ${esc(
+        info.workspace_name ||
+        "Default"
+      )}
 
-toast(
-"Username must be at least 3 characters"
-);
-
-return;
-
-}
+    `;
 
 
-if(
-!password ||
-password.length < 8
-){
-
-toast(
-"Password must be at least 8 characters"
-);
-
-return;
+  $("signupFields")
+    .classList
+    .remove("hidden");
 
 }
 
 
-if(password !== password2){
+/* =========================================================
+   SIGNUP
+========================================================= */
 
-toast(
-"Passwords do not match"
-);
+async function signup(){
 
-return;
-
-}
-
-
-try{
-
-const session =
-(
-await sb.auth.getSession()
-).data.session;
+  const code =
+  $("inviteCode")
+  .value
+  .trim()
+  .toUpperCase();
 
 
-if(!session){
-
-toast(
-"Your session has expired. Login again."
-);
-
-return;
-
-}
+  const name =
+  $("newName")
+  .value
+  .trim();
 
 
-const response =
-await fetch(
-SUPABASE_URL +
-"/functions/v1/create-managed-user",
-{
-
-method:"POST",
-
-headers:{
-
-"Content-Type":
-"application/json",
-
-"Authorization":
-"Bearer " +
-session.access_token
-
-},
-
-body:
-JSON.stringify({
-
-username:username,
-
-password:password,
-
-full_name:fullName,
-
-role:accountRoleToCreate
-
-})
-
-});
+  const username =
+  $("newUser")
+  .value
+  .trim()
+  .toLowerCase();
 
 
-const result =
-await response.json()
-.catch(
-() => ({})
-);
+  const password =
+  $("newPass")
+  .value;
 
 
-if(!response.ok){
-
-console.error(
-"Create account error:",
-result
-);
-
-toast(
-result.error ||
-result.message ||
-"Account creation failed"
-);
-
-return;
-
-}
+  const password2 =
+  $("newPass2")
+  .value;
 
 
-/*
-The Edge Function creates the profile.
-Refresh users and find the newly-created
-profile by username so we can show its
-generated User ID.
-*/
+  if(
+    !name ||
+    !username ||
+    password.length < 8 ||
+    password !== password2
+  ){
 
-await refresh();
+    toast(
+      "Check name and password"
+    );
 
+    return;
 
-const createdUser =
-users.find(
-u =>
-u.username === username
-);
-
-
-const generatedId =
-createdUser?.user_id ||
-result.user_id ||
-"Generated automatically";
+  }
 
 
-$("accountResult")
-.innerHTML = `
-
-<b>
-Account created successfully!
-</b>
-
-<br><br>
-
-User ID:
-<strong>
-${esc(generatedId)}
-</strong>
-
-<br>
-
-Username:
-<strong>
-${esc(username)}
-</strong>
-
-<br>
-
-Role:
-<strong>
-${esc(accountRoleToCreate)}
-</strong>
-
-<br><br>
-
-Keep these login details safe.
-
-`;
+  const check =
+  await sb.rpc(
+    "check_invite",
+    {
+      p_code:
+      code
+    }
+  );
 
 
-$("accountResult")
-.classList
-.remove("hidden");
+  if(
+    check.error ||
+    !check.data ||
+    !check.data.length
+  ){
+
+    toast(
+      "Invite is no longer valid"
+    );
+
+    return;
+
+  }
 
 
-toast(
-accountRoleToCreate === "admin"
-?
-"Admin account created"
-:
-"End User account created"
-);
+  const signupResult =
+  await sb.auth.signUp({
+
+    email:
+    username +
+    "@taskmanager.local",
+
+    password:
+    password
+
+  });
 
 
-/*
-Clear password fields but keep
-modal open so the generated User ID
-can be seen.
-*/
+  if(signupResult.error){
 
-$("accountPassword").value = "";
-$("accountPassword2").value = "";
+    toast(
+      signupResult.error.message
+    );
 
-}
-catch(error){
+    return;
 
-console.error(
-error
-);
+  }
 
-toast(
-"Could not connect to account creation service"
-);
 
-}
+  const complete =
+  await sb.rpc(
+    "complete_invite",
+    {
+
+      p_code:
+      code,
+
+      p_user_id:
+      signupResult.data.user.id,
+
+      p_username:
+      username,
+
+      p_full_name:
+      name
+
+    }
+  );
+
+
+  await sb.auth.signOut();
+
+
+  if(complete.error){
+
+    toast(
+      complete.error.message
+    );
+
+    return;
+
+  }
+
+
+  toast(
+    "Account created successfully"
+  );
+
+
+  showLogin();
 
 }
 
 
-/* =========================================
-   REPORTS
-========================================= */
-
-function renderReports(c){
-
-const all =
-tasks.length;
-
-
-const assigned =
-tasks.filter(
-x =>
-x.status === "assigned"
-).length;
-
-
-const accepted =
-tasks.filter(
-x =>
-x.status === "accepted"
-).length;
-
-
-const inProgress =
-tasks.filter(
-x =>
-x.status === "in_progress"
-).length;
-
-
-const completed =
-tasks.filter(
-x =>
-x.status === "completed"
-).length;
-
-
-const totalTime =
-tasks.reduce(
-(total,x)=>
-total +
-getTaskWorkingTime(x),
-0
-);
-
-
-let html = `
-
-<h2>Reports</h2>
-
-<div class="grid">
-
-<div class="card stat">
-
-<div class="muted">
-Total Tasks
-</div>
-
-<h2>
-${all}
-</h2>
-
-</div>
-
-
-<div class="card stat">
-
-<div class="muted">
-Assigned
-</div>
-
-<h2>
-${assigned}
-</h2>
-
-</div>
-
-
-<div class="card stat">
-
-<div class="muted">
-Accepted
-</div>
-
-<h2>
-${accepted}
-</h2>
-
-</div>
-
-
-<div class="card stat">
-
-<div class="muted">
-In Progress
-</div>
-
-<h2>
-${inProgress}
-</h2>
-
-</div>
-
-
-<div class="card stat">
-
-<div class="muted">
-Completed
-</div>
-
-<h2>
-${completed}
-</h2>
-
-</div>
-
-
-<div class="card stat">
-
-<div class="muted">
-Working Time
-</div>
-
-<h2 style="font-size:22px">
-${secondsText(totalTime)}
-</h2>
-
-</div>
-
-</div>
-
-`;
-
-
-if(me.role === "super_user"){
-
-const admins =
-users.filter(
-u =>
-u.role === "admin"
-);
-
-
-const endUsers =
-users.filter(
-u =>
-u.role === "user"
-);
-
-
-const active =
-users.filter(
-u =>
-u.is_active
-);
-
-
-html += `
-
-<div class="card">
-
-<h3>
-System Summary
-</h3>
-
-<div class="grid">
-
-<div>
-<b>Total Accounts</b>
-<br>
-${users.length}
-</div>
-
-<div>
-<b>Admins</b>
-<br>
-${admins.length}
-</div>
-
-<div>
-<b>End Users</b>
-<br>
-${endUsers.length}
-</div>
-
-<div>
-<b>Active Accounts</b>
-<br>
-${active.length}
-</div>
-
-</div>
-
-</div>
-
-`;
-
-}
-
-
-c.innerHTML = html;
-
-}
-
-
-/* =========================================
+/* =========================================================
    LOGOUT
-========================================= */
+========================================================= */
 
 async function logout(){
 
-if(refreshTimer){
+  if(refreshTimer){
 
-clearInterval(
-refreshTimer
-);
+    clearInterval(
+      refreshTimer
+    );
 
-refreshTimer = null;
+    refreshTimer = null;
 
-}
-
-
-await sb.auth.signOut();
-
-location.reload();
-
-}
+  }
 
 
-/* =========================================
-   AUTH STATE
-========================================= */
+  await sb.auth.signOut();
 
-sb.auth.onAuthStateChange(
-async(event)=>{
-
-if(event === "SIGNED_OUT"){
-
-return;
-
-}
-
-}
-);
-
-
-/* =========================================
-   START APP
-========================================= */
-
-(async()=>{
-
-const {
-data,
-error
-} =
-await sb.auth.getSession();
-
-
-if(error){
-
-console.error(
-"Session error:",
-error
-);
-
-return;
+  location.reload();
 
 }
 
 
-if(!data.session)
-return;
+/* =========================================================
+   RESTORE SESSION
+   ALSO USES NEW RPC
+========================================================= */
+
+(async function(){
+
+  try{
+
+    const {
+      data
+    } =
+    await sb.auth.getSession();
 
 
-/*
-Important:
-Use secure RPC instead of direct
-profiles SELECT.
-*/
-
-const {
-profile,
-error:profileError
-} =
-await getMyProfile();
+    if(!data?.session)
+      return;
 
 
-if(
-!profileError &&
-profile &&
-profile.is_active
-){
+    try{
 
-me = profile;
+      me =
+      await getMyProfile();
 
-openApp();
 
-}
-else{
+      if(
+        me &&
+        me.is_active
+      ){
 
-console.error(
-"Session profile error:",
-profileError
-);
+        openApp();
 
-await sb.auth.signOut();
+      }
+      else{
 
-}
+        await sb.auth.signOut();
+
+      }
+
+    }
+    catch(error){
+
+      console.error(
+        "SESSION PROFILE ERROR:",
+        error
+      );
+
+      await sb.auth.signOut();
+
+    }
+
+  }
+  catch(error){
+
+    console.error(
+      "STARTUP ERROR:",
+      error
+    );
+
+  }
 
 })();
 
